@@ -13,12 +13,10 @@
     @foreach (var item in Model.PropertyGrid.Properties)
     {
         <div class="row border py-1">
-            <div class="col-3 col-form-label">
+            <div class="col-3 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="@item.Description">
                 @item.Header
             </div>
-            <div class="col-9 border g-0">
-                <input id="@item.BindingPath" class="form-control rounded-0" placeholder="" value="@item.Value" />
-            </div>
+            @await Component.InvokeAsync("PropertyView", item)
         </div>
     }
 

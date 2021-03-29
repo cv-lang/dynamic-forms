@@ -27,5 +27,7 @@ namespace Cvl.DynamicForms.Base
 
         public string ToolTip { get; set; }
         public object Value { get; set; }
+        public int Order { get; internal set; }
+        public string Group { get; internal set; }
     }
 }
