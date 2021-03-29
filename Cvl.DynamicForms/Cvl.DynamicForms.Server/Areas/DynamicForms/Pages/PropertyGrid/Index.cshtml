@@ -1,0 +1,26 @@
+﻿@page
+@model Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<h4>
+    Property grid
+</h4>
+
+<div class="container">
+
+    @foreach (var item in Model.PropertyGrid.Properties)
+    {
+        <div class="row border py-1">
+            <div class="col-3 col-form-label">
+                @item.Header
+            </div>
+            <div class="col-9 border g-0">
+                <input id="@item.BindingPath" class="form-control rounded-0" placeholder="" value="@item.Value" />
+            </div>
+        </div>
+    }
+
+
+</div>
