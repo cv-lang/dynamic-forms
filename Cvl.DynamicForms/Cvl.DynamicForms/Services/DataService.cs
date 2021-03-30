@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cvl.DynamicForms.Model;
+using Cvl.DynamicForms.Tools;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,7 +13,15 @@ namespace Cvl.DynamicForms.Services
     {
         public object GetObject(long objectId)
         {
-            return new Test.TestPerson() { Firstname = "Jan", Surname = "Kowalski" };
+            var tp = new Test.TestPerson() { Firstname = "Jan", Surname = "Kowalski" };
+
+            if(objectId == 12)
+            {
+                var xml = Serializer.SerializeObject(tp);
+                return new ObjectXmlWrapper(xml);
+            }
+
+            return tp;
         }
     }
 }
