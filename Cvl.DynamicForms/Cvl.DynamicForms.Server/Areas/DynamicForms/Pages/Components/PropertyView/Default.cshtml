@@ -1,5 +1,36 @@
 ﻿@model Cvl.DynamicForms.Base.PropertyViewModel
 @{
+    switch (Model.Type)
+    {
+        case Cvl.DynamicForms.Base.PropertyTypes.String:
+            <text>
+                <div class="col-9 border g-0">
+                    <input id="@Model.BindingPath" class="form-control rounded-0" placeholder="" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
+                </div>
+            </text>
+            break;
+        case Cvl.DynamicForms.Base.PropertyTypes.Bool:
+            <text>
+                <div class="col-9 border g-0">
+                    <input id="@Model.BindingPath" class="form-check-input" type="checkbox" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
+                </div>
+            </text>
+            break;
+        case Cvl.DynamicForms.Base.PropertyTypes.Enum:
+            <text>
+                @Html.DropDownList("Place of residence", Html.GetEnumSelectList<Cvl.DynamicForms.Base.PropertyTypes>(), "Select City", new { @class = "form-control" })
+            </text>
+            break;
+        case Cvl.DynamicForms.Base.PropertyTypes.Int:
+
+            break;
+        case Cvl.DynamicForms.Base.PropertyTypes.Float:
+
+            break;
+        case Cvl.DynamicForms.Base.PropertyTypes.Other:
+
+            break;
+    }
 }
 
 <div class="col-9 border g-0">

@@ -1,9 +1,13 @@
 ﻿using Cvl.DynamicForms.Base;
 using Cvl.DynamicForms.Model;
 using Cvl.DynamicForms.Tools.Extension;
+using Cvl.DynamicForms.Tools;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
+using Cvl.DynamicForms.Test;
+using System.IO;
 
 namespace Cvl.DynamicForms.Services
 {
@@ -15,8 +19,20 @@ namespace Cvl.DynamicForms.Services
 
             if (obj is ObjectXmlWrapper wrapper)
             {
-                //tu parsowanie xmla
-                //wrapper.Xml
+                var personObject = Serializer.DeserializeObject<TestPerson>(wrapper.Xml);
+                var type = personObject.GetType();
+                var props = type.GetProperties();
+                foreach (var item in props)
+                {
+                    var value = GetPropertyValue(personObject, item);
+
+                    var pvm = new Base.PropertyViewModel() { Header = item.Name, BindingPath = item.Name, Value = value };
+                    pvm.Order = item.GetPropertyOrder();
+                    pvm.Description = item.GetPropertyDescription();
+                    pvm.Group = item.GetPropertyGroup();
+
+                    list.Add(pvm);
+                }
             }
             else
             {
@@ -27,7 +43,7 @@ namespace Cvl.DynamicForms.Services
                 {
                     var value = GetPropertyValue(obj, item);
 
-                    var pvm = new Base.PropertyViewModel() { Header = item.Name, BindingPath = item.Name, Value = value };
+                    var pvm = new Base.PropertyViewModel() { Type = CheckPropType(item), Header = item.Name, BindingPath = item.Name, Value = value };
                     pvm.Order = item.GetPropertyOrder();
                     pvm.Description = item.GetPropertyDescription();
                     pvm.Group = item.GetPropertyGroup();
@@ -37,6 +53,22 @@ namespace Cvl.DynamicForms.Services
             }
 
             return list;
+        }
+
+        private PropertyTypes CheckPropType(object item)
+        {
+            var type = item.GetType();
+            if (type.Equals(typeof(bool)))
+                return PropertyTypes.Bool;
+            if (item is Enum)
+                return PropertyTypes.Enum;
+            if (type.Equals(typeof(float)))
+                return PropertyTypes.Float;
+            if (type.Equals(typeof(int)))
+                return PropertyTypes.Int;
+            if (type.Equals(typeof(string)))
+                return PropertyTypes.String;
+            return PropertyTypes.Other;
         }
 
         private object GetPropertyValue(object obj, System.Reflection.PropertyInfo item)
