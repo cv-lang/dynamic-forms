@@ -8,6 +8,10 @@ using System.Text;
 using System.Xml.Serialization;
 using Cvl.DynamicForms.Test;
 using System.IO;
+using System.Xml;
+using System.Xml.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Services
 {
@@ -19,20 +23,22 @@ namespace Cvl.DynamicForms.Services
 
             if (obj is ObjectXmlWrapper wrapper)
             {
-                var personObject = Serializer.DeserializeObject<TestPerson>(wrapper.Xml);
-                var type = personObject.GetType();
+                object person = DeserializeXml(wrapper.Xml);
+                var type = person.GetType();
                 var props = type.GetProperties();
+
                 foreach (var item in props)
                 {
-                    var value = GetPropertyValue(personObject, item);
+                    var value = GetPropertyValue(person, item);
 
-                    var pvm = new Base.PropertyViewModel() { Header = item.Name, BindingPath = item.Name, Value = value };
+                    var pvm = new Base.PropertyViewModel() { Type = CheckPropType(value), Header = item.Name, BindingPath = item.Name, Value = value };
                     pvm.Order = item.GetPropertyOrder();
                     pvm.Description = item.GetPropertyDescription();
                     pvm.Group = item.GetPropertyGroup();
 
                     list.Add(pvm);
                 }
+
             }
             else
             {
@@ -70,6 +76,22 @@ namespace Cvl.DynamicForms.Services
 
                 return PropertyTypes.String;
             return PropertyTypes.Other;
+        }
+
+        private object DeserializeXml(string xml)
+        {
+            byte[] byteArray = Encoding.UTF8.GetBytes(xml);
+            MemoryStream stream = new MemoryStream(byteArray);
+            var xmlReader = XElement.Load(stream).CreateReader();
+            xmlReader.MoveToContent();
+            string innerXml = xmlReader.ReadInnerXml();
+
+            byte[] byteArray1 = Encoding.UTF8.GetBytes(innerXml);
+            MemoryStream stream1 = new MemoryStream(byteArray1);
+            TestPerson person;
+            XmlSerializer serializer = new XmlSerializer(typeof(TestPerson));
+            person = (TestPerson)serializer.Deserialize(stream1);
+            return person;
         }
 
         private object GetPropertyValue(object obj, System.Reflection.PropertyInfo item)
