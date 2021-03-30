@@ -9,8 +9,21 @@ namespace Cvl.DynamicForms.Base
     /// <summary>
     /// 
     /// </summary>
+    
+    public enum PropertyTypes
+    {
+        String,
+        Int,
+        Float,
+        Bool,
+        Enum,
+        Other
+    }
+
     public class PropertyViewModel
     {
+        public PropertyTypes Type { get; set; }
+
         /// <summary>
         /// Nazwa propercji lub ścieżka do propercji 
         /// np. Name

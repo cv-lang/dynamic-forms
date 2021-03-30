@@ -13,7 +13,7 @@ namespace Cvl.DynamicForms.Services
     {
         public object GetObject(long objectId)
         {
-            var tp = new Test.TestPerson() { Firstname = "Jan", Surname = "Kowalski" };
+            var tp = new Test.TestPerson() { Firstname = "Jan", Surname = "Kowalski", Age = 35, IsEmployed = true, DwellingPlace = Test.Place.Krakow, Earnings = 3.85F  };
 
             if(objectId == 12)
             {
