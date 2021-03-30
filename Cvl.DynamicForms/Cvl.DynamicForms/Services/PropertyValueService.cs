@@ -42,8 +42,7 @@ namespace Cvl.DynamicForms.Services
                 foreach (var item in props)
                 {
                     var value = GetPropertyValue(obj, item);
-
-                    var pvm = new Base.PropertyViewModel() { Type = CheckPropType(item), Header = item.Name, BindingPath = item.Name, Value = value };
+                    var pvm = new Base.PropertyViewModel() { Type = CheckPropType(value), Header = item.Name, BindingPath = item.Name, Value = value };
                     pvm.Order = item.GetPropertyOrder();
                     pvm.Description = item.GetPropertyDescription();
                     pvm.Group = item.GetPropertyGroup();
@@ -58,15 +57,17 @@ namespace Cvl.DynamicForms.Services
         private PropertyTypes CheckPropType(object item)
         {
             var type = item.GetType();
-            if (type.Equals(typeof(bool)))
+
+            if (item is bool)
                 return PropertyTypes.Bool;
             if (item is Enum)
                 return PropertyTypes.Enum;
-            if (type.Equals(typeof(float)))
+            if (item is float)
                 return PropertyTypes.Float;
-            if (type.Equals(typeof(int)))
+            if (item is int)
                 return PropertyTypes.Int;
-            if (type.Equals(typeof(string)))
+            if (item is string)
+
                 return PropertyTypes.String;
             return PropertyTypes.Other;
         }
