@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cvl.DynamicForms.Base
+﻿namespace Cvl.DynamicForms.Model
 {
     /// <summary>
     /// 
     /// </summary>
-    
+
     public enum PropertyTypes
     {
         String,
@@ -17,10 +11,12 @@ namespace Cvl.DynamicForms.Base
         Float,
         Bool,
         Enum,
+        Class,
+        Collection,
         Other
     }
 
-    public class PropertyViewModel
+    public class PropertyViewModel : PropertyBaseViewModel
     {
         public PropertyTypes Type { get; set; }
 

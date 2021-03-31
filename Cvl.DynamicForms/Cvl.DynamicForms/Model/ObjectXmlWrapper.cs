@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cvl.DynamicForms.Model
+﻿namespace Cvl.DynamicForms.Model
 {
     public class ObjectXmlWrapper
     {

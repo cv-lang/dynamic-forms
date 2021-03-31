@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cvl.DynamicForms.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
@@ -12,15 +8,13 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
     {
         private readonly DataService dataService;
         private readonly ViewModelService viewService;
-        private readonly PropertyValueService propertyValueService;
-
+       
         public Model.PropertyGridViewModel PropertyGrid { get; set; }
 
-        public IndexModel(DataService dataService, ViewModelService viewService, PropertyValueService propertyValueService)
+        public IndexModel(DataService dataService, ViewModelService viewService)
         {
             this.dataService = dataService;
             this.viewService = viewService;
-            this.propertyValueService = propertyValueService;
         }
 
         public void OnGet()

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace Cvl.DynamicForms.Test
@@ -35,6 +34,24 @@ namespace Cvl.DynamicForms.Test
         [XmlElement]
         public float Earnings { get; set; }
 
+        public Address Address { get; set; }
+
+        public List<Invoice> Invoices { get; set; } = new List<Invoice>();
+    }
+
+
+    public class Invoice
+    {
+        public string Number { get; set; }
+        public decimal Net { get; set; }
+        public decimal Gross { get; set; }
+    }
+
+    public class Address
+    {
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string Postcode { get; set; }
     }
 
     public enum Place

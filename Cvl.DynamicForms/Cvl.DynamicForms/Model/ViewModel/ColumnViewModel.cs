@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cvl.DynamicForms.Model
+﻿namespace Cvl.DynamicForms.Model
 {
     public class ColumnViewModel
     {
@@ -17,5 +13,15 @@ namespace Cvl.DynamicForms.Model
         public string Description { get; set; }
 
         public string ToolTip { get; set; }
+    }
+
+    public class CellViewModel
+    {
+        public object Value { get; set; }
+    }
+
+    public class RowViewModel
+    {
+        public CellViewModel[] Cells { get; set; }
     }
 }

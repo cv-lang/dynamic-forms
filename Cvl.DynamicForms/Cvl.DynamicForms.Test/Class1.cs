@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cvl.DynamicForms.Test
+﻿namespace Cvl.DynamicForms.Test
 {
     public class Class1
     {

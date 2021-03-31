@@ -1,0 +1,64 @@
+﻿@model Cvl.DynamicForms.Model.PropertyGroupViewModel
+@{
+    foreach (var el in Model.Properties)
+    {
+        if (el is Cvl.DynamicForms.Model.PropertyViewModel prop)
+        {
+            <div class="row border py-1">
+                <div class="col-3 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="@prop.Description">
+                    @prop.Header
+                </div>
+                @await Component.InvokeAsync("PropertyView", prop)
+            </div>
+        }
+        else if (el is Cvl.DynamicForms.Model.PropertyGridElementViewModel pg)
+        {
+            <div class="row border py-1">
+                <div class="accordion" id="accordion@(pg.PropertyName)">
+                    <div class="accordion-item border-0">
+                        <h5 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(pg.PropertyName)" aria-expanded="false" aria-controls="collapse@(pg.PropertyName)">
+                                <div class="col-3">
+                                    <span for="p11" class="form-label">@pg.PropertyName</span>
+                                </div>
+                                <div class="col-7">
+                                    <span id="p11" class="form-label">@pg.PropertyValue</span>
+                                </div>
+                            </button>
+                        </h5>
+                        <div id="collapse@(pg.PropertyName)" class="accordion-collapse collapse" aria-labelledby="heading@(pg.PropertyName)" data-bs-parent="#accordion@(pg.PropertyName)">
+                            <div class="accordion-body">
+                                @await Component.InvokeAsync("PropertyGridElementView", pg)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (el is Cvl.DynamicForms.Model.GridElementViewModel gridElement)
+        {
+            <div class="row border py-1">
+                <div class="accordion" id="accordion@(gridElement.PropertyName)">
+                    <div class="accordion-item border-0">
+                        <h5 class="accordion-header" id="heading@(gridElement.PropertyName)">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(gridElement.PropertyName)" aria-expanded="false" aria-controls="collapse@(gridElement.PropertyName)">
+                                <div class="col-3">
+                                    <span for="p11" class="form-label">@gridElement.PropertyName</span>
+                                </div>
+                                <div class="col-7">
+                                    <span id="p11" class="form-label">@gridElement.PropertyValue</span>
+                                </div>
+                            </button>
+                        </h5>
+                        <div id="collapse@(gridElement.PropertyName)" class="accordion-collapse collapse" aria-labelledby="heading@(gridElement.PropertyName)" data-bs-parent="#accordion@(gridElement.PropertyName)">
+                            <div class="accordion-body">
+                                @await Component.InvokeAsync("GridElementView", gridElement)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+

@@ -10,15 +10,7 @@
 
 <div class="container">
 
-    @foreach (var item in Model.PropertyGrid.Properties)
-    {
-        <div class="row border py-1">
-            <div class="col-3 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="@item.Description">
-                @item.Header
-            </div>
-            @await Component.InvokeAsync("PropertyView", item)
-        </div>
-    }
+    @await Component.InvokeAsync("PropertyGridView", Model.PropertyGrid)  
 
 
 </div>
