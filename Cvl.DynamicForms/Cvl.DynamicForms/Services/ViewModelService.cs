@@ -106,15 +106,39 @@ namespace Cvl.DynamicForms.Services
 
         private void createGridFromCollection(IEnumerable collection, GridElementViewModel gv)
         {
-            foreach (var item in collection)
+            
+
+            bool isFirst = true;
+            foreach (var position in collection)
             {
-                //TODO: Uzupełnić na podstawie pierwszego przejsca
-                //gv.Columns
+                var type = position.GetType();
+                var props = type.GetProperties();
+                var rvm = new RowViewModel();
+                CellViewModel[] cells = null;
 
-                //TODO: Uzupełnić dla każdego przejscia
-                //gv.Rows
+                for (int i = 0; i <= props.Length; i++)
+                {
+                    var item = props[i];
+                    var value = item.GetValue(position);
+                    var propType = CheckPropType(item.PropertyType);
 
+                    if (isFirst)
+                    {
+                        var cvm = new ColumnViewModel() { BindingPath = item.Name };
+                        gv.Columns.Add(cvm);
+                    }
+
+                    var ccvm = new CellViewModel() { Value = value };
+                    cells[i] = ccvm;
+                    //TODO: Uzupełnić na podstawie pierwszego przejsca
+                    //gv.Columns
+
+                    //TODO: Uzupełnić dla każdego przejscia
+                    //gv.Rows
+
+                }
             }
+            
         }
 
         private PropertyTypes CheckPropType(Type propertyType)
