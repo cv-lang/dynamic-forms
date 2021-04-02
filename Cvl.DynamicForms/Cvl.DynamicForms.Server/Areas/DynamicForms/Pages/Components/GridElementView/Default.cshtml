@@ -1,5 +1,24 @@
 ﻿@model Cvl.DynamicForms.Model.GridElementViewModel
 @{
     <h2>Grid</h2>
+    <div class="row">
+        @foreach (var col in Model.Columns)
+        {
+            <div class="col">
+                @col.Header
+            </div>
+        }
+    </div>
+
+    @foreach (var row in Model.Rows)
+    {
+        <div class="row">
+            @foreach (var cell in row.Cells)
+            {
+                <div class="col">@cell.Value</div>
+            }
+        </div>
+    }
+
 }
 

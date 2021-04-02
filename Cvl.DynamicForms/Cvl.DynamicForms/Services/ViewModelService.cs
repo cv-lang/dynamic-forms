@@ -106,17 +106,17 @@ namespace Cvl.DynamicForms.Services
 
         private void createGridFromCollection(IEnumerable collection, GridElementViewModel gv)
         {
-            
 
+            //int propsLenght = 0;
             bool isFirst = true;
             foreach (var position in collection)
             {
                 var type = position.GetType();
                 var props = type.GetProperties();
                 var rvm = new RowViewModel();
-                CellViewModel[] cells = null;
+                rvm.Cells = new CellViewModel[props.Length];
 
-                for (int i = 0; i <= props.Length; i++)
+                for (int i = 0; i < props.Length; i++)
                 {
                     var item = props[i];
                     var value = item.GetValue(position);
@@ -124,21 +124,16 @@ namespace Cvl.DynamicForms.Services
 
                     if (isFirst)
                     {
-                        var cvm = new ColumnViewModel() { BindingPath = item.Name };
+                        var cvm = new ColumnViewModel() { BindingPath = item.Name, Header = item.Name };
                         gv.Columns.Add(cvm);
                     }
 
                     var ccvm = new CellViewModel() { Value = value };
-                    cells[i] = ccvm;
-                    //TODO: Uzupełnić na podstawie pierwszego przejsca
-                    //gv.Columns
-
-                    //TODO: Uzupełnić dla każdego przejscia
-                    //gv.Rows
-
+                    rvm.Cells[i] = ccvm;
                 }
-            }
-            
+                gv.Rows.Add(rvm);
+                isFirst = false;
+            }            
         }
 
         private PropertyTypes CheckPropType(Type propertyType)
