@@ -3,14 +3,18 @@ using Cvl.DynamicForms.Tools;
 using Cvl.DynamicForms.Tools.Extension;
 using System;
 using System.Collections;
+using System.Linq;
 
 namespace Cvl.DynamicForms.Services
 {
-    public class ViewModelService
+    public class PropretyGridFaktory
     {        
-        public ViewModelService()
+        public PropretyGridFaktory()
         {            
         }
+
+        
+
 
         #region Property grid        
 
@@ -54,6 +58,8 @@ namespace Cvl.DynamicForms.Services
                 }
             }
         }
+
+        
         #endregion
 
         #region C# object
@@ -106,6 +112,11 @@ namespace Cvl.DynamicForms.Services
 
         private void createGridFromCollection(IEnumerable collection, GridElementViewModel gv)
         {
+            if(collection is ICollection collection1)
+            {
+                gv.PropertyValue = $"{collection1.Cast<object>().FirstOrDefault()?.GetType().Name}[{collection1.Count}]";
+            }
+            
 
             //int propsLenght = 0;
             bool isFirst = true;

@@ -10,6 +10,8 @@ namespace Cvl.DynamicForms.Test
     [XmlRoot("Properties")]
     public class TestPerson
     {
+        public int Id { get; set; }
+
         [Description("Imię")]
         [XmlElement]
         public string Firstname { get; set; }
@@ -42,6 +44,7 @@ namespace Cvl.DynamicForms.Test
 
     public class Invoice
     {
+        public int Id { get; set; }
         public string Number { get; set; }
         public decimal Net { get; set; }
         public decimal Gross { get; set; }
@@ -49,6 +52,7 @@ namespace Cvl.DynamicForms.Test
 
     public class Address
     {
+        public int Id { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
         public string Postcode { get; set; }

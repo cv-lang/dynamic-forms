@@ -1,0 +1,16 @@
+﻿@page
+@model Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<h4>
+    Property grid
+</h4>
+
+<div class="container">
+
+    @await Component.InvokeAsync("GridView", Model.GridViewModel)
+
+
+</div>

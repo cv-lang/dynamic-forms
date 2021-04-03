@@ -23,5 +23,7 @@
     public class RowViewModel
     {
         public CellViewModel[] Cells { get; set; }
+        public string Id { get;  set; }
+        public string ElementTypeFullName { get; set; }
     }
 }

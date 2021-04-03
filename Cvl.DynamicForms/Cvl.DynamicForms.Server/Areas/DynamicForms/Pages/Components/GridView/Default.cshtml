@@ -1,4 +1,4 @@
-﻿@model Cvl.DynamicForms.Model.GridElementViewModel
+﻿@model Cvl.DynamicForms.Model.ViewModel.GridViewModel
 @{
     <table class="table table-hover">
         <thead>
@@ -16,7 +16,7 @@
             @foreach (var row in Model.Rows)
             {
                 <tr>
-                    <th scope="col"><a href="PropertyGrid?Id=@row.Id">@row.Id</a></th>
+                    <th scope="col"><a href="PropertyGrid?id=@row.Id&type=@row.ElementTypeFullName">@row.Id</a></th>
                     @foreach (var cell in row.Cells)
                     {
                         <td>@cell.Value</td>
