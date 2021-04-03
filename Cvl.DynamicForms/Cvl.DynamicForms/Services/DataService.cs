@@ -4,6 +4,7 @@ using Cvl.DynamicForms.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cvl.DynamicForms.Services
 {
@@ -51,6 +52,8 @@ namespace Cvl.DynamicForms.Services
                         break;
                 }
 
+                
+
                 var address = new Address() { Id= number, City = "Kraków", Street = $"Jana Nowakowskiego {number}", Postcode = "11-222" };
                 addresses.Add(address);
                 tp.Address = address;
@@ -61,6 +64,13 @@ namespace Cvl.DynamicForms.Services
                     var invoice = new Invoice() {Id= number*100+i,  Number = $"{i}/2021", Net = 100 * i, Gross = 123 * 1 };
                     invoices.Add(invoice);
                     tp.Invoices.Add(invoice);
+                }
+
+                var number10 = number % 10;
+                if (number10 == 9)
+                {
+                    tp.Address = null;
+                    tp.Invoices = null;
                 }
             }
         }
@@ -76,24 +86,24 @@ namespace Cvl.DynamicForms.Services
             var collection = GetCollection(typeFullname);
 
 
-            var tp = people[id];
+            var tp = collection.Skip(id).Take(1).FirstOrDefault();
             return tp;
         }
                 
 
-        public ICollection GetCollection(string typeFullname)
+        public IQueryable<object> GetCollection(string typeFullname)
         {
             switch(typeFullname)
             {
                 case "TestPerson":
-                    return people;
+                    return people.Cast<object>().AsQueryable();
                 case "Address":
-                    return addresses;
+                    return addresses.Cast<object>().AsQueryable();
                 case "Invoice":
-                    return invoices;
+                    return invoices.Cast<object>().AsQueryable();
             }
 
-            return new List<TestPerson>();
+            return new List<object>().AsQueryable();
         }
     }
 }

@@ -10,57 +10,121 @@ namespace Cvl.DynamicForms.Services
 {
     public class GridViewModelParameters
     {
-        public string IdPropertyName { get; set; } = "Id";
+        public int PageSize { get; set; } = 200;
+        public int Page { get; set; } = 0;
     }
 
 
     public class GridViewModelFactory
     {
 
-        public GridViewModel GetGridViewModel(ICollection collection, GridViewModelParameters parameters)
+        public GridViewModel GetGridViewModel(IQueryable<object> collection, GridViewModelParameters parameters)
         {
             var gv = new GridViewModel();
 
-            gv.PropertyValue = $"{collection.Cast<object>().FirstOrDefault()?.GetType().Name}[{collection.Count}]";
+            gv.PropertyValue = $"{collection.Cast<object>().FirstOrDefault()?.GetType().Name}[{collection.Count()}]";
 
-            var first = collection.Cast<object>().FirstOrDefault();
-            if(first == null)
+            var firstElement = collection.Cast<object>().FirstOrDefault();
+            if(firstElement == null)
             {
                 return gv;
             }
 
-            var type = first.GetType();
-            var propertyInfos = type.GetProperties().Where(x=> x.Name != parameters.IdPropertyName).ToArray();
-            var idProperty = type.GetProperty(parameters.IdPropertyName);
+            var elementType = firstElement.GetType();
+            var elementIdPropertyName = getIdPropertyName(elementType);
+            var propertyInfos = elementType.GetProperties().Where(x=> x.Name != elementIdPropertyName).ToArray();
+            var idProperty = elementType.GetProperty(elementIdPropertyName);
 
             bool isFirst = true;
-            foreach (var element in collection)
+            var page = collection.Skip(parameters.Page * parameters.PageSize).Take(parameters.PageSize);
+
+            foreach (var element in page)
             {                
                 var row = new RowViewModel();
                 row.Cells = new CellViewModel[propertyInfos.Length];
-                row.Id = idProperty.GetValue(element)?.ToString();
-                row.ElementTypeFullName = type.Name;
+                var rowId = idProperty.GetValue(element);
+                row.Id = rowId?.ToString();
+                row.ElementTypeFullName = getTypeName(elementType);
+                row.EditUrl = getEditUrlForClass(row.Id, elementType);
 
                 for (int i = 0; i < propertyInfos.Length; i++)
                 {
-                    var item = propertyInfos[i];
-                    var value = item.GetValue(element);
-                    var propType = CheckPropType(item.PropertyType);
+                    var cellProperty = propertyInfos[i];
+                    var cellValue = cellProperty.GetValue(element);
+                    var cellPropertyType = cellProperty.PropertyType;
+                    var cellType = CheckPropType(cellPropertyType);
 
                     if (isFirst)
                     {
-                        var cvm = new ColumnViewModel() { BindingPath = item.Name, Header = item.Name };
+                        var cvm = new ColumnViewModel() { BindingPath = cellProperty.Name, Header = cellProperty.Name };
                         gv.Columns.Add(cvm);
                     }
 
-                    var ccvm = new CellViewModel() { Value = value };
-                    row.Cells[i] = ccvm;
+                    var cell = new CellViewModel() { Value = getValue(cellValue) };
+                    row.Cells[i] = cell;
+
+                    if (cellType == PropertyTypes.Class)
+                    {
+                        if (cellValue != null)
+                        {
+                            var valueType = cellValue.GetType();
+                            var idPropName = getIdPropertyName(valueType);
+                            var idProp = valueType.GetProperty(idPropName);
+                            var id = idProp.GetValue(cellValue)?.ToString();
+
+                            cell.EditUrl = getEditUrlForClass(id, valueType);
+                        }                        
+                    }
+                    else if (cellType == PropertyTypes.Collection)
+                    {
+                        cell.EditUrl = getEditUrlForCollection(getCollectionElementType(cellPropertyType), rowId, elementType);
+                    }
+
+
+                    
                 }
                 gv.Rows.Add(row);
                 isFirst = false;
             }
 
             return gv;
+        }
+
+        private string getValue(object obj)
+        {
+            if (obj is ICollection collection1)
+            {
+                return $"{collection1.Cast<object>().FirstOrDefault()?.GetType().Name}[{collection1.Count}]";
+            } else
+            {
+                return obj?.ToString() ?? "NULL";
+            }
+        }
+
+        private Type getCollectionElementType(Type type)
+        {
+            return type.GetGenericArguments()[0];
+        }
+
+        private string getTypeName(Type type)
+        {
+            return type.Name;
+        }
+
+        private string getIdPropertyName(Type valueType)
+        {
+            return "Id";
+        }
+
+        private string getEditUrlForClass(string id, Type objectType)
+        {
+            var type = getTypeName(objectType);
+            return $"PropertyGrid?id={id}&type={type}";
+        }
+
+        private string getEditUrlForCollection(Type collectionType, object parentId, Type parentType)
+        {
+            return $"Grid?type={getTypeName(collectionType)}&parentId={parentId}&parentType={getTypeName(parentType)}";
         }
 
         private PropertyTypes CheckPropType(Type propertyType)

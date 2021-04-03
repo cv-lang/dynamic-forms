@@ -24,9 +24,10 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
         public void OnGet()
         {
             var query = Request.Query;
-            
+            var type = query["type"];
+
             var parameters = new Parameters(query.Select(x => new Parameter() { Key = x.Key, Value = x.Value.ToString() }));
-            var obj = dataService.GetCollection("TestPerson");
+            var obj = dataService.GetCollection(type);
             GridViewModel = viewService.GetGridViewModel(obj, new GridViewModelParameters());
 
         }

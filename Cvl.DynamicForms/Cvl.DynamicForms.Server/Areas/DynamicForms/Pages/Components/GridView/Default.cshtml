@@ -15,13 +15,20 @@
         <tbody>
             @foreach (var row in Model.Rows)
             {
-                <tr>
-                    <th scope="col"><a href="PropertyGrid?id=@row.Id&type=@row.ElementTypeFullName">@row.Id</a></th>
-                    @foreach (var cell in row.Cells)
+            <tr>
+                <th scope="col"><a href="@row.EditUrl">@row.Id</a></th>
+                @foreach (var cell in row.Cells)
+                {
+                    if (@cell.EditUrl != null)
+                    {
+                        <td><a href="@cell.EditUrl">@cell.Value</a></td>
+                    }
+                    else
                     {
                         <td>@cell.Value</td>
                     }
-                </tr>
+                }
+            </tr>
             }
         </tbody>
     </table>

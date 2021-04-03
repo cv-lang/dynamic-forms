@@ -18,6 +18,7 @@
     public class CellViewModel
     {
         public object Value { get; set; }
+        public string EditUrl { get; internal set; }
     }
 
     public class RowViewModel
@@ -25,5 +26,6 @@
         public CellViewModel[] Cells { get; set; }
         public string Id { get;  set; }
         public string ElementTypeFullName { get; set; }
+        public string EditUrl { get; internal set; }
     }
 }
