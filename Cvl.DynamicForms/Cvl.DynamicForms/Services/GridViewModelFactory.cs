@@ -31,7 +31,7 @@ namespace Cvl.DynamicForms.Services
             }
 
             var elementType = firstElement.GetType();
-            var elementIdPropertyName = getIdPropertyName(elementType);
+            var elementIdPropertyName = GetIdPropertyName(elementType);
             var propertyInfos = elementType.GetProperties().Where(x=> x.Name != elementIdPropertyName).ToArray();
             var idProperty = elementType.GetProperty(elementIdPropertyName);
 
@@ -45,7 +45,7 @@ namespace Cvl.DynamicForms.Services
                 var rowId = idProperty.GetValue(element);
                 row.Id = rowId?.ToString();
                 row.ElementTypeFullName = getTypeName(elementType);
-                row.EditUrl = getEditUrlForClass(row.Id, elementType);
+                row.EditUrl = GetEditUrlForClass(row.Id, elementType);
 
                 for (int i = 0; i < propertyInfos.Length; i++)
                 {
@@ -60,7 +60,7 @@ namespace Cvl.DynamicForms.Services
                         gv.Columns.Add(cvm);
                     }
 
-                    var cell = new CellViewModel() { Value = getValue(cellValue) };
+                    var cell = new CellViewModel() { Value = GetValue(cellValue) };
                     row.Cells[i] = cell;
 
                     if (cellType == PropertyTypes.Class)
@@ -68,19 +68,17 @@ namespace Cvl.DynamicForms.Services
                         if (cellValue != null)
                         {
                             var valueType = cellValue.GetType();
-                            var idPropName = getIdPropertyName(valueType);
+                            var idPropName = GetIdPropertyName(valueType);
                             var idProp = valueType.GetProperty(idPropName);
                             var id = idProp.GetValue(cellValue)?.ToString();
 
-                            cell.EditUrl = getEditUrlForClass(id, valueType);
+                            cell.EditUrl = GetEditUrlForClass(id, valueType);
                         }                        
                     }
                     else if (cellType == PropertyTypes.Collection)
                     {
-                        cell.EditUrl = getEditUrlForCollection(getCollectionElementType(cellPropertyType), rowId, elementType);
+                        cell.EditUrl = GetEditUrlForCollection(getCollectionElementType(cellPropertyType), rowId, elementType);
                     }
-
-
                     
                 }
                 gv.Rows.Add(row);
@@ -90,7 +88,7 @@ namespace Cvl.DynamicForms.Services
             return gv;
         }
 
-        private string getValue(object obj)
+        public string GetValue(object obj)
         {
             if (obj is ICollection collection1)
             {
@@ -111,26 +109,24 @@ namespace Cvl.DynamicForms.Services
             return type.Name;
         }
 
-        private string getIdPropertyName(Type valueType)
+        public string GetIdPropertyName(Type valueType)
         {
             return "Id";
         }
 
-        private string getEditUrlForClass(string id, Type objectType)
+        public string GetEditUrlForClass(string id, Type objectType)
         {
             var type = getTypeName(objectType);
             return $"PropertyGrid?id={id}&type={type}";
         }
 
-        private string getEditUrlForCollection(Type collectionType, object parentId, Type parentType)
+        public string GetEditUrlForCollection(Type collectionType, object parentId, Type parentType)
         {
             return $"Grid?type={getTypeName(collectionType)}&parentId={parentId}&parentType={getTypeName(parentType)}";
         }
 
-        private PropertyTypes CheckPropType(Type propertyType)
+        public PropertyTypes CheckPropType(Type propertyType)
         {
-
-
             if (propertyType == typeof(bool))
                 return PropertyTypes.Bool;
             if (propertyType.IsEnum)
