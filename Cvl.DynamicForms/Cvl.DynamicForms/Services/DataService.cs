@@ -75,6 +75,11 @@ namespace Cvl.DynamicForms.Services
             }
         }
 
+        internal object GetCollection(object collectionTypeName)
+        {
+            throw new NotImplementedException();
+        }
+
         public DataService()
         {
             generate();
@@ -104,6 +109,11 @@ namespace Cvl.DynamicForms.Services
             }
 
             return new List<object>().AsQueryable();
+        }
+
+        public string GetIdPropertyName(Type valueType)
+        {
+            return "Id";
         }
     }
 }

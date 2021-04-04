@@ -17,8 +17,7 @@ namespace Cvl.DynamicForms.WebHost
                 .AddRazorRuntimeCompilation();
 
             services.AddScoped<DataService, DataService>();
-            services.AddScoped<PropretyGridFaktory, PropretyGridFaktory>();
-            services.AddScoped<GridViewModelFactory, GridViewModelFactory>();
+            services.AddScoped<ViewConfigurationService, ViewConfigurationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

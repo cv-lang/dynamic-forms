@@ -11,15 +11,13 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
 {
     public class IndexModel : PageModel
     {
-        private readonly DataService dataService;
-        private readonly GridViewModelFactory viewService;
+        private readonly GridService viewService;
 
         public GridViewModel GridViewModel { get; set; }
 
-        public IndexModel(DataService dataService, GridViewModelFactory viewService)
+        public IndexModel(DataService dataService, ViewConfigurationService viewConfigurationService)
         {
-            this.dataService = dataService;
-            this.viewService = viewService;
+            this.viewService = new GridService(dataService, viewConfigurationService);
         }
         public void OnGet()
         {
@@ -27,8 +25,10 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
             var type = query["type"];
 
             var parameters = new Parameters(query.Select(x => new Parameter() { Key = x.Key, Value = x.Value.ToString() }));
-            var obj = dataService.GetCollection(type);
-            GridViewModel = viewService.GetGridViewModel(obj, new GridViewModelParameters());
+            var param = new GridViewModelParameters();
+            param.CollectionTypeName = type.ToString();
+
+            GridViewModel = viewService.GetGridViewModel(param);
 
         }
     }

@@ -15,6 +15,7 @@ namespace Cvl.DynamicForms.Model
     {
         public string ObjectTypeName { get; set; }
         public string ObjectId { get; set; }
+        public string ListUrl { get; internal set; }
     }
 
     /// <summary>

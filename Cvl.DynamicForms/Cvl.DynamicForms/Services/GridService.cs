@@ -12,16 +12,32 @@ namespace Cvl.DynamicForms.Services
     {
         public int PageSize { get; set; } = 200;
         public int Page { get; set; } = 0;
+        public string CollectionTypeName { get; set; }
     }
 
 
-    public class GridViewModelFactory
+    public class GridService
     {
+        private BaseService helper = new BaseService();
+        private readonly DataService dataService;
+        private readonly ViewConfigurationService viewConfigurationService;
+
+        public GridService(DataService dataService, ViewConfigurationService viewConfigurationService)
+        {
+            this.dataService = dataService;
+            this.viewConfigurationService = viewConfigurationService;
+        }
+
+        public GridViewModel GetGridViewModel(GridViewModelParameters parameters)
+        {
+            var collection = dataService.GetCollection(parameters.CollectionTypeName);
+            return GetGridViewModel(collection, parameters);
+        }
 
         public GridViewModel GetGridViewModel(IQueryable<object> collection, GridViewModelParameters parameters)
         {
             var gv = new GridViewModel();
-
+            
             gv.PropertyValue = $"{collection.Cast<object>().FirstOrDefault()?.GetType().Name}[{collection.Count()}]";
 
             var firstElement = collection.Cast<object>().FirstOrDefault();
@@ -31,7 +47,7 @@ namespace Cvl.DynamicForms.Services
             }
 
             var elementType = firstElement.GetType();
-            var elementIdPropertyName = GetIdPropertyName(elementType);
+            var elementIdPropertyName = dataService.GetIdPropertyName(elementType);
             var propertyInfos = elementType.GetProperties().Where(x=> x.Name != elementIdPropertyName).ToArray();
             var idProperty = elementType.GetProperty(elementIdPropertyName);
 
@@ -44,15 +60,15 @@ namespace Cvl.DynamicForms.Services
                 row.Cells = new CellViewModel[propertyInfos.Length];
                 var rowId = idProperty.GetValue(element);
                 row.Id = rowId?.ToString();
-                row.ElementTypeFullName = getTypeName(elementType);
-                row.EditUrl = GetEditUrlForClass(row.Id, elementType);
+                row.ElementTypeFullName = helper.GetTypeName(elementType);
+                row.EditUrl = helper.GetEditUrlForClass(row.Id, elementType);
 
                 for (int i = 0; i < propertyInfos.Length; i++)
                 {
                     var cellProperty = propertyInfos[i];
                     var cellValue = cellProperty.GetValue(element);
                     var cellPropertyType = cellProperty.PropertyType;
-                    var cellType = CheckPropType(cellPropertyType);
+                    var cellType = helper.CheckPropType(cellPropertyType);
 
                     if (isFirst)
                     {
@@ -60,7 +76,7 @@ namespace Cvl.DynamicForms.Services
                         gv.Columns.Add(cvm);
                     }
 
-                    var cell = new CellViewModel() { Value = GetValue(cellValue) };
+                    var cell = new CellViewModel() { Value = helper.GetValue(cellValue) };
                     row.Cells[i] = cell;
 
                     if (cellType == PropertyTypes.Class)
@@ -68,16 +84,16 @@ namespace Cvl.DynamicForms.Services
                         if (cellValue != null)
                         {
                             var valueType = cellValue.GetType();
-                            var idPropName = GetIdPropertyName(valueType);
+                            var idPropName = dataService.GetIdPropertyName(valueType);
                             var idProp = valueType.GetProperty(idPropName);
                             var id = idProp.GetValue(cellValue)?.ToString();
 
-                            cell.EditUrl = GetEditUrlForClass(id, valueType);
+                            cell.EditUrl = helper.GetEditUrlForClass(id, valueType);
                         }                        
                     }
                     else if (cellType == PropertyTypes.Collection)
                     {
-                        cell.EditUrl = GetEditUrlForCollection(getCollectionElementType(cellPropertyType), rowId, elementType);
+                        cell.EditUrl = helper.GetEditUrlForCollection(helper.GetCollectionElementType(cellPropertyType), rowId, elementType);
                     }
                     
                 }
@@ -86,70 +102,6 @@ namespace Cvl.DynamicForms.Services
             }
 
             return gv;
-        }
-
-        public string GetValue(object obj)
-        {
-            if (obj is ICollection collection1)
-            {
-                return $"{collection1.Cast<object>().FirstOrDefault()?.GetType().Name}[{collection1.Count}]";
-            } else
-            {
-                return obj?.ToString() ?? "NULL";
-            }
-        }
-
-        private Type getCollectionElementType(Type type)
-        {
-            return type.GetGenericArguments()[0];
-        }
-
-        private string getTypeName(Type type)
-        {
-            return type.Name;
-        }
-
-        public string GetIdPropertyName(Type valueType)
-        {
-            return "Id";
-        }
-
-        public string GetEditUrlForClass(string id, Type objectType)
-        {
-            var type = getTypeName(objectType);
-            return $"PropertyGrid?id={id}&type={type}";
-        }
-
-        public string GetEditUrlForCollection(Type collectionType, object parentId, Type parentType)
-        {
-            return $"Grid?type={getTypeName(collectionType)}&parentId={parentId}&parentType={getTypeName(parentType)}";
-        }
-
-        public PropertyTypes CheckPropType(Type propertyType)
-        {
-            if (propertyType == typeof(bool))
-                return PropertyTypes.Bool;
-            if (propertyType.IsEnum)
-                return PropertyTypes.Enum;
-            if (propertyType == typeof(float))
-                return PropertyTypes.Float;
-            if (propertyType == typeof(int))
-                return PropertyTypes.Int;
-            if (propertyType == typeof(string))
-                return PropertyTypes.String;
-
-            if (typeof(IEnumerable).IsAssignableFrom(propertyType))
-            {
-                return PropertyTypes.Collection;
-            }
-
-            if (propertyType.IsClass)
-            {
-                return PropertyTypes.Class;
-            }
-
-            return PropertyTypes.Other;
-        }
-
+        }                   
     }
 }

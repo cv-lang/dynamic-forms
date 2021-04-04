@@ -8,19 +8,19 @@ using System.Linq;
 
 namespace Cvl.DynamicForms.Services
 {
-    public class PropretyGridFaktory
+    public class PropretyGridService
     {
-        private GridViewModelFactory gridViewModelFactory;
+        private BaseService helper = new BaseService();
+        private GridService gridService;
+        private readonly DataService dataService;
+        private readonly ViewConfigurationService viewConfigurationService;
 
-        public PropretyGridFaktory(GridViewModelFactory gridViewModelFactory)
+        public PropretyGridService(DataService dataService, ViewConfigurationService viewConfigurationService)
         {
-            this.gridViewModelFactory = gridViewModelFactory;
+            this.dataService = dataService;
+            this.viewConfigurationService = viewConfigurationService;
+            gridService = new GridService(dataService, viewConfigurationService);
         }
-
-        
-
-
-        #region Property grid        
 
         public PropertyGridViewModel GetPropertyGrid(object obj, Parameters parameters)
         {
@@ -29,13 +29,19 @@ namespace Cvl.DynamicForms.Services
             if (obj is ObjectXmlWrapper wrapper)
             {
                 var complex = Serializer.DeserializeXml(wrapper.Xml);
+                pg.ObjectTypeName = complex.Name;
                 createPropertyGridFromXml(complex, pg);
             }
             else
             {
                 //mamy zwykły obiekt - przechodzimy refleksjami
                 createPropertyGridFromObject(obj, pg);
+                pg.PropertyValue = obj?.ToString();
+                pg.ObjectTypeName = obj?.GetType().Name;
+                pg.ListUrl = helper.GetEditUrlForCollection(obj.GetType(), null, null);
             }
+
+            
 
             return pg;
         }
@@ -85,19 +91,22 @@ namespace Cvl.DynamicForms.Services
             {
                 var value = item.GetValue(obj);
                 var propertyType = item.PropertyType;
-                var propType = gridViewModelFactory.CheckPropType(propertyType);
+                var propType = helper.CheckPropType(propertyType);
 
                 if (propType == PropertyTypes.Collection)
                 {
                     if (value != null)
                     {
                         var collection = (ICollection)value;
-                        var gridViewModel = gridViewModelFactory.GetGridViewModel(collection.Cast<object>().AsQueryable(), new GridViewModelParameters());
+                        var gridViewModel = gridService.GetGridViewModel(collection?.Cast<object>().AsQueryable(), new GridViewModelParameters());
                         gridViewModel.PropertyName = item.Name;
-                        gridViewModel.PropertyValue = gridViewModelFactory.GetValue(value);
-                        gridViewModel.EditUrl = gridViewModelFactory.GetEditUrlForCollection(propertyType, "", propertyType);//TODO
+                        gridViewModel.PropertyValue = helper.GetValue(value);
+                        gridViewModel.EditUrl = helper.GetEditUrlForCollection(propertyType, "", propertyType);//TODO
 
                         group.Properties.Add(gridViewModel);
+                    } else
+                    {
+                        group.Properties.Add(new GridViewModel() { PropertyName = item.Name, PropertyValue = "NULL" });
                     }
                 }
                 else if (propType == PropertyTypes.Class)
@@ -105,16 +114,22 @@ namespace Cvl.DynamicForms.Services
                     var propertyGridElementViewModel = new PropertyGridElementViewModel();
                     propertyGridElementViewModel.PropertyName = item.Name;
                     propertyGridElementViewModel.PropertyValue = value?.ToString();
-                    var idPropName = gridViewModelFactory.GetIdPropertyName(propertyType);
-                    var idProp = propertyType.GetProperty(idPropName);
-                    var id = idProp.GetValue(value).ToString();
-                    propertyGridElementViewModel.EditUrl = gridViewModelFactory.GetEditUrlForClass(id, propertyType);
-                    group.Properties.Add(propertyGridElementViewModel);
-                    createPropertyGridFromObject(value, propertyGridElementViewModel);
+                    if (value != null)
+                    {
+                        var idPropName = dataService.GetIdPropertyName(propertyType);
+                        var idProp = propertyType.GetProperty(idPropName);
+                        var id = idProp.GetValue(value).ToString();
+                        propertyGridElementViewModel.EditUrl = helper.GetEditUrlForClass(id, propertyType);
+                        group.Properties.Add(propertyGridElementViewModel);
+                        createPropertyGridFromObject(value, propertyGridElementViewModel);
+                    } else
+                    {
+                        group.Properties.Add(new PropertyGridElementViewModel() { PropertyName = item.Name, PropertyValue = "NULL" });
+                    }
 
                 } else
                 {
-                    var pvm = new PropertyViewModel() { Type = propType, Header = item.Name, BindingPath = item.Name, Value = gridViewModelFactory.GetValue(value) };
+                    var pvm = new PropertyViewModel() { Type = propType, Header = item.Name, BindingPath = item.Name, Value = helper.GetValue(value) };
                     pvm.Order = item.GetPropertyOrder();
                     pvm.Description = item.GetPropertyDescription();
                     pvm.Group = item.GetPropertyGroup();
@@ -122,18 +137,8 @@ namespace Cvl.DynamicForms.Services
                     group.Properties.Add(pvm);
                 }                
             }
-        }
-
-        private void createGridFromCollection(IQueryable<object> collection, GridViewModel gv)
-        {
-            
-        }
-
+        }        
        
         #endregion
-
-        #endregion
-
-
     }
 }
