@@ -98,7 +98,7 @@ namespace Cvl.DynamicForms.Services
                     if (value != null)
                     {
                         var collection = (ICollection)value;
-                        var gridViewModel = gridService.GetGridViewModel(collection?.Cast<object>().AsQueryable(), new GridViewModelParameters());
+                        var gridViewModel = gridService.GetGridViewModel(collection?.Cast<object>().AsQueryable(), new CollectionViewModelParameters());
                         gridViewModel.PropertyName = item.Name;
                         gridViewModel.PropertyValue = helper.GetValue(value);
                         gridViewModel.EditUrl = helper.GetEditUrlForCollection(propertyType, "", propertyType);//TODO

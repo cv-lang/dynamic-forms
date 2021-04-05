@@ -16,6 +16,7 @@ namespace Cvl.DynamicForms.Services
         private List<TestPerson> people = new List<TestPerson>();
         private List<Address> addresses = new List<Address>();
         private List<Invoice> invoices = new List<Invoice>();
+        private List<Logger> loggers = new List<Logger>();
 
         private void generate()
         {
@@ -72,13 +73,42 @@ namespace Cvl.DynamicForms.Services
                     tp.Address = null;
                     tp.Invoices = null;
                 }
+
+                int ilog = 0;
+                var log = new Logger();
+                log.Id = ilog++;
+                log.Member = "Pozim 0";
+                log.Message = $"Message 0 {log.Id}";
+                loggers.Add(log);
+                for (int i = 0; i < 20; i++)
+                {
+                    var log2 = new Logger();
+                    log2.Id = ilog++;
+
+                    loggers.Add(log2);
+                    log2.ParentId = log.Id;
+                    log.Subloggers.Add(log2);
+
+                    log2.Member = "Pozim 1";
+                    log2.Message = $"Message 1 {log2.Id}";
+
+                    for (int i3 = 0; i3 < 10; i3++)
+                    {
+                        var log3 = new Logger();
+                        log3.Id = ilog++;
+
+                        loggers.Add(log3);
+                        log3.ParentId = log2.Id;
+                        log2.Subloggers.Add(log3);
+
+                        log3.Member = "Pozim 2";
+                        log3.Message = $"Message 2 {log3.Id}";
+                    }
+                }
             }
         }
 
-        internal object GetCollection(object collectionTypeName)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public DataService()
         {
@@ -88,17 +118,17 @@ namespace Cvl.DynamicForms.Services
         public object GetObject(string objectId, string typeFullname)
         {
             var id = int.Parse(objectId);
-            var collection = GetCollection(typeFullname);
 
+            IQueryable<object> collection = getCollection(typeFullname);
 
             var tp = collection.Skip(id).Take(1).FirstOrDefault();
             return tp;
         }
-                
+        
 
-        public IQueryable<object> GetCollection(string typeFullname)
+        public IQueryable<object> GetCollection(CollectionViewModelParameters parameters)
         {
-            switch(typeFullname)
+            switch (parameters.CollectionTypeName)
             {
                 case "TestPerson":
                     return people.Cast<object>().AsQueryable();
@@ -106,10 +136,32 @@ namespace Cvl.DynamicForms.Services
                     return addresses.Cast<object>().AsQueryable();
                 case "Invoice":
                     return invoices.Cast<object>().AsQueryable();
+                case "Logger":
+                    var lq = loggers;                    
+                    lq = parameters.Id == null ? lq : lq.Where(x => x.Id == parameters.Id).ToList();
+                    lq = parameters.ParentId != null ? lq : lq = lq.Where(x => x.ParentId == parameters.ParentId).ToList();
+                    return lq.Cast<object>().AsQueryable();
             }
 
             return new List<object>().AsQueryable();
         }
+
+        private IQueryable<object> getCollection(string collectionTypeName)
+        {
+            switch (collectionTypeName)
+            {
+                case "TestPerson":
+                    return people.Cast<object>().AsQueryable();
+                case "Address":
+                    return addresses.Cast<object>().AsQueryable();
+                case "Invoice":
+                    return invoices.Cast<object>().AsQueryable();
+                case "Logger":
+                    return loggers.Cast<object>().AsQueryable();
+            }
+            return new List<object>().AsQueryable();
+        }
+
 
         public string GetIdPropertyName(Type valueType)
         {

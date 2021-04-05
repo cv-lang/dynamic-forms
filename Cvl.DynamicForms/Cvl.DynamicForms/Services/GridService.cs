@@ -8,10 +8,14 @@ using System.Text;
 
 namespace Cvl.DynamicForms.Services
 {
-    public class GridViewModelParameters
+    public class CollectionViewModelParameters
     {
+        public int? Id { get; set; }
+        public int? ParentId { get; set; }
+
         public int PageSize { get; set; } = 200;
         public int Page { get; set; } = 0;
+        public string ParentTypeName { get; set; }
         public string CollectionTypeName { get; set; }
     }
 
@@ -28,13 +32,13 @@ namespace Cvl.DynamicForms.Services
             this.viewConfigurationService = viewConfigurationService;
         }
 
-        public GridViewModel GetGridViewModel(GridViewModelParameters parameters)
+        public GridViewModel GetGridViewModel(CollectionViewModelParameters parameters)
         {
-            var collection = dataService.GetCollection(parameters.CollectionTypeName);
+            var collection = dataService.GetCollection(parameters);
             return GetGridViewModel(collection, parameters);
         }
 
-        public GridViewModel GetGridViewModel(IQueryable<object> collection, GridViewModelParameters parameters)
+        public GridViewModel GetGridViewModel(IQueryable<object> collection, CollectionViewModelParameters parameters)
         {
             var gv = new GridViewModel();
             
