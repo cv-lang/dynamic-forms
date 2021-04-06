@@ -9,13 +9,13 @@
             break;
         case Cvl.DynamicForms.Model.PropertyTypes.Bool:
             <div class="col-9 border g-0">
-                <input id="@Model.BindingPath" class="form-check-input" type="checkbox" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
+                <input id="@Model.BindingPath" class="form-check-input" checked="@Convert.ToBoolean(Model.Value)" type="checkbox" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
             </div>
             break;
         case Cvl.DynamicForms.Model.PropertyTypes.Enum:
-            <div class="col-9 border g-0">
-                @Html.DropDownList("Place of residence", Html.GetEnumSelectList<Cvl.DynamicForms.Test.Place>(), "Select City", new { @class = "form-control" })
-            </div>
+<div class="col-9 border g-0">
+    @Html.DropDownList("Place of residence", Html.GetEnumSelectList<Cvl.DynamicForms.Test.Place>(), Model.Value.ToString(), new { @class = "form-control" })
+</div>
             break;
         case Cvl.DynamicForms.Model.PropertyTypes.Int:
             <div class="col-9 border g-0">
