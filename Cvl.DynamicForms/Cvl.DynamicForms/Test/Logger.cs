@@ -7,7 +7,7 @@ namespace Cvl.DynamicForms.Test
     public class Logger
     {
         public int Id { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public ICollection<Logger> Subloggers { get; set; } = new List<Logger>();
 
         /// <summary>

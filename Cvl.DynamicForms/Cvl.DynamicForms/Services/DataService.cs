@@ -139,7 +139,7 @@ namespace Cvl.DynamicForms.Services
                 case "Logger":
                     var lq = loggers;                    
                     lq = parameters.Id == null ? lq : lq.Where(x => x.Id == parameters.Id).ToList();
-                    lq = parameters.ParentId != null ? lq : lq = lq.Where(x => x.ParentId == parameters.ParentId).ToList();
+                    lq = parameters.ParentId == null ? lq : lq = lq.Where(x => x.ParentId == parameters.ParentId).ToList();
                     return lq.Cast<object>().AsQueryable();
             }
 
