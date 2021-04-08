@@ -11,9 +11,9 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Components.TreeListView
 {
     public class TreeNodeViewViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(PropertyViewModel propertyViewModel)
+        public IViewComponentResult Invoke(TreeListViewModel treeListViewModel)
         {
-            return View(propertyViewModel);
+            return View(treeListViewModel);
         }
     }
 }
