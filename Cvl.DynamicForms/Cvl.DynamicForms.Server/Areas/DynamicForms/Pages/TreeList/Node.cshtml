@@ -1,38 +1,7 @@
 ﻿@page
 @model Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList.NodeModel
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>#</th>
-            @foreach (var col in Model.TreeList.Columns)
-            {
-                <th scope="col">
-                    @col.Header
-                </th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var row in Model.TreeList.Rows)
-        {
-            <tr>
-                <th scope="col"><a href="@row.EditUrl">@row.Id</a></th>
-                @foreach (var cell in row.Cells)
-                {
-                    if (@cell.EditUrl != null)
-                    {
-                        <td><a href="@cell.EditUrl">@cell.Value</a></td>
-                    }
-                    else
-                    {
-                        <td>@cell.Value</td>
-                    }
-                }
-            </tr>
-        }
-    </tbody>
-</table>
+@await Component.InvokeAsync("TreeNodeView", Model.TreeList)
 
 
 

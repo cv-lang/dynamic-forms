@@ -77,7 +77,7 @@ namespace Cvl.DynamicForms.Services
                 int ilog = 0;
                 var log = new Logger();
                 log.Id = ilog++;
-                log.Member = "Pozim 0";
+                log.Member = "Poziom 0";
                 log.Message = $"Message 0 {log.Id}";
                 loggers.Add(log);
                 for (int i = 0; i < 20; i++)
@@ -89,7 +89,7 @@ namespace Cvl.DynamicForms.Services
                     log2.ParentId = log.Id;
                     log.Subloggers.Add(log2);
 
-                    log2.Member = "Pozim 1";
+                    log2.Member = "Poziom 1";
                     log2.Message = $"Message 1 {log2.Id}";
 
                     for (int i3 = 0; i3 < 10; i3++)
@@ -101,7 +101,7 @@ namespace Cvl.DynamicForms.Services
                         log3.ParentId = log2.Id;
                         log2.Subloggers.Add(log3);
 
-                        log3.Member = "Pozim 2";
+                        log3.Member = "Poziom 2";
                         log3.Message = $"Message 2 {log3.Id}";
                     }
                 }
