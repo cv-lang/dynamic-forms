@@ -23,17 +23,14 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
         {
             var query = Request.Query;
             var objectIdStr = query["id"].ToString();
-            //var objectId = int.Parse(objectIdStr);
             var type = query["type"];
 
             var parameters = new Parameters(query.Select(x => new Parameter() { Key = x.Key, Value = x.Value.ToString() }));
 
-            var p = new TreeListParameters();
-            p.ParentId = 1;// objectId;
-            p.CollectionTypeName = "Logger";// type;
+            var p = new CollectionViewModelParameters();
+            
 
-
-            TreeList = viewService.GetTreeList(p);
+            TreeList = viewService.GetTreeList(objectIdStr, type, p);
 
         }
     }

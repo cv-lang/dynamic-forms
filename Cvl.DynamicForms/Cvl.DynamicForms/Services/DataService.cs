@@ -20,6 +20,7 @@ namespace Cvl.DynamicForms.Services
 
         private void generate()
         {
+            int ilog = 1;
             for (int number = 0; number < 200; number++)
             {
                 var tp = new TestPerson() { Id = number, Age = 18 + number % 30, IsEmployed = true, DwellingPlace = Test.Place.Krakow, Earnings = 3.85F };
@@ -74,7 +75,7 @@ namespace Cvl.DynamicForms.Services
                     tp.Invoices = null;
                 }
 
-                int ilog = 0;
+                
                 var log = new Logger();
                 log.Id = ilog++;
                 log.Member = "Poziom 0";
@@ -115,16 +116,73 @@ namespace Cvl.DynamicForms.Services
             generate();
         }
 
+        /// <summary>
+        /// Zwraca pojedyńczy obiekt
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="typeFullname"></param>
+        /// <returns></returns>
         public object GetObject(string objectId, string typeFullname)
         {
             var id = int.Parse(objectId);
 
-            IQueryable<object> collection = getCollection(typeFullname);
-
-            var tp = collection.Skip(id).Take(1).FirstOrDefault();
-            return tp;
+            switch (typeFullname)
+            {
+                case "TestPerson":
+                    return people.Where(x=> x.Id == id);
+                case "Address":
+                    return addresses.Where(x => x.Id == id);
+                case "Invoice":
+                    return invoices.Where(x => x.Id == id);
+                case "Logger":                    
+                    return loggers.Where(x => x.Id == id);
+            }
+            return null;
         }
-        
+
+        /// <summary>
+        /// Zwraca dzieci obiektu - dla obiektu hierarchicznego
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="type"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters)
+        {
+            var id = int.Parse(objectId);
+
+            switch (typeFullname)
+            {
+                case "Logger":
+                    return loggers.Where(x => x.ParentId == id).Cast<object>().AsQueryable();
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Zwraca kolekcję obiektów
+        /// </summary>
+        /// <param name="collectionTypeName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public IQueryable<object> GetCollection(string collectionTypeName, CollectionViewModelParameters parameters)
+        {
+            switch (collectionTypeName)
+            {
+                case "TestPerson":
+                    return people.Cast<object>().AsQueryable();
+                case "Address":
+                    return addresses.Cast<object>().AsQueryable();
+                case "Invoice":
+                    return invoices.Cast<object>().AsQueryable();
+                case "Logger":
+                    return loggers.Cast<object>().AsQueryable();
+            }
+            return new List<object>().AsQueryable();
+        }
+
+
 
         public IQueryable<object> GetCollection(CollectionViewModelParameters parameters)
         {
@@ -146,22 +204,7 @@ namespace Cvl.DynamicForms.Services
             return new List<object>().AsQueryable();
         }
 
-        private IQueryable<object> getCollection(string collectionTypeName)
-        {
-            switch (collectionTypeName)
-            {
-                case "TestPerson":
-                    return people.Cast<object>().AsQueryable();
-                case "Address":
-                    return addresses.Cast<object>().AsQueryable();
-                case "Invoice":
-                    return invoices.Cast<object>().AsQueryable();
-                case "Logger":
-                    return loggers.Cast<object>().AsQueryable();
-            }
-            return new List<object>().AsQueryable();
-        }
-
+        
 
         public string GetIdPropertyName(Type valueType)
         {

@@ -6,12 +6,7 @@ using System.Linq;
 using System.Text;
 
 namespace Cvl.DynamicForms.Services
-{
-    public class TreeListParameters : CollectionViewModelParameters
-    {
-
-    }
-
+{   
     public class TreeListService
     {
         private BaseService helper = new BaseService();        
@@ -24,13 +19,13 @@ namespace Cvl.DynamicForms.Services
             this.viewConfigurationService = viewConfigurationService;            
         }
 
-        public TreeListViewModel GetTreeList(TreeListParameters parameters)
+        public TreeListViewModel GetTreeList(string objectId, string typeFullname, CollectionViewModelParameters parameters)
         {
-            var collection = dataService.GetCollection(parameters);
-            return GetGridViewModel(collection, parameters);
+            var collection = dataService.GetChildrenCollection(objectId, typeFullname,  parameters);
+            return GetTreeListViewModel(collection, parameters);
         }
 
-        public TreeListViewModel GetGridViewModel(IQueryable<object> collection, TreeListParameters parameters)
+        public TreeListViewModel GetTreeListViewModel(IQueryable<object> collection, CollectionViewModelParameters parameters)
         {
             var gv = new TreeListViewModel();
 

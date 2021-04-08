@@ -8,9 +8,22 @@
     Tree list
 </h4>
 
-<div class="container">
+@await Component.InvokeAsync("TreeNodeView", Model.TreeList)
 
-    @await Component.InvokeAsync("TreeListView", Model.TreeList)
+<script type="text/javascript">
+    function getData(id, type, targetdiv) {
+        $.ajax({
+            type: "get",
+            url: "/DynamicForms/TreeList/Node?Id=" + id + "&type=" + type,
+            dataType: "html",
+            contentType: "text/html",
+            success: function (data) {
+                $('#' + targetdiv).html(data);
+            },
+            failure: function (response) {
+                alert("niefajne");
+            }
+        })
+    }
 
-
-</div>
+</script>

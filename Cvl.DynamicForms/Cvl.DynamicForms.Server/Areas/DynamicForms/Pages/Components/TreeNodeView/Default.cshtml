@@ -1,60 +1,56 @@
 ﻿@model Cvl.DynamicForms.Model.ViewModel.TreeListViewModel
 @{
-    <table class="table table-hover">
-        <thead>
-            <tr>
 
-                <th>#</th>
-                @foreach (var col in Model.Columns)
-                {
-                    <th scope="col">
-                        @col.Header
-                    </th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var row in Model.Rows)
-            {
-            <tr>
-                <th><button type="button" class="btn btn-sm btn-outline-primary py-0" style="font-size: 0.8em;" onclick="getData(@row.Id, 'Logger', @row.Id)">Get</button></th>
-                <th id="@row.Id"></th>
-                <th scope="col"><a href="@row.EditUrl">@row.Id</a></th>
-                @foreach (var cell in row.Cells)
-                {
-                    if (@cell.EditUrl != null)
-                    {
-                        <td><a href="@cell.EditUrl">@cell.Value</a></td>
-                    }
-                    else
-                    {
-                        <td>@cell.Value</td>
-                    }
-                }
-            </tr>
-            }
 
-        </tbody>
-    </table>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        function getData(id, type, targetdiv) {
-            $.ajax({
-                type: "get",
-                url: "/DynamicForms/TreeList/Node?Id=" + id + "&type=" + type,
-                dataType: "html",
-                contentType: "text/html",
-                success: function (data) {
-                    $('#' + targetdiv).append(data);
-                },
-                failure: function (response) {
-                    alert("niefajne");
-                }
-            })
+    <div class="row px-5">
+        <div class="col">#</div>
+        @foreach (var col in Model.Columns)
+        {
+            <div class="col">
+                @col.Header
+            </div>
         }
+    </div>
+    @foreach (var row in Model.Rows)
+    {
+        <div class="border py-1">
+            <div class="accordion" id="accordion@(row.Id)">
+                <div class="accordion-item border-0">
+                    <div class="accordion-header" id="heading@(row.Id)">
+                        <div class="accordion-button collapsed" onclick="getData(@row.Id, 'Logger', 'childrenContainer@(row.Id)')" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(row.Id)" aria-expanded="false" aria-controls="collapse@(row.Id)">
+                            <div class="row w-100">
+                                <div class="col"><a href="@row.EditUrl">@row.Id</a></div>
+                                @foreach (var cell in row.Cells)
+                                {
+                                    if (@cell.EditUrl != null)
+                                    {
+                                        <div class="col"><a href="@cell.EditUrl">@cell.Value</a></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col">@cell.Value</div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div id="collapse@(row.Id)" class="accordion-collapse collapse" aria-labelledby="heading@(row.Id)" data-bs-parent="#accordion@(row.Id)">
+                        <div class="accordion-body">
+                            <div id="childrenContainer@(row.Id)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    </script>
+
+    }
+
+
+
+
+
 
 }
 
