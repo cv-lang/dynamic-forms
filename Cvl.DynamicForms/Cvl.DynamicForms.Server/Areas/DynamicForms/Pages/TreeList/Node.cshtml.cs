@@ -8,12 +8,12 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
 {
     public class NodeModel : PageModel
     {
-        private readonly DataService dataService;
+        private readonly DataServiceBase dataService;
         private readonly TreeListService viewService;
 
         public TreeListViewModel TreeList { get; set; }
 
-        public NodeModel(DataService dataService, ViewConfigurationService viewConfigurationService)
+        public NodeModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.dataService = dataService;
             this.viewService = new TreeListService(dataService, viewConfigurationService);

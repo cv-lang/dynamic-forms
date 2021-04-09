@@ -18,10 +18,10 @@ namespace Cvl.DynamicForms.Services
     public class GridService
     {
         private BaseService helper = new BaseService();
-        private readonly DataService dataService;
+        private readonly DataServiceBase dataService;
         private readonly ViewConfigurationService viewConfigurationService;
 
-        public GridService(DataService dataService, ViewConfigurationService viewConfigurationService)
+        public GridService(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.dataService = dataService;
             this.viewConfigurationService = viewConfigurationService;

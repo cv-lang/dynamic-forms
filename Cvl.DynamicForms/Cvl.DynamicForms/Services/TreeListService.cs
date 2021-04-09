@@ -10,10 +10,10 @@ namespace Cvl.DynamicForms.Services
     public class TreeListService
     {
         private BaseService helper = new BaseService();        
-        private readonly DataService dataService;
+        private readonly DataServiceBase dataService;
         private readonly ViewConfigurationService viewConfigurationService;
 
-        public TreeListService(DataService dataService, ViewConfigurationService viewConfigurationService)
+        public TreeListService(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.dataService = dataService;
             this.viewConfigurationService = viewConfigurationService;            

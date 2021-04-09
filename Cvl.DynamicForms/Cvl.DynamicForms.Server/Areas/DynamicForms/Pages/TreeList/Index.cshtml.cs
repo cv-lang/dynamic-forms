@@ -7,12 +7,12 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
 {
     public class IndexModel : PageModel
     {
-        private readonly DataService dataService;
+        private readonly DataServiceBase dataService;
         private readonly TreeListService viewService;
 
         public TreeListViewModel TreeList { get; set; }
 
-        public IndexModel(DataService dataService, ViewConfigurationService viewConfigurationService)
+        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.dataService = dataService;
             this.viewService = new TreeListService(dataService, viewConfigurationService);

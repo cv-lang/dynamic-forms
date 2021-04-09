@@ -17,7 +17,7 @@ namespace Cvl.DynamicForms.WebHost
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
 
-            services.AddScoped<DataService, DataService>();
+            services.AddScoped<DataServiceBase, TestDataService>();
             services.AddScoped<ViewConfigurationService, TestViewConfigurationService>();
         }
 

@@ -15,7 +15,7 @@ namespace Cvl.DynamicForms.Services
             {
                 return null;
             }
-            return type.Name;
+            return type.FullName;
         }
 
         public PropertyTypes CheckPropType(Type propertyType)

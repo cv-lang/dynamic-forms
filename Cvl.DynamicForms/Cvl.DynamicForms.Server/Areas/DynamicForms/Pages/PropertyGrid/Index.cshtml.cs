@@ -6,12 +6,12 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
 {
     public class IndexModel : PageModel
     {
-        private readonly DataService dataService;
+        private readonly DataServiceBase dataService;
         private readonly PropretyGridService viewService;
        
         public Model.PropertyGridViewModel PropertyGrid { get; set; }
 
-        public IndexModel(DataService dataService, ViewConfigurationService viewConfigurationService)
+        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.dataService = dataService;
             this.viewService = new PropretyGridService(dataService, viewConfigurationService);

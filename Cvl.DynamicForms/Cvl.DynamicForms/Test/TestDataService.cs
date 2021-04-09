@@ -1,17 +1,12 @@
-﻿using Cvl.DynamicForms.Model;
-using Cvl.DynamicForms.Test;
-using Cvl.DynamicForms.Tools;
+﻿using Cvl.DynamicForms.Services;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-namespace Cvl.DynamicForms.Services
+namespace Cvl.DynamicForms.Test
 {
-    /// <summary>
-    /// Serwis do pobierania danych - obiektów, kolekcji
-    /// </summary>
-    public class DataService
+    public class TestDataService : DataServiceBase
     {
         private List<TestPerson> people = new List<TestPerson>();
         private List<Address> addresses = new List<Address>();
@@ -54,16 +49,16 @@ namespace Cvl.DynamicForms.Services
                         break;
                 }
 
-                
 
-                var address = new Address() { Id= number, City = "Kraków", Street = $"Jana Nowakowskiego {number}", Postcode = "11-222" };
+
+                var address = new Address() { Id = number, City = "Kraków", Street = $"Jana Nowakowskiego {number}", Postcode = "11-222" };
                 addresses.Add(address);
                 tp.Address = address;
 
                 var invoiceCount = Math.Min(Math.Max(3, number), 100);
                 for (int i = 0; i < invoiceCount; i++)
                 {
-                    var invoice = new Invoice() {Id= number*100+i,  Number = $"{i}/2021", Net = 100 * i, Gross = 123 * 1 };
+                    var invoice = new Invoice() { Id = number * 100 + i, Number = $"{i}/2021", Net = 100 * i, Gross = 123 * 1 };
                     invoices.Add(invoice);
                     tp.Invoices.Add(invoice);
                 }
@@ -75,7 +70,7 @@ namespace Cvl.DynamicForms.Services
                     tp.Invoices = null;
                 }
 
-                
+
                 var log = new Logger();
                 log.Id = ilog++;
                 log.Member = "Poziom 0";
@@ -109,9 +104,9 @@ namespace Cvl.DynamicForms.Services
             }
         }
 
-        
 
-        public DataService()
+
+        public TestDataService()
         {
             generate();
         }
@@ -122,19 +117,19 @@ namespace Cvl.DynamicForms.Services
         /// <param name="objectId"></param>
         /// <param name="typeFullname"></param>
         /// <returns></returns>
-        public virtual object GetObject(string objectId, string typeFullname)
+        public override object GetObject(string objectId, string typeFullname)
         {
             var id = int.Parse(objectId);
 
             switch (typeFullname)
             {
-                case "TestPerson":
-                    return people.FirstOrDefault(x=> x.Id == id);
-                case "Address":
+                case "Cvl.DynamicForms.Test.TestPerson":
+                    return people.FirstOrDefault(x => x.Id == id);
+                case "Cvl.DynamicForms.Test.Address":
                     return addresses.FirstOrDefault(x => x.Id == id);
-                case "Invoice":
+                case "Cvl.DynamicForms.Test.Invoice":
                     return invoices.FirstOrDefault(x => x.Id == id);
-                case "Logger":                    
+                case "Cvl.DynamicForms.Test.Logger":
                     return loggers.FirstOrDefault(x => x.Id == id);
             }
             return null;
@@ -147,7 +142,7 @@ namespace Cvl.DynamicForms.Services
         /// <param name="type"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters)
+        public override IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters)
         {
             int? id = null;
             if (!string.IsNullOrEmpty(objectId) && objectId != "null")
@@ -157,7 +152,7 @@ namespace Cvl.DynamicForms.Services
 
             switch (typeFullname)
             {
-                case "Logger":
+                case "Cvl.DynamicForms.Test.Logger":
                     return loggers.Where(x => x.ParentId == id).Cast<object>().AsQueryable();
             }
 
@@ -172,7 +167,7 @@ namespace Cvl.DynamicForms.Services
         /// <param name="objectType"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual IQueryable<object> GetCollection(string collectionTypeName, string objectId, string objectType, CollectionViewModelParameters parameters)
+        public override IQueryable<object> GetCollection(string collectionTypeName, string objectId, string objectType, CollectionViewModelParameters parameters)
         {
             int? id = null;
             if (!string.IsNullOrEmpty(objectId) && objectId != "null")
@@ -188,31 +183,31 @@ namespace Cvl.DynamicForms.Services
 
             switch (collectionTypeName)
             {
-                case "TestPerson":
+                case "Cvl.DynamicForms.Test.TestPerson":
                     return people.Cast<object>().AsQueryable();
-                case "Address":
+                case "Cvl.DynamicForms.Test.Address":
                     return addresses.Cast<object>().AsQueryable();
-                case "Invoice":
+                case "Cvl.DynamicForms.Test.Invoice":
                     return invoices.Cast<object>().AsQueryable();
-                case "Logger":
+                case "Cvl.DynamicForms.Test.Logger":
                     if (id == null)
                     {
                         return loggers.Cast<object>().AsQueryable();
                     }
                     else
                     {
-                        return loggers.Where(x=> x.ParentId == id).Cast<object>().AsQueryable();
+                        return loggers.Where(x => x.ParentId == id).Cast<object>().AsQueryable();
                     }
             }
             return new List<object>().AsQueryable();
         }
-               
+
         /// <summary>
         /// Zwraca nazwę propercji Id'ka
         /// </summary>
         /// <param name="valueType"></param>
         /// <returns></returns>
-        public virtual string GetIdPropertyName(Type valueType)
+        public override string GetIdPropertyName(Type valueType)
         {
             return "Id";
         }

@@ -4,7 +4,13 @@
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RootNamespace>Cvl.DynamicForms</RootNamespace>
-    <Version>0.10.0</Version>
+    <Version>0.10.1</Version>
+    <Description>dynamic web forms in .net 5</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/cv-lang/dynamic-forms</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cv-lang/dynamic-forms</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>C#; dynamic forms; MVC; Razor</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

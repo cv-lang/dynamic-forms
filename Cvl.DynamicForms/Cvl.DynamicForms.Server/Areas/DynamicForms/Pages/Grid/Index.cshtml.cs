@@ -15,7 +15,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
 
         public GridViewModel GridViewModel { get; set; }
 
-        public IndexModel(DataService dataService, ViewConfigurationService viewConfigurationService)
+        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.viewService = new GridService(dataService, viewConfigurationService);
         }
