@@ -27,14 +27,10 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
             var parentType = query["parentType"];
 
             var parameters = new Parameters(query.Select(x => new Parameter() { Key = x.Key, Value = x.Value.ToString() }));
-            var param = new CollectionViewModelParameters();
-            param.CollectionTypeName = type.ToString();
-            int parentId;
-            int.TryParse(parentIdStr.ToString(), out parentId);
-            param.ParentTypeName = parentType.ToString();
+            var param = new CollectionViewModelParameters();          
                 
 
-            GridViewModel = viewService.GetGridViewModel(param);
+            GridViewModel = viewService.GetGridViewModel(type, parentIdStr, parentType,  param);
 
         }
     }

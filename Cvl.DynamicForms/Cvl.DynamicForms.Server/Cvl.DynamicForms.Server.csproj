@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RootNamespace>Cvl.DynamicForms</RootNamespace>
+    <Version>0.10.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

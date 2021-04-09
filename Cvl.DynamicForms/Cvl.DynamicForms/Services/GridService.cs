@@ -9,14 +9,9 @@ using System.Text;
 namespace Cvl.DynamicForms.Services
 {
     public class CollectionViewModelParameters
-    {
-        public int? Id { get; set; }
-        public int? ParentId { get; set; }
-
+    {       
         public int PageSize { get; set; } = 200;
         public int Page { get; set; } = 0;
-        public string ParentTypeName { get; set; }
-        public string CollectionTypeName { get; set; }
     }
 
 
@@ -32,9 +27,9 @@ namespace Cvl.DynamicForms.Services
             this.viewConfigurationService = viewConfigurationService;
         }
 
-        public GridViewModel GetGridViewModel(CollectionViewModelParameters parameters)
+        public GridViewModel GetGridViewModel(string collectionTypeName, string objectId, string objectType, CollectionViewModelParameters parameters)
         {
-            var collection = dataService.GetCollection(parameters);
+            var collection = dataService.GetCollection(collectionTypeName, objectId, objectType, parameters);
             return GetGridViewModel(collection, parameters);
         }
 
@@ -52,7 +47,7 @@ namespace Cvl.DynamicForms.Services
 
             var elementType = firstElement.GetType();
             var elementIdPropertyName = dataService.GetIdPropertyName(elementType);
-            var propertyInfos = elementType.GetProperties().Where(x=> x.Name != elementIdPropertyName).ToArray();
+            var propertyInfos = viewConfigurationService.GetGridCollumn(elementType, elementIdPropertyName);
             var idProperty = elementType.GetProperty(elementIdPropertyName);
 
             bool isFirst = true;

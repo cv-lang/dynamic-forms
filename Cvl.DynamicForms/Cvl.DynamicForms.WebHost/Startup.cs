@@ -1,4 +1,5 @@
 using Cvl.DynamicForms.Services;
+using Cvl.DynamicForms.Test;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,7 @@ namespace Cvl.DynamicForms.WebHost
                 .AddRazorRuntimeCompilation();
 
             services.AddScoped<DataService, DataService>();
-            services.AddScoped<ViewConfigurationService, ViewConfigurationService>();
+            services.AddScoped<ViewConfigurationService, TestViewConfigurationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
