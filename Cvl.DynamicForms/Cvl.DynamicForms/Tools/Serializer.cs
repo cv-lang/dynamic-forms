@@ -7,8 +7,42 @@ namespace Cvl.DynamicForms.Tools
 {
     public class BaseObject
     {
-    }
+    }    
+
     public class Complex : BaseObject
+    {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+
+        [XmlAttribute("type")]
+        public string Type { get; set; }
+
+        [XmlArray("Properties")]
+        [XmlArrayItem("Simple", typeof(Simple))]
+        [XmlArrayItem("Complex", typeof(Complex))]
+        [XmlArrayItem("Null", typeof(Null))]
+        [XmlArrayItem("Collection", typeof(Collection))]
+        public BaseObject[] Properties { get; set; }
+    }
+    public class Simple : BaseObject
+    {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+
+        [XmlAttribute("type")]
+        public string Type { get; set; }
+
+        [XmlAttribute("value")]
+        public string Value { get; set; }
+    }
+
+    public class Null : BaseObject
+    {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+    }
+
+    public class Collection : BaseObject
     {
         [XmlAttribute("name")]
         public string Name { get; set; }
@@ -16,14 +50,16 @@ namespace Cvl.DynamicForms.Tools
         [XmlArray("Properties")]
         [XmlArrayItem("Simple", typeof(Simple))]
         [XmlArrayItem("Complex", typeof(Complex))]
+        [XmlArrayItem("Null", typeof(Null))]
+        [XmlArrayItem("Collection", typeof(Collection))]
         public BaseObject[] Properties { get; set; }
-    }
-    public class Simple : BaseObject
-    {
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-        [XmlAttribute("value")]
-        public string Value { get; set; }
+
+        [XmlArray("Items")]
+        [XmlArrayItem("Simple", typeof(Simple))]
+        [XmlArrayItem("Complex", typeof(Complex))]
+        [XmlArrayItem("Null", typeof(Null))]
+        [XmlArrayItem("Collection", typeof(Collection))]
+        public BaseObject[] Items { get; set; }
     }
 
     public class Serializer

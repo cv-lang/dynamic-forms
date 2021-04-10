@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace Cvl.DynamicForms.Services
 {
@@ -44,6 +45,13 @@ namespace Cvl.DynamicForms.Services
             return PropertyTypes.Other;
         }
 
+        public string GetPreview(object obj)
+        {
+            var val = GetValue(obj);
+
+            return val.Substring(0, Math.Min(val.Length - 1, 600));
+        }
+
         public string GetValue(object obj)
         {
             if (obj is ICollection collection1)
@@ -52,7 +60,8 @@ namespace Cvl.DynamicForms.Services
             }
             else
             {
-                return obj?.ToString() ?? "NULL";
+                var str = obj?.ToString() ?? "NULL";
+                return str?.ToString().Replace("+", " + ");//HttpUtility.HtmlEncode(str);
             }
         }
 

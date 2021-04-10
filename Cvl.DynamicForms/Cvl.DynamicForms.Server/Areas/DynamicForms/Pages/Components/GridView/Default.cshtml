@@ -1,36 +1,41 @@
 ﻿@model Cvl.DynamicForms.Model.ViewModel.GridViewModel
-@{
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>#</th>
-                @foreach (var col in Model.Columns)
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            @foreach (var col in Model.Columns)
                 {
-                    <th scope="col">
-                        @col.Header
-                    </th>
+            <th scope="col">
+                @col.Header
+            </th>
                 }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var row in Model.Rows)
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.Rows)
             {
-            <tr>
-                <th scope="col"><a href="@row.EditUrl">@row.Id</a></th>
-                @foreach (var cell in row.Cells)
+        <tr>
+            <th scope="col"><a href="@row.EditUrl">@row.Id</a></th>
+            @foreach (var cell in row.Cells)
                 {
                     if (@cell.EditUrl != null)
                     {
-                        <td><a href="@cell.EditUrl">@cell.Value</a></td>
+            <td><a href="@cell.EditUrl">@cell.PreviewValue</a></td>
                     }
                     else
                     {
-                        <td>@cell.Value</td>
+            <td>
+            <span tabindex="0" class="d-inline-block" role="button"  data-bs-toggle="popover" data-bs-trigger="focus" title="Full value" data-bs-content="@cell.Value">
+                @cell.PreviewValue
+            </span>
+            
+        </td>
                     }
                 }
-            </tr>
+        </tr>
             }
-        </tbody>
-    </table>
-}
+    </tbody>
+</table>
+
 

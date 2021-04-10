@@ -4,7 +4,10 @@ using Cvl.DynamicForms.Tools;
 using Cvl.DynamicForms.Tools.Extension;
 using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
 namespace Cvl.DynamicForms.Services
 {
@@ -35,7 +38,7 @@ namespace Cvl.DynamicForms.Services
             else
             {
                 //mamy zwykły obiekt - przechodzimy refleksjami
-                createPropertyGridFromObject(obj, pg);
+                createPropertyGridFromObject(obj, pg, 2);
                 pg.PropertyValue = obj?.ToString();
                 pg.ObjectTypeName = obj?.GetType().Name;
                 pg.ListUrl = helper.GetEditUrlForCollection(obj.GetType(), null, null);
@@ -49,11 +52,20 @@ namespace Cvl.DynamicForms.Services
         #region Xml object
         private void createPropertyGridFromXml(Complex complex, PropertyGridElementViewModel pg)
         {
+            xmlPropertyGridControlId = 0;
+            createPropertyGridFromXml_internal(complex, pg);
+        }
+
+        private int xmlPropertyGridControlId = 0;
+        private void createPropertyGridFromXml_internal(Complex complex, PropertyGridElementViewModel pg)
+        {
             var group = new PropertyGroupViewModel();
             pg.Groups.Add(group);
 
             foreach (var item in complex.Properties)
             {
+                xmlPropertyGridControlId++;
+
                 if (item is Simple simple)
                 {
                     var pvm = new PropertyViewModel() { Type = PropertyTypes.String, Header = simple.Name, BindingPath = simple.Name, Value = simple.Value };
@@ -63,21 +75,52 @@ namespace Cvl.DynamicForms.Services
                 {
                     var childPg = new PropertyGridElementViewModel();
                     childPg.PropertyName = compx.Name;
+                    childPg.PropertyUniqueName = compx.Name + "__" + xmlPropertyGridControlId;
+                    
                     group.Properties.Add(childPg);
-                    createPropertyGridFromXml(compx, childPg);
+                    createPropertyGridFromXml_internal(compx, childPg );
+                } else if(item is Collection collection)
+                {
+                    ////properies
+                    //var childPg = new PropertyGridElementViewModel();
+                    //childPg.PropertyName = collection.Name;
+                    //childPg.PropertyUniqueName = compx.Name + "__" + xmlPropertyGridControlId;
+                    //group.Properties.Add(childPg);
+                    //var compx2 = new Complex() { Properties = collection.Properties };
+                    //createPropertyGridFromXml(compx2, childPg);
+
+                    //items
+                    var childPg2 = new PropertyGridElementViewModel();
+                    childPg2.PropertyName = collection.Name;
+                    childPg2.PropertyUniqueName = collection.Name + "__" + xmlPropertyGridControlId;
+                    group.Properties.Add(childPg2);
+                    var compx3 = new Complex() { Properties = collection.Items };
+                    createPropertyGridFromXml_internal(compx3, childPg2);                    
                 }
             }
         }
 
-        
+
         #endregion
 
         #region C# object
 
-        private void createPropertyGridFromObject(object obj, PropertyGridElementViewModel pg)
+        private void createPropertyGridFromObject(object obj, PropertyGridElementViewModel pg, int level)
         {
+            uniquePropertyGridId = 0;
+            createPropertyGridFromObject_internal(obj, pg, level);
+        }
+
+        private int uniquePropertyGridId;
+        private void createPropertyGridFromObject_internal(object obj, PropertyGridElementViewModel pg, int level)
+        {
+            if(level <= 0 )
+            {
+                return;
+            }
+
             var group = new PropertyGroupViewModel();
-            pg.Groups.Add(group);
+            pg?.Groups.Add(group);
 
             if(obj == null)
             {
@@ -89,6 +132,8 @@ namespace Cvl.DynamicForms.Services
 
             foreach (var item in props)
             {
+                uniquePropertyGridId++;
+
                 var value = item.GetValue(obj);
                 var propertyType = item.PropertyType;
                 var propType = helper.CheckPropType(propertyType);
@@ -97,7 +142,7 @@ namespace Cvl.DynamicForms.Services
                 {
                     if (value != null)
                     {
-                        var collection = (ICollection)value;
+                        var collection = (IEnumerable)value;
                         var gridViewModel = gridService.GetGridViewModel(collection?.Cast<object>().AsQueryable(), new CollectionViewModelParameters());
                         gridViewModel.PropertyName = item.Name;
                         gridViewModel.PropertyValue = helper.GetValue(value);
@@ -113,15 +158,20 @@ namespace Cvl.DynamicForms.Services
                 {
                     var propertyGridElementViewModel = new PropertyGridElementViewModel();
                     propertyGridElementViewModel.PropertyName = item.Name;
+                    propertyGridElementViewModel.PropertyUniqueName = item.Name + uniquePropertyGridId;
                     propertyGridElementViewModel.PropertyValue = value?.ToString();
                     if (value != null)
                     {
                         var idPropName = dataService.GetIdPropertyName(propertyType);
                         var idProp = propertyType.GetProperty(idPropName);
+                        if(idProp == null)
+                        {
+                            throw new Exception($"Brak zdefiniowanej nazwy properji z Id dla typu {propertyType.FullName}");
+                        }
                         var id = idProp.GetValue(value).ToString();
                         propertyGridElementViewModel.EditUrl = helper.GetEditUrlForClass(id, propertyType);
                         group.Properties.Add(propertyGridElementViewModel);
-                        createPropertyGridFromObject(value, propertyGridElementViewModel);
+                        createPropertyGridFromObject_internal(value, propertyGridElementViewModel, level-1);
                     } else
                     {
                         group.Properties.Add(new PropertyGridElementViewModel() { PropertyName = item.Name, PropertyValue = "NULL" });
@@ -130,6 +180,61 @@ namespace Cvl.DynamicForms.Services
                 } else
                 {
                     var pvm = new PropertyViewModel() { Type = propType, Header = item.Name, BindingPath = item.Name, Value = helper.GetValue(value) };
+
+                    if(propType == PropertyTypes.String)
+                    {
+                        //jeśli duży string to wyświetlam jako opis
+                        var stringSize = pvm.Value?.ToString().Length;
+                        if (stringSize != null && stringSize.Value > 130)
+                        {
+                            pvm.Type = PropertyTypes.StringEditor;
+
+                            //jeśli xml to wyświetlam jako xml
+                            try
+                            {
+                                var xml = pvm.Value?.ToString();
+
+                                //tu jest jakiś problem z kodowaniem, i bez tego hacka parser się wywala
+                                xml = $"<Complex><Properties>{xml}</Properties></Complex>";
+
+                                var complex = Serializer.DeserializeXml(xml);
+                                pvm.Type = PropertyTypes.StringXml;
+                               
+                                //dodaje jeszcze propertygrida
+                                var propertyGridElementViewModel = new PropertyGridElementViewModel();
+                                propertyGridElementViewModel.PropertyName = item.Name;
+                                createPropertyGridFromXml(complex, propertyGridElementViewModel);   
+                                group.Properties.Add(propertyGridElementViewModel);                                
+                            }
+                            catch (Exception ex)
+                            {
+                                //nie jest to serizlizowany obiekt (<Complex> ... </Complex>)
+                               
+                            }
+
+                            //sprawdzam czy zwykły xml i formatuje go
+                            try
+                            {
+                                var xml = pvm.Value?.ToString();                                
+                                xml = $@"<?xml version=""1.0""?>
+<Root>  
+    {xml} 
+</Root>";
+                                var sb = new StringBuilder();
+                                var doc = XDocument.Parse(xml);
+                                var tr = new StringWriter(sb);
+                                doc.Save(tr);
+                                pvm.Value = (sb.ToString());
+
+                                pvm.Type = PropertyTypes.StringXml;
+
+                            }
+                            catch (Exception ex2)
+                            {
+                            }
+                        }
+                    }
+
                     pvm.Order = item.GetPropertyOrder();
                     pvm.Description = item.GetPropertyDescription();
                     pvm.Group = item.GetPropertyGroup();

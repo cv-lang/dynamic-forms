@@ -75,7 +75,9 @@ namespace Cvl.DynamicForms.Services
                         gv.Columns.Add(cvm);
                     }
 
-                    var cell = new CellViewModel() { Value = helper.GetValue(cellValue) };
+                    var cell = new CellViewModel() {
+                        PreviewValue = helper.GetPreview(cellValue),
+                        Value = helper.GetValue(cellValue) };
                     row.Cells[i] = cell;
 
                     if (cellType == PropertyTypes.Class)

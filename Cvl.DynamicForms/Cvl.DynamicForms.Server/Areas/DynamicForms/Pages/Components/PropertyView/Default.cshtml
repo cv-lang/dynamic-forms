@@ -7,15 +7,25 @@
                 <input id="@Model.BindingPath" class="form-control rounded-0" placeholder="" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
             </div>
             break;
+        case Cvl.DynamicForms.Model.PropertyTypes.StringEditor:
+            <div class="col-9 border g-0">
+                <textarea id="@Model.BindingPath" class="form-control" rows="12" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description">@Model.Value</textarea>
+            </div>
+            break;
+        case Cvl.DynamicForms.Model.PropertyTypes.StringXml:
+            <div class="col-9 border g-0">
+                <textarea id="@Model.BindingPath" class="form-control" rows="12" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description">@Model.Value</textarea>
+            </div>
+            break;
         case Cvl.DynamicForms.Model.PropertyTypes.Bool:
             <div class="col-9 border g-0">
                 <input id="@Model.BindingPath" class="form-check-input" checked="@Convert.ToBoolean(Model.Value)" type="checkbox" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
             </div>
             break;
         case Cvl.DynamicForms.Model.PropertyTypes.Enum:
-<div class="col-9 border g-0">
-    @Html.DropDownList("Place of residence", Html.GetEnumSelectList<Cvl.DynamicForms.Test.Place>(), Model.Value.ToString(), new { @class = "form-control" })
-</div>
+            <div class="col-9 border g-0">
+                @Html.DropDownList("Place of residence", Html.GetEnumSelectList<Cvl.DynamicForms.Test.Place>(), Model.Value.ToString(), new { @class = "form-control" })
+            </div>
             break;
         case Cvl.DynamicForms.Model.PropertyTypes.Int:
             <div class="col-9 border g-0">

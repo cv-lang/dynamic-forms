@@ -1,4 +1,6 @@
-﻿namespace Cvl.DynamicForms.Model
+﻿using Cvl.DynamicForms.Tools;
+
+namespace Cvl.DynamicForms.Model
 {
     /// <summary>
     /// 
@@ -7,6 +9,8 @@
     public enum PropertyTypes
     {
         String,
+        StringEditor,
+        StringXml,       
         Int,
         Float,
         Bool,
@@ -37,6 +41,6 @@
         public string ToolTip { get; set; }
         public object Value { get; set; }
         public int Order { get; internal set; }
-        public string Group { get; internal set; }
+        public string Group { get; internal set; }        
     }
 }

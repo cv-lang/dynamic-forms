@@ -24,6 +24,7 @@ namespace Cvl.DynamicForms.Model
     public class PropertyGridElementViewModel : PropertyBaseViewModel
     {
         public string PropertyName { get; set; }
+        public string PropertyUniqueName { get; set; }
         public string PropertyValue { get; set; }
 
         public List<PropertyGroupViewModel> Groups { get; set; } = new List<PropertyGroupViewModel>();

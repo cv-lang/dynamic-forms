@@ -17,7 +17,11 @@
 
     public class CellViewModel
     {
-        public object Value { get; set; }
+        //sktócona wersja wartosci
+        public string PreviewValue { get; set; }
+
+        //pełna wersja
+        public string Value { get; set; }
         public string EditUrl { get; internal set; }
     }
 

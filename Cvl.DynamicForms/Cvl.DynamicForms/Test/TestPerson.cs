@@ -38,7 +38,10 @@ namespace Cvl.DynamicForms.Test
 
         public Address Address { get; set; }
 
-        public List<Invoice> Invoices { get; set; } = new List<Invoice>();
+        public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
+
+
+        public string BigStringXml { get; set; }
     }
 
 
@@ -56,6 +59,8 @@ namespace Cvl.DynamicForms.Test
         public string City { get; set; }
         public string Street { get; set; }
         public string Postcode { get; set; }
+
+        public Address AlternativeAddres { get; set; }
     }
 
     public enum Place
