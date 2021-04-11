@@ -202,7 +202,7 @@ namespace Cvl.DynamicForms.Services
                                
                                 //dodaje jeszcze propertygrida
                                 var propertyGridElementViewModel = new PropertyGridElementViewModel();
-                                propertyGridElementViewModel.PropertyName = item.Name;
+                                propertyGridElementViewModel.PropertyName = $"{item.Name} -gen. from xml";
                                 createPropertyGridFromXml(complex, propertyGridElementViewModel);   
                                 group.Properties.Add(propertyGridElementViewModel);                                
                             }

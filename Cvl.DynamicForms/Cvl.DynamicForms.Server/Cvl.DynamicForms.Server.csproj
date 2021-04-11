@@ -1,16 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RootNamespace>Cvl.DynamicForms</RootNamespace>
-    <Version>0.10.1</Version>
+    <Version>0.10.2</Version>
     <Description>dynamic web forms in .net 5</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/cv-lang/dynamic-forms</PackageProjectUrl>
     <RepositoryUrl>https://github.com/cv-lang/dynamic-forms</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>C#; dynamic forms; MVC; Razor</PackageTags>
+    <PackageIcon>cvlogo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cvl.DynamicForms\Cvl.DynamicForms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Icons\cvlogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   
 

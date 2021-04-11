@@ -49,7 +49,7 @@ namespace Cvl.DynamicForms.Services
         {
             var val = GetValue(obj);
 
-            return val.Substring(0, Math.Min(val.Length - 1, 600));
+            return val.Substring(0, Math.Min(val.Length, 600));
         }
 
         public string GetValue(object obj)
