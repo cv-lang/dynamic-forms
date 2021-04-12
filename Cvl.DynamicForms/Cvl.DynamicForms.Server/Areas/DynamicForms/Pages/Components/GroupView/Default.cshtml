@@ -43,7 +43,7 @@
                 <div class="accordion" id="accordion@(gridElement.PropertyName)">
                     <div class="accordion-item border-0">
                         <h5 class="accordion-header" id="heading@(gridElement.PropertyName)">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(gridElement.PropertyName)" aria-expanded="false" aria-controls="collapse@(gridElement.PropertyName)">
+                            <button class="accordion-button collapsed" type="button" onclick="getData(1, 'Cvl.DynamicForms.Test.TestPerson', 'list')" data-bs-toggle="collapse" data-bs-target="#collapse@(gridElement.PropertyName)" aria-expanded="false" aria-controls="collapse@(gridElement.PropertyName)">
                                 <div class="col-3">
                                     <a href="@gridElement.EditUrl">
                                         <span for="p11" class="form-label"> @gridElement.PropertyName</span>
@@ -64,5 +64,23 @@
             </div>
         }
     }
+
+    <script type="text/javascript">
+    function getData(id, type, targetdiv) {
+        $.ajax({
+            type: "get",
+            url: "/DynamicForms/PropertyGrid?Id=" + id + "&type=Cvl.DynamicForms.Test.Address",
+            dataType: "html",
+            contentType: "text/html",
+            success: function (data) {
+                $('#' + targetdiv).html(data);
+            },
+            failure: function (response) {
+                alert("niefajne");
+            }
+        })
+    }
+
+    </script>
 }
 
