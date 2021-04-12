@@ -1,9 +1,25 @@
 ﻿@model Cvl.DynamicForms.Model.PropertyViewModel
+@using  System.ComponentModel.DataAnnotations;
 @{
+    string GroupDisplay(Cvl.DynamicForms.Model.PropertyViewModel propertyViewModel)
+    {
+        string colour = "white";
+        if (Model.Group == "Podstawowa")
+        {
+            colour = "red";
+        }
+        return colour;
+    }
+    <style>
+        div{
+            background-color: @GroupDisplay(Model);
+        }
+    </style>
     switch (Model.Type)
     {
         case Cvl.DynamicForms.Model.PropertyTypes.String:
             <div class="col-9 border g-0">
+                <p>@GroupDisplay(Model)</p>
                 <input id="@Model.BindingPath" class="form-control rounded-0" placeholder="" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
             </div>
             break;
