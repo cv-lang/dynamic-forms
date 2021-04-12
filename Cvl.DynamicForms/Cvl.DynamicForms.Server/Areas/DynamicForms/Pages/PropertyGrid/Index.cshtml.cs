@@ -27,7 +27,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
             var parameters = new Parameters(query.Select(x => new Parameter(){ Key = x.Key, Value = x.Value.ToString() }));
 
             var obj = dataService.GetObject(objectIdStr, type);
-            PropertyGrid = viewService.GetPropertyGrid(obj, parameters);                       
+            PropertyGrid = viewService.GetPropertyGrid(obj, parameters);                
             
         }
     }
