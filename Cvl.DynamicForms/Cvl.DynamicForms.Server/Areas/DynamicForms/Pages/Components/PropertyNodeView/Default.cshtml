@@ -1,7 +1,5 @@
-﻿@model Cvl.DynamicForms.Model.PropertyGridElementViewModel
+﻿@model Cvl.DynamicForms.Model.PropertyGridViewModel
 @{
-    @foreach (var group in Model.Groups)
-    {
-        @await Component.InvokeAsync("GroupView", group)
-    }
+    <div>@Model.PropertyValue (<a href="@Model.ListUrl">type:@Model.ObjectTypeName</a>)</div>
+    @await Component.InvokeAsync("PropertyGridElementView", Model)
 }
