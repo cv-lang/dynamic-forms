@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Components.PropertyNodeView
 {
-    public class PropertyNodeViewViewComponent : ViewComponent
+    public class PropertyGridNodeViewViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(PropertyGridViewModel propertyGridElementView)
         {

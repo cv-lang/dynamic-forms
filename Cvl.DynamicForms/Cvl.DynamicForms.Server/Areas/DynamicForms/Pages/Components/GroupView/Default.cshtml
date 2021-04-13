@@ -47,7 +47,7 @@
                 <div class="accordion" id="accordion@(gridElement.PropertyName)">
                     <div class="accordion-item border-0">
                         <h5 class="accordion-header" id="heading@(gridElement.PropertyName)">
-                            <button class="accordion-button collapsed" type="button"  data-bs-toggle="collapse" data-bs-target="#collapse@(gridElement.PropertyName)" aria-expanded="false" aria-controls="collapse@(gridElement.PropertyName)">
+                            <button class="accordion-button collapsed" type="button" onclick="getNode(@idToAjax.ToString(), '@gridElement.PropertyValue', 'dataholder@(gridElement.PropertyValue)')" data-bs-toggle="collapse" data-bs-target="#collapse@(gridElement.PropertyName)" aria-expanded="false" aria-controls="collapse@(gridElement.PropertyName)">
                                 <div class="col-3">
                                     <a href="@gridElement.EditUrl">
                                         <span for="p11" class="form-label"> @gridElement.PropertyName</span>
@@ -65,10 +65,6 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" onclick="getNode(@idToAjax.ToString(), '@gridElement.PropertyValue', 'dataholder@(gridElement.PropertyValue)')">Click</button>
-                <div id="dataholder@(gridElement.PropertyValue)">
-
-                </div>
             </div>
         }
     }  
@@ -78,7 +74,7 @@
     function getNode(id, type, targetdiv) {
         $.ajax({
             type: "get",
-            url: "/DynamicForms/PropertyGrid/Node?Id=" + id + "&type=" + type,
+            url: "/DynamicForms/PropertyGridNode?Id=" + id + "&type=" + type,
             dataType: "html",
             contentType: "text/html",
             success: function (data) {
