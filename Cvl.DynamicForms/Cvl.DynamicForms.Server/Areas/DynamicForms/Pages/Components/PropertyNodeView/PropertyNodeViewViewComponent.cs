@@ -11,7 +11,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Components.PropertyNodeView
 {
     public class PropertyNodeViewViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(PropertyGridElementViewModel propertyGridElementView)
+        public IViewComponentResult Invoke(PropertyGridViewModel propertyGridElementView)
         {
             return View(propertyGridElementView);
         }
