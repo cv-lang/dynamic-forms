@@ -2,16 +2,16 @@ using System.Linq;
 using Cvl.DynamicForms.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
+namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGridNode
 {
-    public class PropNodeModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly DataServiceBase dataService;
         private readonly PropretyGridService viewService;
 
         public Model.PropertyGridViewModel PropertyGrid { get; set; }
 
-        public PropNodeModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
+        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.dataService = dataService;
             this.viewService = new PropretyGridService(dataService, viewConfigurationService);
