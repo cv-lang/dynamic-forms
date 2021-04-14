@@ -112,7 +112,7 @@ namespace Cvl.DynamicForms.Services
         }
 
         private int uniquePropertyGridId;
-        private void createPropertyGridFromObject_internal(object obj, PropertyGridElementViewModel pg, int level)
+        private void createPropertyGridFromObject_internal(object obj, PropertyGridElementViewModel pg, int level, string parentPath = "")
         {
             if(level <= 0 )
             {
@@ -129,7 +129,7 @@ namespace Cvl.DynamicForms.Services
 
             var type = obj.GetType();
             var props = type.GetProperties();
-
+            parentPath = type.Name;
             foreach (var item in props)
             {
                 uniquePropertyGridId++;
@@ -171,7 +171,8 @@ namespace Cvl.DynamicForms.Services
                         var id = idProp.GetValue(value).ToString();
                         propertyGridElementViewModel.EditUrl = helper.GetEditUrlForClass(id, propertyType);
                         group.Properties.Add(propertyGridElementViewModel);
-                        createPropertyGridFromObject_internal(value, propertyGridElementViewModel, level-1);
+                        parentPath = parentPath + "." + item.Name;
+                        createPropertyGridFromObject_internal(value, propertyGridElementViewModel, level-1, parentPath);
                     } else
                     {
                         group.Properties.Add(new PropertyGridElementViewModel() { PropertyName = item.Name, PropertyValue = "NULL" });
@@ -179,7 +180,7 @@ namespace Cvl.DynamicForms.Services
 
                 } else
                 {
-                    var pvm = new PropertyViewModel() { Type = propType, Header = item.Name, BindingPath = item.Name, Value = helper.GetValue(value) };
+                    var pvm = new PropertyViewModel() { Type = propType, Header = item.Name, BindingPath = parentPath + "." + item.Name, Value = helper.GetValue(value) };
 
                     if(propType == PropertyTypes.String)
                     {
