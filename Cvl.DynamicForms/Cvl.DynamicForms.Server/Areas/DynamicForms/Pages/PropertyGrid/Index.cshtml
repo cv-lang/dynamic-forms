@@ -7,3 +7,21 @@
 <div class="container">
     @await Component.InvokeAsync("PropertyGridView", Model.PropertyGrid)  
 </div>
+
+<script type="text/javascript">
+    function getPropertyGridNode(id, type, targetdiv, bindingPath) {
+        $.ajax({
+            type: "get",
+            url: "/DynamicForms/PropertyGrid/PropertyGridNode?id=" + id + "&type=" + type + "&bindingPath=" + bindingPath,
+            dataType: "html",
+            contentType: "text/html",
+            success: function (data) {
+                $('#' + targetdiv).html(data);
+            },
+            failure: function (response) {
+                alert("niefajne");
+            }
+        })
+    }
+
+</script>

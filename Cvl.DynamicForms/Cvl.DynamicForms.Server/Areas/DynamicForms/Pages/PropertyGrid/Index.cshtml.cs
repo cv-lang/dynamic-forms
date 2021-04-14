@@ -23,11 +23,12 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
             var objectIdStr = query["id"].ToString();
             var objectId = long.Parse(objectIdStr);
             var type = query["type"];
+            
 
             var parameters = new Parameters(query.Select(x => new Parameter(){ Key = x.Key, Value = x.Value.ToString() }));
 
             var obj = dataService.GetObject(objectIdStr, type);
-            PropertyGrid = viewService.GetPropertyGrid(obj, parameters);                
+            PropertyGrid = viewService.GetPropertyGrid(obj, parameters, "");                
             
         }
     }

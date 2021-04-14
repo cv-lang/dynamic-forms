@@ -1,6 +1,7 @@
 ﻿using Cvl.DynamicForms.Model;
 using Cvl.DynamicForms.Test;
 using Cvl.DynamicForms.Tools;
+using Pather.CSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,19 @@ namespace Cvl.DynamicForms.Services
         public virtual object GetObject(string objectId, string typeFullname)
         {            
             return null;
+        }
+
+        public virtual object GetObject(string objectId, string typeFullname, string bindingPath)
+        {
+            var obj = GetObject(objectId, typeFullname);
+            if(obj == null)
+            {
+                return null;
+            }
+            var resolver = new Resolver();
+            var val = resolver.Resolve(obj, bindingPath);
+
+            return val;
         }
 
         protected object GetObjectDb(object objectId, string typeFullname, object processesContext)

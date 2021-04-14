@@ -28,7 +28,11 @@ namespace Cvl.DynamicForms.Model
         public string PropertyValue { get; set; }
 
         public List<PropertyGroupViewModel> Groups { get; set; } = new List<PropertyGroupViewModel>();
-        public string EditUrl { get; internal set; }
+        public string EditUrl { get; set; }
+        public string BindingPath { get; set; }
+
+        //znaczy że propertyGrid ma być w całości wygnerowany na serwerze (bez ajaxa)
+        public bool IsStatic { get;  set; }
     }    
 
     /// <summary>

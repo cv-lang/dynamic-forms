@@ -11,6 +11,7 @@ namespace Cvl.DynamicForms.Model.ViewModel
         public List<RowViewModel> Rows { get; set; } = new List<RowViewModel>();
         public string PropertyName { get; set; }
         public string PropertyValue { get; set; }
-        public string EditUrl { get; internal set; }
+        public string EditUrl { get; set; }
+        public string BindingPath { get; set; }
     }
 }
