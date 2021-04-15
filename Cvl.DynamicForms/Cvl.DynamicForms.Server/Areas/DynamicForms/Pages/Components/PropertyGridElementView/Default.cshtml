@@ -1,8 +1,0 @@
-﻿@model Cvl.DynamicForms.Model.PropertyGridElementViewModel
-@{    
-    @foreach (var group in Model.Groups)
-    {
-        @await Component.InvokeAsync("GroupView", group)
-    }
-}
-

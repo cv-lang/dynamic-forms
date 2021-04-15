@@ -11,7 +11,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Components.GridView
 {
     public class GridViewViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(GridViewModel gridViewModel)
+        public IViewComponentResult Invoke(Model.ViewModel.GridVM gridViewModel)
         {
             return View(gridViewModel);
         }

@@ -5,7 +5,7 @@ namespace Cvl.DynamicForms.Pages.Components.PropertyView
 {
     public class PropertyViewViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(PropertyViewModel propertyViewModel)
+        public IViewComponentResult Invoke(PropertyBaseVM propertyViewModel)
         {
             return View(propertyViewModel);
         }

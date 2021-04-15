@@ -10,7 +10,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Components.GroupView
 {
     public class GroupViewViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(PropertyGroupViewModel groupViewModel)
+        public IViewComponentResult Invoke(GroupVM groupViewModel)
         {
             return View(groupViewModel);
         }

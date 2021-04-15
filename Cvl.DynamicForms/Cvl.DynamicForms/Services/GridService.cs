@@ -27,15 +27,15 @@ namespace Cvl.DynamicForms.Services
             this.viewConfigurationService = viewConfigurationService;
         }
 
-        public GridViewModel GetGridViewModel(string collectionTypeName, string objectId, string objectType, CollectionViewModelParameters parameters)
+        public Model.ViewModel.GridVM GetGridViewModel(string collectionTypeName, string objectId, string objectType, CollectionViewModelParameters parameters)
         {
             var collection = dataService.GetCollection(collectionTypeName, objectId, objectType, parameters);
             return GetGridViewModel(collection, parameters);
         }
 
-        public GridViewModel GetGridViewModel(IQueryable<object> collection, CollectionViewModelParameters parameters)
+        public Model.ViewModel.GridVM GetGridViewModel(IQueryable<object> collection, CollectionViewModelParameters parameters)
         {
-            var gv = new GridViewModel();
+            var gv = new Model.ViewModel.GridVM();
             
             gv.PropertyValue = $"{collection.Cast<object>().FirstOrDefault()?.GetType().Name}[{collection.Count()}]";
 

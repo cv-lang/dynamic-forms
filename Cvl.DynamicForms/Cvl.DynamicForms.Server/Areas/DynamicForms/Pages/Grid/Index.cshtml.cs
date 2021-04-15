@@ -13,7 +13,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
     {
         private readonly GridService viewService;
 
-        public GridViewModel GridViewModel { get; set; }
+        public GridVM GridViewModel { get; set; }
 
         public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {

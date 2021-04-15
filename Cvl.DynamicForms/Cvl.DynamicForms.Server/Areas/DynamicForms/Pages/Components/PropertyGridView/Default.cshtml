@@ -1,6 +1,0 @@
-﻿@model Cvl.DynamicForms.Model.PropertyGridViewModel
-@{
-    <div>@Model.PropertyValue (<a href="@Model.ListUrl">type:@Model.ObjectTypeName</a>)</div>
-    @await Component.InvokeAsync("PropertyGridElementView", Model)    
-}
-

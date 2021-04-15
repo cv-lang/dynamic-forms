@@ -1,62 +1,17 @@
-﻿@model Cvl.DynamicForms.Model.PropertyViewModel
+﻿@model Cvl.DynamicForms.Model.PropertyBaseVM
 @using  System.ComponentModel.DataAnnotations;
-@{
-    string GroupDisplay(Cvl.DynamicForms.Model.PropertyViewModel propertyViewModel)
-    {
-        string colour = "white";
-        if (Model.Group == "Podstawowa")
-        {
-            colour = "red";
-        }
-        return colour;
-    }
-    <style>
-        div{
-            background-color: @GroupDisplay(Model);
-        }
-    </style>
-    switch (Model.Type)
-    {
-        case Cvl.DynamicForms.Model.PropertyTypes.String:
-            <div class="col-9 border g-0">
-                <input id="@Model.BindingPath" class="form-control rounded-0" placeholder="" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
-            </div>
-            break;
-        case Cvl.DynamicForms.Model.PropertyTypes.StringEditor:
-            <div class="col-9 border g-0">
-                <textarea id="@Model.BindingPath" class="form-control" rows="12" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description">@Model.Value</textarea>
-            </div>
-            break;
-        case Cvl.DynamicForms.Model.PropertyTypes.StringXml:
-            <div class="col-9 border g-0">
-                <textarea id="@Model.BindingPath" class="form-control" rows="12" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description">@Model.Value</textarea>
-            </div>
-            break;
-        case Cvl.DynamicForms.Model.PropertyTypes.Bool:
-            <div class="col-9 border g-0">
-                <input id="@Model.BindingPath" class="form-check-input" checked="@Convert.ToBoolean(Model.Value)" type="checkbox" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
-            </div>
-            break;
-        case Cvl.DynamicForms.Model.PropertyTypes.Enum:
-            <div class="col-9 border g-0">
-                @Html.DropDownList("Place of residence", Html.GetEnumSelectList<Cvl.DynamicForms.Test.Place>(), Model.Value.ToString(), new { @class = "form-control" })
-            </div>
-            break;
-        case Cvl.DynamicForms.Model.PropertyTypes.Int:
-            <div class="col-9 border g-0">
-                <input id="@Model.BindingPath" class="form-control rounded-0" type="number" step="1" min="1" max="150" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
-            </div>
-            break;
-        case Cvl.DynamicForms.Model.PropertyTypes.Float:
-            <div class="col-9 border g-0">
-                <input id="@Model.BindingPath" class="form-control rounded-0" type="number" step="0.001" min="0" max="1000" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
-            </div>
-            break;
-        case Cvl.DynamicForms.Model.PropertyTypes.Other:
-            <div class="col-9 border g-0">
-                <input id="@Model.BindingPath" class="form-control rounded-0" placeholder="" value="@Model.Value" data-bs-toggle="tooltip" data-bs-placement="top" title="@Model.Description" />
-            </div>
-            break;
-    }
+
+@if (Model is Cvl.DynamicForms.Model.SimplePropertyVM)
+{
+    @await Component.InvokeAsync("SimplePropertyView", Model)
 }
+else @if (Model is Cvl.DynamicForms.Model.ViewModel.GridVM)
+{
+@await Component.InvokeAsync("GridView", Model)
+}
+else @if (Model is Cvl.DynamicForms.Model.GroupVM)
+{
+@await Component.InvokeAsync("GroupView", Model)
+}
+
 

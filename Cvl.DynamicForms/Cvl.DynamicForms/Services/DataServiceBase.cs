@@ -37,6 +37,11 @@ namespace Cvl.DynamicForms.Services
             {
                 return null;
             }
+            if( string.IsNullOrEmpty(bindingPath))
+            {
+                return obj;
+            }
+
             var resolver = new Resolver();
             var val = resolver.Resolve(obj, bindingPath);
 
