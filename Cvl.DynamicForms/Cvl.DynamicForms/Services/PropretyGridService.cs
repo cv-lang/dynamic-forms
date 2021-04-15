@@ -129,6 +129,11 @@ namespace Cvl.DynamicForms.Services
 
             var type = obj.GetType();
             var props = type.GetProperties();
+            var parentName = "";
+            if (parentPath != "")
+                parentName = $"{parentPath}.{type.Name}".TrimStart('.');
+            else if (level != 2)
+                parentName = type.Name;
             foreach (var item in props)
             {
                 uniquePropertyGridId++;
@@ -136,7 +141,7 @@ namespace Cvl.DynamicForms.Services
                 var value = item.GetValue(obj);
                 var propertyType = item.PropertyType;
                 var propType = helper.CheckPropType(propertyType);
-                var bindingPath =  $"{parentPath}.{item.Name}".TrimStart('.');
+                var bindingPath =  $"{parentName}.{item.Name}".TrimStart('.');
 
                 if (propType == PropertyTypes.Collection)
                 {
@@ -152,7 +157,7 @@ namespace Cvl.DynamicForms.Services
                         group.Properties.Add(gridViewModel);
                     } else
                     {
-                        group.Properties.Add(new GridViewModel() { PropertyName = item.Name, PropertyValue = "NULL" });
+                        group.Properties.Add(new GridViewModel() { PropertyName = item.Name, PropertyValue = "NULL", BindingPath = bindingPath });
                     }
                 }
                 else if (propType == PropertyTypes.Class)
@@ -173,8 +178,8 @@ namespace Cvl.DynamicForms.Services
                         var id = idProp.GetValue(value).ToString();
                         propertyGridElementViewModel.EditUrl = helper.GetEditUrlForClass(id, propertyType);
                         group.Properties.Add(propertyGridElementViewModel);
-                        parentPath = parentPath + "." + item.Name;
-                        createPropertyGridFromObject_internal(value, propertyGridElementViewModel, level-1, bindingPath);
+                        
+                        createPropertyGridFromObject_internal(value, propertyGridElementViewModel, level-1, parentName);
                     } else
                     {
                         group.Properties.Add(new PropertyGridElementViewModel() { PropertyName = item.Name, PropertyValue = "NULL", BindingPath = bindingPath });
@@ -182,7 +187,7 @@ namespace Cvl.DynamicForms.Services
 
                 } else
                 {
-                    var pvm = new PropertyViewModel() { Type = propType, Header = item.Name, BindingPath = parentPath + "." + item.Name, Value = helper.GetValue(value) };
+                    var pvm = new PropertyViewModel() { Type = propType, Header = item.Name, BindingPath = bindingPath, Value = helper.GetValue(value) };
 
                     if(propType == PropertyTypes.String)
                     {
