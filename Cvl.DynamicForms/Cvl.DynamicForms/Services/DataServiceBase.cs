@@ -30,8 +30,23 @@ namespace Cvl.DynamicForms.Services
             return null;
         }
 
+        public class ObjectCollection
+        {
+            public object[] Collection { get; set; }
+        }
+
         public virtual object GetObject(string objectId, string typeFullname, string bindingPath)
         {
+            var resolver = new Resolver();
+            if (string.IsNullOrEmpty(objectId))
+            {
+                //zwracamy kolekcję obiektów dla typu
+                var col = new ObjectCollection();
+                col.Collection = GetCollection(typeFullname, null, null, new CollectionViewModelParameters()).ToArray();
+                var valCol = resolver.Resolve(col, bindingPath);
+                return valCol;
+            }
+
             var obj = GetObject(objectId, typeFullname);
             if(obj == null)
             {
@@ -42,19 +57,19 @@ namespace Cvl.DynamicForms.Services
                 return obj;
             }
 
-            var resolver = new Resolver();
+            
             var val = resolver.Resolve(obj, bindingPath);
 
             return val;
         }
 
-        protected object GetObjectDb(object objectId, string typeFullname, object processesContext)
-        {            
-            dynamic set = GetDbSet(typeFullname, processesContext);
-            object obj = set.Find(objectId);
+        //protected object GetObjectDb(object objectId, string typeFullname, object processesContext)
+        //{            
+        //    dynamic set = GetDbSet(typeFullname, processesContext);
+        //    object obj = set.Find(objectId);
 
-            return obj;
-        }
+        //    return obj;
+        //}
 
         /// <summary>
         /// Zwraca dzieci obiektu - dla obiektu hierarchicznego
@@ -70,14 +85,14 @@ namespace Cvl.DynamicForms.Services
             return null;
         }
 
-        public virtual IQueryable<object> GetChildrenCollectionDb(object objectId, string collectionTypeName, CollectionViewModelParameters parameters, object processesContext)
-        {
-            var set = GetDbSet(collectionTypeName, processesContext);
-            var query = (IQueryable<object>)System.Linq.Queryable.Cast<object>(set);
+        //public virtual IQueryable<object> GetChildrenCollectionDb(object objectId, string collectionTypeName, CollectionViewModelParameters parameters, object processesContext)
+        //{
+        //    var set = GetDbSet(collectionTypeName, processesContext);
+        //    var query = (IQueryable<object>)System.Linq.Queryable.Cast<object>(set);
 
-            var dane = query.ToList();
-            return dane.AsQueryable<object>();
-        }
+        //    var dane = query.ToList();
+        //    return dane.AsQueryable<object>();
+        //}
 
         /// <summary>
         /// Zwraca kolekcję obiektów

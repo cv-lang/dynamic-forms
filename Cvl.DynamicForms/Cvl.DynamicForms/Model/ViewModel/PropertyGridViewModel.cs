@@ -38,8 +38,6 @@ namespace Cvl.DynamicForms.Model
     public enum PropertyTypes
     {
         String,
-        StringEditor,
-        StringXml,
         Int,
         Float,
         Bool,
@@ -51,7 +49,8 @@ namespace Cvl.DynamicForms.Model
 
     public class SimplePropertyVM : PropertyBaseVM
     {
-        public string Group { get; internal set; }
+        public string Group { get; set; }
+        public bool IsBigString { get; set; }
     }
 
     public class RegionVM : PropertyBaseVM
@@ -61,8 +60,8 @@ namespace Cvl.DynamicForms.Model
 
         public string EditUrl { get; set; }
 
-        public string MainObjectId { get; internal set; }
-        public string MainObjectTypeFullname { get; internal set; }
+        public string MainObjectId { get; set; }
+        public string MainObjectTypeFullname { get; set; }
     }
 
     /// <summary>

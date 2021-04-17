@@ -7,6 +7,12 @@
             <div class="row border py-1">
                 <div class="col-3 col-form-label" data-bs-toggle="tooltip" data-bs-placement="top" title="@prop.Description">
                     @prop.Header
+                    @if (prop.IsBigString)
+                    {
+                        <span onclick="showFullValue('@Model.MainObjectId', '@Model.MainObjectTypeFullname', '@prop.BindingPath')">
+                            <i class="bi bi-arrow-up-right" style="font-size: 10px;"></i>
+                        </span>
+                    }
                 </div>
                 @await Component.InvokeAsync("PropertyView", prop)
             </div>

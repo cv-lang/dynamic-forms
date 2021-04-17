@@ -27,13 +27,13 @@ namespace Cvl.DynamicForms.Services
             this.viewConfigurationService = viewConfigurationService;
         }
 
-        public Model.ViewModel.GridVM GetGridViewModel(string collectionTypeName, string objectId, string objectType, CollectionViewModelParameters parameters)
+        public Model.ViewModel.GridVM GetGridViewModelForType(string collectionTypeName, string parentObjectId, string parentType, CollectionViewModelParameters parameters)
         {
-            var collection = dataService.GetCollection(collectionTypeName, objectId, objectType, parameters);
-            return GetGridViewModel(collection, parameters);
+            var collection = dataService.GetCollection(collectionTypeName, parentObjectId, parentType, parameters);
+            return GetGridViewModelForObject(collection, null, collectionTypeName, "Collection", parameters);
         }
 
-        public Model.ViewModel.GridVM GetGridViewModel(IQueryable<object> collection, CollectionViewModelParameters parameters)
+        public Model.ViewModel.GridVM GetGridViewModelForObject(IQueryable<object> collection, string objectId, string objectType, string bindingPath, CollectionViewModelParameters parameters)
         {
             var gv = new Model.ViewModel.GridVM();
             
@@ -52,6 +52,7 @@ namespace Cvl.DynamicForms.Services
 
             bool isFirst = true;
             var page = collection.Skip(parameters.Page * parameters.PageSize).Take(parameters.PageSize);
+            int iRow = 0;
 
             foreach (var element in page)
             {                
@@ -76,8 +77,12 @@ namespace Cvl.DynamicForms.Services
                     }
 
                     var cell = new CellViewModel() {
-                        PreviewValue = helper.GetPreview(cellValue),
-                        Value = helper.GetValue(cellValue) };
+                        IsBigString = helper.IsBigString(cellValue, BaseService.EnumPreviewType.Grid),
+                        Value = helper.GetPreview(cellValue, BaseService.EnumPreviewType.Grid)};
+                    cell.MainObjectId = objectId;
+                    cell.MainObjectType = objectType;
+                    cell.BindingPath = $"{bindingPath}[{iRow}].{cellProperty.Name}";
+
                     row.Cells[i] = cell;
 
                     if (cellType == PropertyTypes.Class)
@@ -100,6 +105,7 @@ namespace Cvl.DynamicForms.Services
                 }
                 gv.Rows.Add(row);
                 isFirst = false;
+                iRow++;
             }
 
             return gv;

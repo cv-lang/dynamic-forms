@@ -10,14 +10,12 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
 {
     public class PropertyGridNodeModel : PageModel
     {
-        private readonly DataServiceBase dataService;
         private readonly ViewService viewService;
 
         public Model.PropertyBaseVM PropertyGrid { get; set; }
 
-        public PropertyGridNodeModel(DataServiceBase dataService, ViewService viewService)
+        public PropertyGridNodeModel(ViewService viewService)
         {
-            this.dataService = dataService;
             this.viewService = viewService;
         }
 

@@ -17,12 +17,14 @@
 
     public class CellViewModel
     {
-        //sktócona wersja wartosci
-        public string PreviewValue { get; set; }
-
-        //pełna wersja
+        //wartość komórki
         public string Value { get; set; }
+        public bool IsBigString { get; set; }
+
         public string EditUrl { get; internal set; }
+        public string MainObjectId { get; internal set; }
+        public string MainObjectType { get; internal set; }
+        public string BindingPath { get; internal set; }
     }
 
     public class RowViewModel

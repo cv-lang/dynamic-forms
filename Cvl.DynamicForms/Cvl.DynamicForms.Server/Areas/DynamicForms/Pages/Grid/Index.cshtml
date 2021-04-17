@@ -4,9 +4,20 @@
     Layout = "_Layout";
 }
 
-<div class="container">
-
+<div class="container-fluid">
+    <div class="row">
+        <span>
+            <a href="@Model.RefreshUrl"><i class="bi bi-arrow-clockwise"></i></a>
+            @if (Model.IsAutoRefresh)
+            {
+                <a href="@Model.RefreshUrl"><i class="bi bi-caret-right-fill"></i></a>
+            }
+            else
+            {
+                <a href="@Model.AutoRefreshUrl"><i class="bi bi-caret-right"></i></a>
+            }
+            Typ: @Model.GridViewModel.MainObjectTypeFullname
+        </span>
+    </div>
     @await Component.InvokeAsync("GridView", Model.GridViewModel)
-
-
 </div>

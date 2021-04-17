@@ -26,7 +26,7 @@ namespace Cvl.DynamicForms.Services
 
             if (obj is IEnumerable collection)
             {
-                return gridService.GetGridViewModel(collection.Cast<object>().AsQueryable(), new CollectionViewModelParameters());
+                return gridService.GetGridViewModelForObject(collection.Cast<object>().AsQueryable(),objectIdStr, typeFullname, bindingPath,  new CollectionViewModelParameters());
             }
             else
             {

@@ -5,36 +5,42 @@
         <tr>
             <th>#</th>
             @foreach (var col in Model.Columns)
-                {
-            <th scope="col">
-                @col.Header
-            </th>
-                }
+            {
+                <th scope="col">
+                    @col.Header
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
         @foreach (var row in Model.Rows)
-            {
-        <tr>
-            <th scope="col"><a href="@row.EditUrl">@row.Id</a></th>
-            @foreach (var cell in row.Cells)
+        {
+            <tr>
+                <th scope="col"><a href="@row.EditUrl">@row.Id</a></th>
+                @foreach (var cell in row.Cells)
                 {
                     if (@cell.EditUrl != null)
                     {
-            <td><a href="@cell.EditUrl">@cell.PreviewValue</a></td>
+                        <td><a href="@cell.EditUrl">@cell.Value</a></td>
                     }
                     else
                     {
-            <td>
-            <span tabindex="0" class="d-inline-block" role="button"  data-bs-toggle="popover" data-bs-trigger="focus" title="Full value" data-bs-content="@cell.Value">
-                @cell.PreviewValue
-            </span>
-            
-        </td>
+                        <td>
+                            <span tabindex="0" class="d-inline-block" title="@cell.BindingPath">
+                                @cell.Value
+                                @if (cell.IsBigString)
+                                {
+                                    <span onclick="showFullValue('@cell.MainObjectId', '@cell.MainObjectType', '@cell.BindingPath')">
+                                        <i class="bi bi-arrow-up-right" style="font-size: 10px;"></i>
+                                    </span>
+                                }
+                            </span>
+
+                        </td>
                     }
                 }
-        </tr>
-            }
+            </tr>
+        }
     </tbody>
 </table>
 

@@ -39,7 +39,7 @@ namespace Cvl.DynamicForms.Services
             } else if(obj is IEnumerable collection)
             {
                 //mamy kolekcję                
-                var gridVM = gridService.GetGridViewModel(collection?.Cast<object>().AsQueryable(), new CollectionViewModelParameters());
+                var gridVM = gridService.GetGridViewModelForObject(collection?.Cast<object>().AsQueryable(), objectId, typeFullname, bindingPath,  new CollectionViewModelParameters());
                 gridVM.BindingPath = bindingPath;
                 gridVM.PropertyValue = helper.GetValue(collection);
                 gridVM.IsStatic = false;
@@ -154,7 +154,9 @@ namespace Cvl.DynamicForms.Services
                     if (value != null)
                     {
                         var collection = (IEnumerable)value;
-                        var gridVM = gridService.GetGridViewModel(collection?.Cast<object>().AsQueryable(), new CollectionViewModelParameters());
+                        var gridVM = gridService.GetGridViewModelForObject(collection?.Cast<object>().AsQueryable(),
+                            parentPropertyGridVM.MainObjectId, parentPropertyGridVM.MainObjectTypeFullname, bindingPath,
+                            new CollectionViewModelParameters());
                         gridVM.PropertyName = item.Name;
                         gridVM.BindingPath = bindingPath;
                         gridVM.PropertyValue = helper.GetValue(value);
@@ -204,10 +206,10 @@ namespace Cvl.DynamicForms.Services
                     {
                         //jeśli duży string to wyświetlam jako opis
                         var stringSize = pvm.Value?.ToString().Length;
-                        if (stringSize != null && stringSize.Value > 130)
+                        pvm.IsBigString = helper.IsBigString(value, BaseService.EnumPreviewType.PropertyGrid);
+                        if (pvm.IsBigString)
                         {
-                            pvm.Type = PropertyTypes.StringEditor;
-
+                            pvm.Value = helper.GetPreview(value, BaseService.EnumPreviewType.PropertyGrid);
                             //jeśli xml to wyświetlam jako xml
                             try
                             {
@@ -217,7 +219,6 @@ namespace Cvl.DynamicForms.Services
                                 xml = $"<Complex><Properties>{xml}</Properties></Complex>";
 
                                 var complex = Serializer.DeserializeXml(xml);
-                                pvm.Type = PropertyTypes.StringXml;
                                
                                 //dodaje jeszcze propertygrida
                                 var propertyGridElementViewModel = new PropertyGridVM();
@@ -247,9 +248,6 @@ namespace Cvl.DynamicForms.Services
                                 var tr = new StringWriter(sb);
                                 doc.Save(tr);
                                 pvm.Value = (sb.ToString());
-
-                                pvm.Type = PropertyTypes.StringXml;
-
                             }
                             catch (Exception ex2)
                             {

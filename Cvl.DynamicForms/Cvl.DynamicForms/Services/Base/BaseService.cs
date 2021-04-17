@@ -12,7 +12,7 @@ namespace Cvl.DynamicForms.Services
     {
         public string GetTypeName(Type type)
         {
-            if(type == null)
+            if (type == null)
             {
                 return null;
             }
@@ -45,11 +45,27 @@ namespace Cvl.DynamicForms.Services
             return PropertyTypes.Other;
         }
 
-        public string GetPreview(object obj)
+        public enum EnumPreviewType
+        {
+            PropertyGrid = 1200,
+            Grid = 300
+        }
+
+        public bool IsBigString(object obj, EnumPreviewType previewType)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var val = GetValue(obj);
+            return val.Length >= (int)previewType;
+        }
+        public string GetPreview(object obj, EnumPreviewType enumPreviewType)
         {
             var val = GetValue(obj);
 
-            return val.Substring(0, Math.Min(val.Length, 600));
+            return val.Substring(0, Math.Min(val.Length, (int)enumPreviewType));
         }
 
         public string GetValue(object obj)
@@ -80,5 +96,7 @@ namespace Cvl.DynamicForms.Services
         {
             return $"Grid?type={GetTypeName(collectionType)}&parentId={parentId}&parentType={GetTypeName(parentType)}";
         }
+
+
     }
 }

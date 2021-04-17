@@ -15,6 +15,10 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
 
         public GridVM GridViewModel { get; set; }
 
+        public string RefreshUrl { get; set; }
+        public string AutoRefreshUrl { get; set; }
+        public bool IsAutoRefresh { get; set; }
+
         public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
         {
             this.viewService = new GridService(dataService, viewConfigurationService);
@@ -25,12 +29,20 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
             var type = query["type"];
             var parentIdStr = query["parentId"];
             var parentType = query["parentType"];
-            
-            var param = new CollectionViewModelParameters();          
-                
 
-            GridViewModel = viewService.GetGridViewModel(type, parentIdStr, parentType,  param);
+            var autorefresh = query["autorefresh"];
 
+            if (string.IsNullOrEmpty(autorefresh) == false)
+            {
+                IsAutoRefresh = true;
+                Response.Headers.Add("Refresh", autorefresh);
+            }
+            RefreshUrl = $"{Request.Path}?type={type}&parentId={parentIdStr}&parentType={parentType}";
+            AutoRefreshUrl = RefreshUrl + "&autorefresh=3";
+
+            var param = new CollectionViewModelParameters();
+            GridViewModel = viewService.GetGridViewModelForType(type, parentIdStr, parentType,  param);
+            GridViewModel.MainObjectTypeFullname = type;
         }
     }
 }

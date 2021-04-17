@@ -51,6 +51,12 @@ namespace Cvl.DynamicForms.Test
         public string Number { get; set; }
         public decimal Net { get; set; }
         public decimal Gross { get; set; }
+
+        public string BigStringTest { get; set; } = "sd asdf asdfasdfasdfas dfasdfasdfasdfkjakjhk jdhfka hkd jhaksjdh k" +
+            "sdfa sdf asdf asdfasdfwerwerwerwefwwelkjlkjldkjflaksjdfasdfs sdf sdf sdf sdfs dfsd fsd fsd fsd fsd fdsf dsf" +
+            "sdfa sdf asdf asdfasdfwerwerwerwefwwelkjlkjldkjflaksjdfasdfs sdf sdf sdf sdfs dfsd fsd fsd fsd fsd fdsf dsf" +
+            "sdfa sdf asdf asdfasdfwerwerwerwefwwelkjlkjldkjflaksjdfasdfs sdf sdf sdf sdfs dfsd fsd fsd fsd fsd fdsf dsf" +
+            "sdfa sdf asdf asdfasdfwerwerwerwefwwelkjlkjldkjflaksjdfasdfs sdf sdf sdf sdfs dfsd fsd fsd fsd fsd fdsf dsf";
     }
 
     public class Address
