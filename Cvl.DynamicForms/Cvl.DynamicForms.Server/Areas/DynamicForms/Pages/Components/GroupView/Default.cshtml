@@ -20,7 +20,7 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false"
                                     data-bs-target="#collapse@(region.PropertyUniqueName)"
                                     aria-controls="collapse@(region.PropertyUniqueName)"
-                                    onclick="getPropertyGridNode('@region.MainObjectId', '@region.MainObjectTypeFullname', 'dataholder@(region.PropertyUniqueName)', '@region.BindingPath')">
+                                    onclick="getPropertyGridNode('@region.MainObjectId', '@region.MainObjectTypeFullname', 'dataholder@(region.PropertyUniqueName)', '@region.BindingPath', @(region.IsStatic ? "true" : "false") )">
                                 <div class="col-3">
                                     <a href="@region.EditUrl">
                                         <span for="p11" class="form-label"> @region.PropertyName</span>
@@ -40,7 +40,7 @@
                                 }
                                 else
                                 {
-                                    <h4>Wczytywanie..</h4>
+                                    <h4>Loading..</h4>
                                 }
                             </div>
                         </div>

@@ -470,7 +470,7 @@ namespace Cvl.DynamicForms.Test
         }
 
         /// <summary>
-        /// Zwraca kolekcję obiektów
+        /// Zwraca kolekcję obiektów danego obiekt (id)
         /// </summary>
         /// <param name="collectionTypeName"></param>
         /// <param name="objectId"></param>

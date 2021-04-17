@@ -1,4 +1,5 @@
 using Cvl.DynamicForms.Services;
+using Cvl.DynamicForms.Setup;
 using Cvl.DynamicForms.Test;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,7 @@ namespace Cvl.DynamicForms.WebHost
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
 
+            services.UseDynamicForms();
             services.AddScoped<DataServiceBase, TestDataService>();
             services.AddScoped<ViewConfigurationService, TestViewConfigurationService>();
         }

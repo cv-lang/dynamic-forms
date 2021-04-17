@@ -11,14 +11,14 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
     public class PropertyGridNodeModel : PageModel
     {
         private readonly DataServiceBase dataService;
-        private readonly PropretyGridService viewService;
+        private readonly ViewService viewService;
 
-        public Model.PropertyGridVM PropertyGrid { get; set; }
+        public Model.PropertyBaseVM PropertyGrid { get; set; }
 
-        public PropertyGridNodeModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
+        public PropertyGridNodeModel(DataServiceBase dataService, ViewService viewService)
         {
             this.dataService = dataService;
-            this.viewService = new PropretyGridService(dataService, viewConfigurationService);
+            this.viewService = viewService;
         }
 
         public void OnGet()
@@ -28,9 +28,12 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
             var type = query["type"];
             var bindingPath = query["bindingPath"];
 
-            var parameters = new Parameters(query.Select(x => new Parameter() { Key = x.Key, Value = x.Value.ToString() }));
+            if(string.IsNullOrEmpty(objectIdStr))
+            {
+                return;
+            }
 
-            PropertyGrid = viewService.GetPropertyGrid(objectIdStr, type, parameters, bindingPath);
+            PropertyGrid = viewService.GetViewModel(objectIdStr, type, bindingPath);
         }
     }
 }

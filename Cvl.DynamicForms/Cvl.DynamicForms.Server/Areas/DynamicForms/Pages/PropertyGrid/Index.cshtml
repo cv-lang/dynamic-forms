@@ -5,11 +5,29 @@
 }
 
 <div class="container">
-    @await Component.InvokeAsync("GroupView", Model.PropertyGrid)  
+    <div class="row">
+        <span>
+            <a href="@Model.RefreshUrl"><i class="bi bi-arrow-clockwise"></i></a>
+            @if (Model.IsAutoRefresh)
+            {
+                <a href="@Model.RefreshUrl"><i class="bi bi-caret-right-fill"></i></a>
+            }
+            else
+            {
+                <a href="@Model.AutoRefreshUrl"><i class="bi bi-caret-right"></i></a>
+            }
+            Id: @Model.PropertyGrid.MainObjectId Type:<a href="@Model.PropertyGrid.ListUrl">@Model.PropertyGrid.MainObjectTypeFullname</a> 
+        </span>
+
+        <span></span>
+    </div>
+    @await Component.InvokeAsync("GroupView", Model.PropertyGrid)
 </div>
 
 <script type="text/javascript">
-    function getPropertyGridNode(id, type, targetdiv, bindingPath) {
+    function getPropertyGridNode(id, type, targetdiv, bindingPath, isStatic) {
+        if (isStatic) { return; } //jeśli z statycznego expandera to nic nie robię
+
         $.ajax({
             type: "get",
             url: "/DynamicForms/PropertyGrid/PropertyGridNode?id=" + id + "&type=" + type + "&bindingPath=" + bindingPath,
