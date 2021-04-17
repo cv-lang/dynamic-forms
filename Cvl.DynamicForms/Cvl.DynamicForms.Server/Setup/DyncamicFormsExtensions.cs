@@ -1,4 +1,5 @@
 ﻿using Cvl.DynamicForms.Services;
+using Cvl.DynamicForms.Services.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,7 +12,7 @@ namespace Cvl.DynamicForms.Setup
 {
     public static class DyncamicFormsExtensions
     {
-        public static IServiceCollection UseDynamicForms<TDataService,TViewConfiguration>(this IServiceCollection services)
+        public static IServiceCollection UseDynamicForms<TDataService,TViewConfiguration>(this IServiceCollection services, string applicationUrl)
             where TDataService : DataServiceBase
             where TViewConfiguration : ViewConfigurationService
         {
@@ -21,6 +22,8 @@ namespace Cvl.DynamicForms.Setup
             services.AddScoped<ViewService, ViewService>();
             services.AddScoped<DataServiceBase, TDataService>();
             services.AddScoped<ViewConfigurationService, TViewConfiguration>();
+            var apurl = new ApplicationConfigurtion() { ApplicationUrl = applicationUrl };
+            services.AddSingleton(apurl);
 
             return services;
         }

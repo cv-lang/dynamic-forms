@@ -35,6 +35,14 @@ namespace Cvl.DynamicForms.Services
             public object[] Collection { get; set; }
         }
 
+
+        /// <summary>
+        /// Zwraca pojedyńczy obiekt (lub pole obiektu)
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="typeFullname"></param>
+        /// <param name="bindingPath"></param>
+        /// <returns></returns>
         public virtual object GetObject(string objectId, string typeFullname, string bindingPath)
         {
             var resolver = new Resolver();
@@ -63,13 +71,20 @@ namespace Cvl.DynamicForms.Services
             return val;
         }
 
-        //protected object GetObjectDb(object objectId, string typeFullname, object processesContext)
-        //{            
-        //    dynamic set = GetDbSet(typeFullname, processesContext);
-        //    object obj = set.Find(objectId);
+        /// <summary>
+        /// Helper do pobierania obiektów z EF
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="typeFullname"></param>
+        /// <param name="processesContext"></param>
+        /// <returns></returns>
+        protected object GetObjectDb(object objectId, string typeFullname, object processesContext)
+        {
+            dynamic set = GetDbSet(typeFullname, processesContext);
+            object obj = set.Find(objectId);
 
-        //    return obj;
-        //}
+            return obj;
+        }
 
         /// <summary>
         /// Zwraca dzieci obiektu - dla obiektu hierarchicznego
@@ -85,14 +100,22 @@ namespace Cvl.DynamicForms.Services
             return null;
         }
 
-        //public virtual IQueryable<object> GetChildrenCollectionDb(object objectId, string collectionTypeName, CollectionViewModelParameters parameters, object processesContext)
-        //{
-        //    var set = GetDbSet(collectionTypeName, processesContext);
-        //    var query = (IQueryable<object>)System.Linq.Queryable.Cast<object>(set);
+        /// <summary>
+        /// Helper do pobierania obiektów z EF
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="collectionTypeName"></param>
+        /// <param name="parameters"></param>
+        /// <param name="processesContext"></param>
+        /// <returns></returns>
+        public virtual IQueryable<object> GetChildrenCollectionDb(object objectId, string collectionTypeName, CollectionViewModelParameters parameters, object processesContext)
+        {
+            var set = GetDbSet(collectionTypeName, processesContext);
+            var query = (IQueryable<object>)System.Linq.Queryable.Cast<object>(set);
 
-        //    var dane = query.ToList();
-        //    return dane.AsQueryable<object>();
-        //}
+            var dane = query.ToList();
+            return dane.AsQueryable<object>();
+        }
 
         /// <summary>
         /// Zwraca kolekcję obiektów

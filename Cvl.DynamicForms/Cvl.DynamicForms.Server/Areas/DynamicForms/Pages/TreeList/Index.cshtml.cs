@@ -1,18 +1,20 @@
 using System.Linq;
+using Cvl.DynamicForms.Base;
 using Cvl.DynamicForms.Model.ViewModel;
 using Cvl.DynamicForms.Services;
+using Cvl.DynamicForms.Services.Base;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
 {
-    public class IndexModel : PageModel
+    public class IndexModel : PageModelBase
     {
         private readonly DataServiceBase dataService;
         private readonly TreeListService viewService;
 
         public TreeListViewModel TreeList { get; set; }
 
-        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
+        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion) : base(applicationConfigurtion)
         {
             this.dataService = dataService;
             this.viewService = new TreeListService(dataService, viewConfigurationService);
@@ -20,6 +22,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
 
         public void OnGet()
         {
+            SetBasePage();
             var query = Request.Query;
             var objectIdStr = query["id"].ToString();
             var type = query["type"];

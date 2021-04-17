@@ -18,8 +18,9 @@ namespace Cvl.DynamicForms.WebHost
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
 
-            services.UseDynamicForms< TestDataService, TestViewConfigurationService>();
-            
+            services.UseDynamicForms< TestDataService, TestViewConfigurationService>("https://localhost:44314");
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

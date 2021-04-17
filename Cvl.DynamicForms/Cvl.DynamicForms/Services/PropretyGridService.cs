@@ -204,8 +204,7 @@ namespace Cvl.DynamicForms.Services
 
                     if(propType == PropertyTypes.String)
                     {
-                        //jeśli duży string to wyświetlam jako opis
-                        var stringSize = pvm.Value?.ToString().Length;
+                        //jeśli duży string to wyświetlam jako opis                        
                         pvm.IsBigString = helper.IsBigString(value, BaseService.EnumPreviewType.PropertyGrid);
                         if (pvm.IsBigString)
                         {
@@ -213,7 +212,7 @@ namespace Cvl.DynamicForms.Services
                             //jeśli xml to wyświetlam jako xml
                             try
                             {
-                                var xml = pvm.Value?.ToString();
+                                var xml = value?.ToString() ?? "NULL";
 
                                 //tu jest jakiś problem z kodowaniem, i bez tego hacka parser się wywala
                                 xml = $"<Complex><Properties>{xml}</Properties></Complex>";

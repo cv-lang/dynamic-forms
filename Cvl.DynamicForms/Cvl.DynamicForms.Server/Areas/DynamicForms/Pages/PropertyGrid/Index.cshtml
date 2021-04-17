@@ -28,7 +28,7 @@
 
         $.ajax({
             type: "get",
-            url: "/DynamicForms/PropertyGrid/PropertyGridNode?id=" + id + "&type=" + type + "&bindingPath=" + bindingPath,
+            url: "@ViewData["ApplicationUrl"]/DynamicForms/PropertyGrid/PropertyGridNode?id=" + id + "&type=" + type + "&bindingPath=" + bindingPath,
             dataType: "html",
             contentType: "text/html",
             success: function (data) {

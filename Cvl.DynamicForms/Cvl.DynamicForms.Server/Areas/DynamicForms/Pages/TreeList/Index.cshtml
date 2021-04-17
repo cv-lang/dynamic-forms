@@ -10,14 +10,14 @@
     function getData(id, type, targetdiv) {
         $.ajax({
             type: "get",
-            url: "/DynamicForms/TreeList/Node?Id=" + id + "&type=" + type,
+            url: "@ViewData["ApplicationUrl"]/DynamicForms/TreeList/Node?Id=" + id + "&type=" + type,
             dataType: "html",
             contentType: "text/html",
             success: function (data) {
                 $('#' + targetdiv).html(data);
             },
             failure: function (response) {
-                alert("niefajne");
+                throw new Error('Error in ajax TreeListNode loading');
             }
         })
     }
