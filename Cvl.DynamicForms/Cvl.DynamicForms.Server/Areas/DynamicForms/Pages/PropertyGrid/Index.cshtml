@@ -16,7 +16,8 @@
             {
                 <a href="@Model.AutoRefreshUrl"><i class="bi bi-caret-right"></i></a>
             }
-            Id: @Model.PropertyGrid.MainObjectId Type:<a href="@Model.PropertyGrid.ListUrl">@Model.PropertyGrid.MainObjectTypeFullname</a> 
+            Id: @Model.PropertyGrid.MainObjectId <a href="@Model.PropertyGrid.ListUrl">@Model.PropertyGrid.MainObjectTypeFullname</a>
+            <a href="@Model.AllTypesUrl">all types</a>
         </span>
     </div>
     @await Component.InvokeAsync("GroupView", Model.PropertyGrid)

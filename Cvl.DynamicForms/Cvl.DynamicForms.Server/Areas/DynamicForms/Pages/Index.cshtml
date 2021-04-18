@@ -1,0 +1,12 @@
+﻿@page
+@model Cvl.DynamicForms.Areas.DynamicForms.Pages.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+@foreach (var item in Model.Types)
+{
+    <div>
+        <a href="@item.Url">@item.Type</a>
+    </div>
+}

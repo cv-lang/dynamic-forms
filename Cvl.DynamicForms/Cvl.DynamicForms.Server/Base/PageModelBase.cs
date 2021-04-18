@@ -12,11 +12,13 @@ namespace Cvl.DynamicForms.Base
     {
         private readonly ApplicationConfigurtion applicationUrlConfigurtion;
         public string ApplicationUrl { get; set; }
+        public string AllTypesUrl { get; set; }
 
         public PageModelBase(ApplicationConfigurtion applicationUrlConfigurtion):base()
         {
             this.applicationUrlConfigurtion = applicationUrlConfigurtion;
-            ApplicationUrl = applicationUrlConfigurtion.ApplicationUrl;            
+            ApplicationUrl = applicationUrlConfigurtion.ApplicationUrl;
+            AllTypesUrl = $"{ApplicationUrl}/DynamicForms";
         }
 
         public void SetBasePage()

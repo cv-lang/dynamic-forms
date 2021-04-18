@@ -16,7 +16,8 @@
             {
                 <a href="@Model.AutoRefreshUrl"><i class="bi bi-caret-right"></i></a>
             }
-            Typ: @Model.GridViewModel.MainObjectTypeFullname
+            @Model.GridViewModel.MainObjectTypeFullname
+            <a href="@Model.AllTypesUrl">all types</a>
         </span>
     </div>
     @await Component.InvokeAsync("GridView", Model.GridViewModel)
