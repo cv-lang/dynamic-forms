@@ -14,6 +14,12 @@ namespace Cvl.DynamicForms.Services
             return props;
         }
 
+        public virtual System.Reflection.PropertyInfo[] GetGridCollumnInPropertyGrid(Type elementType, string elementIdPropertyName)
+        {
+            return GetGridCollumn(elementType, elementIdPropertyName);
+        }
+
+
         public virtual System.Reflection.PropertyInfo[] GetTreeListCollumns(Type elementType, string elementIdPropertyName)
         {
             System.Reflection.PropertyInfo[] props = elementType.GetProperties().Where(x => x.Name != elementIdPropertyName).ToArray();

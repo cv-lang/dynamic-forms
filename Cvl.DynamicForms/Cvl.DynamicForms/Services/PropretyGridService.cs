@@ -76,11 +76,10 @@ namespace Cvl.DynamicForms.Services
         private int xmlPropertyGridControlId = 0;
         private void createPropertyGridFromXml_internal(Complex complex, PropertyGridVM pg)
         {
-            var group = new GroupVM();
-            group.IsStatic = true;
-            group.BindingPath = xmlPropertyGridControlId.ToString();//dla unikalny id
-            xmlPropertyGridControlId++;
-            pg.Properties.Add(group);
+            //var group = new GroupVM();
+            pg.IsStatic = true;
+            pg.BindingPath = xmlPropertyGridControlId.ToString();//dla unikalny id
+            xmlPropertyGridControlId++;            
 
             foreach (var item in complex.Properties)
             {
@@ -89,7 +88,10 @@ namespace Cvl.DynamicForms.Services
                 if (item is Simple simple)
                 {
                     var pvm = new SimplePropertyVM() { Type = PropertyTypes.String, Header = simple.Name, BindingPath = simple.Name, Value = simple.Value };
-                    group.Properties.Add(pvm);
+
+                    pvm.IsBigString = helper.IsBigString(simple.Value, BaseService.EnumPreviewType.PropertyGrid);
+
+                    pg.Properties.Add(pvm);
                 }
                 else if (item is Complex compx)
                 {
@@ -99,7 +101,7 @@ namespace Cvl.DynamicForms.Services
                     childPg.BindingPath = xmlPropertyGridControlId.ToString();//dla unikalny id
 
 
-                    group.Properties.Add(childPg);
+                    pg.Properties.Add(childPg);
                     createPropertyGridFromXml_internal(compx, childPg );
                 } else if(item is Collection collection)
                 {
@@ -115,7 +117,7 @@ namespace Cvl.DynamicForms.Services
                     var childPg2 = new PropertyGridVM();
                     childPg2.PropertyName = collection.Name;
                     childPg2.BindingPath = xmlPropertyGridControlId.ToString();//dla unikalny id
-                    group.Properties.Add(childPg2);
+                    pg.Properties.Add(childPg2);
                     var compx3 = new Complex() { Properties = collection.Items };
                     createPropertyGridFromXml_internal(compx3, childPg2);                    
                 }

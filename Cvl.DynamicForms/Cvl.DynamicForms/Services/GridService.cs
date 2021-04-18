@@ -47,7 +47,7 @@ namespace Cvl.DynamicForms.Services
 
             var elementType = firstElement.GetType();
             var elementIdPropertyName = dataService.GetIdPropertyName(elementType);
-            var propertyInfos = viewConfigurationService.GetGridCollumn(elementType, elementIdPropertyName);
+            var propertyInfos = viewConfigurationService.GetGridCollumnInPropertyGrid(elementType, elementIdPropertyName);
             var idProperty = elementType.GetProperty(elementIdPropertyName);
 
             bool isFirst = true;

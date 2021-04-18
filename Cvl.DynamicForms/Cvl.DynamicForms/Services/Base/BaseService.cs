@@ -48,7 +48,7 @@ namespace Cvl.DynamicForms.Services
         public enum EnumPreviewType
         {
             PropertyGrid = 1200,
-            Grid = 300
+            Grid = 100
         }
 
         public bool IsBigString(object obj, EnumPreviewType previewType)
@@ -77,7 +77,7 @@ namespace Cvl.DynamicForms.Services
             else
             {
                 var str = obj?.ToString() ?? "NULL";
-                return str?.ToString().Replace("+", " + ");//HttpUtility.HtmlEncode(str);
+                return str?.ToString().Replace(",", ", ").Replace("+", "+ ");//HttpUtility.HtmlEncode(str);
             }
         }
 
