@@ -11,7 +11,7 @@ namespace Cvl.DynamicForms.Services
         public bool IsFavourite { get; set; }
         public string FullTypeName { get; set; }
     }
-
+    // Przykładowy komentarz.
     public class ViewConfigurationService
     {
         public virtual System.Reflection.PropertyInfo[] GetGridCollumn(Type elementType, string elementIdPropertyName)
