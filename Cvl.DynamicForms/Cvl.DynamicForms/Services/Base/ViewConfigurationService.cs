@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+using System.Linq.Expressions;
 
 namespace Cvl.DynamicForms.Services
 {
@@ -11,12 +13,53 @@ namespace Cvl.DynamicForms.Services
         public bool IsFavourite { get; set; }
         public string FullTypeName { get; set; }
     }
-    // Przykładowy komentarz.
+
+    public class BuilderForType<T>
+    {
+        List<string> colList = new List<string>();
+        private GridBuilder conf;
+        public BuilderForType(GridBuilder conf)
+        {
+            this.conf = conf;
+        }
+        internal List<PropertyInfo> Build()
+        {
+            var type = typeof(T);
+            List<PropertyInfo> propList = new List<PropertyInfo>();
+            for (int i = 0; i < colList.Count; i++)
+            {
+                propList.Add(type.GetProperty(colList[i]));
+            }
+
+            return propList;
+        }
+
+
+        internal BuilderForType<T> AddColumn(Expression<Func<TestPerson, string>> p)
+        {
+            var testName = p.ToString().Replace("x => x.", "");
+            colList.Add(testName);
+            return this;
+        }
+    }
+
+    public class GridBuilder
+    {
+        internal BuilderForType<T> ForType<T>()
+        {
+            return new BuilderForType<T>(this);
+        }
+    }
+
     public class ViewConfigurationService
     {
         public virtual System.Reflection.PropertyInfo[] GetGridCollumn(Type elementType, string elementIdPropertyName)
         {
-            System.Reflection.PropertyInfo[] props = elementType.GetProperties().Where(x => x.Name != elementIdPropertyName).ToArray();
+            var gridBuilder = new GridBuilder();
+            PropertyInfo[] props = gridBuilder.ForType<TestPerson>()
+                .AddColumn(x => x.Firstname)
+                .AddColumn(x => x.Surname)
+                .Build().ToArray();
 
             return props;
         }
