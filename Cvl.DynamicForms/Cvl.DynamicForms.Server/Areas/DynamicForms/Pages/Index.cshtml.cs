@@ -13,12 +13,15 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages
     public class UrlLink
     {
         public string Type { get; internal set; }
-        public string Url { get; internal set; }
+        public string ListUrl { get; internal set; }
+        public string TreeListUrl { get; internal set; }
     }
 
     public class IndexModel : PageModelBase
     {
         private readonly ViewConfigurationService viewConfigurationService;
+
+
 
         public IndexModel(ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion) :base(applicationConfigurtion)
         {
@@ -26,6 +29,8 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages
         }
 
         public List<UrlLink> Types { get; set; }
+
+
 
         public void OnGet()
         {
@@ -35,7 +40,8 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages
             {
                 var l = new UrlLink();
                 l.Type = item.FullTypeName;
-                l.Url = $"{ApplicationUrl}/DynamicForms/Grid?type={item.FullTypeName}";
+                l.ListUrl = $"{ApplicationUrl}/DynamicForms/Grid?type={item.FullTypeName}";
+                l.TreeListUrl = $"{ApplicationUrl}/DynamicForms/TreeList?type={item.FullTypeName}";
                 Types.Add(l);
             }
         }

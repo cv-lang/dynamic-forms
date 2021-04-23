@@ -4,7 +4,25 @@
     Layout = "_Layout";
 }
 
-@await Component.InvokeAsync("TreeNodeView", Model.TreeList)
+<div class="container-fluid">
+    <div class="row">
+        <span>
+            <a href="@Model.RefreshUrl"><i class="bi bi-arrow-clockwise"></i></a>
+            @if (Model.IsAutoRefresh)
+            {
+                <a href="@Model.RefreshUrl"><i class="bi bi-caret-right-fill"></i></a>
+            }
+            else
+            {
+                <a href="@Model.AutoRefreshUrl"><i class="bi bi-caret-right"></i></a>
+            }
+            @Model.TreeList.MainObjectTypeFullname
+            <a href="@Model.AllTypesUrl">all types</a>
+        </span>
+    </div>
+
+    @await Component.InvokeAsync("TreeNodeView", Model.TreeList)
+</div>
 
 <script type="text/javascript">
     function getData(id, type, targetdiv) {

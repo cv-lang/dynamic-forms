@@ -12,6 +12,10 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
         private readonly DataServiceBase dataService;
         private readonly TreeListService viewService;
 
+        public string RefreshUrl { get; set; }
+        public string AutoRefreshUrl { get; set; }
+        public bool IsAutoRefresh { get; set; }
+
         public TreeListViewModel TreeList { get; set; }
 
         public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion) : base(applicationConfigurtion)
@@ -26,6 +30,15 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             var query = Request.Query;
             var objectIdStr = query["id"].ToString();
             var type = query["type"];
+            var autorefresh = query["autorefresh"];
+
+            if (string.IsNullOrEmpty(autorefresh) == false)
+            {
+                IsAutoRefresh = true;
+                Response.Headers.Add("Refresh", autorefresh);
+            }
+            RefreshUrl = $"{ApplicationUrl}{Request.Path}?type={type}&id={objectIdStr}";
+            AutoRefreshUrl = RefreshUrl + "&autorefresh=3";
 
             var p = new CollectionViewModelParameters();
             TreeList = viewService.GetTreeList(objectIdStr, type, p);

@@ -22,4 +22,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Cvl.ApplicationServer">
+      <HintPath>..\..\..\application-server\Cvl.ApplicationServer\Cvl.ApplicationServer\bin\Debug\netstandard2.0\Cvl.ApplicationServer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

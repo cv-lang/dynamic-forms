@@ -1,4 +1,6 @@
-﻿using Cvl.DynamicForms.Services;
+﻿using Cvl.ApplicationServer.Logs.Model;
+using Cvl.ApplicationServer.Logs.Storage;
+using Cvl.DynamicForms.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,10 @@ namespace Cvl.DynamicForms.Test
         private List<Address> addresses = new List<Address>();
         private List<Invoice> invoices = new List<Invoice>();
         private List<Logger> loggers = new List<Logger>();
+		private List<LogElement> LogElements = new List<LogElement>();
+		private FileLogStorage fileLogStorage;
 
-        private void generate()
+		private void generate()
         {
             int ilog = 1;
             for (int number = 0; number < 200; number++)
@@ -419,6 +423,8 @@ namespace Cvl.DynamicForms.Test
         public TestDataService()
         {
             generate();
+			fileLogStorage = new FileLogStorage();
+			LogElements= fileLogStorage.GetHeaders();
         }
 
         /// <summary>
@@ -429,20 +435,28 @@ namespace Cvl.DynamicForms.Test
         /// <returns></returns>
         public override object GetObject(string objectId, string typeFullname)
         {
-            var id = int.Parse(objectId);
+			if (typeFullname == "Cvl.ApplicationServer.Logs.Model.LogElement")
+			{
+				return fileLogStorage.GetLogElement(objectId);
+			}
+			else
+			{
 
-            switch (typeFullname)
-            {
-                case "Cvl.DynamicForms.Test.TestPerson":
-                    return people.FirstOrDefault(x => x.Id == id);
-                case "Cvl.DynamicForms.Test.Address":
-                    return addresses.FirstOrDefault(x => x.Id == id);
-                case "Cvl.DynamicForms.Test.Invoice":
-                    return invoices.FirstOrDefault(x => x.Id == id);
-                case "Cvl.DynamicForms.Test.Logger":
-                    return loggers.FirstOrDefault(x => x.Id == id);
-            }
-            return null;
+				var id = int.Parse(objectId);
+
+				switch (typeFullname)
+				{
+					case "Cvl.DynamicForms.Test.TestPerson":
+						return people.FirstOrDefault(x => x.Id == id);
+					case "Cvl.DynamicForms.Test.Address":
+						return addresses.FirstOrDefault(x => x.Id == id);
+					case "Cvl.DynamicForms.Test.Invoice":
+						return invoices.FirstOrDefault(x => x.Id == id);
+					case "Cvl.DynamicForms.Test.Logger":
+						return loggers.FirstOrDefault(x => x.Id == id);
+				}
+				return null;
+			}            
         }
 
         /// <summary>
@@ -454,13 +468,24 @@ namespace Cvl.DynamicForms.Test
         /// <returns></returns>
         public override IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters)
         {
-            int? id = null;
+			if (typeFullname == "Cvl.ApplicationServer.Logs.Model.LogElement")
+			{
+				if(string.IsNullOrEmpty(objectId))
+                {
+					return fileLogStorage.GetHeaders().Cast<object>().AsQueryable();
+                }
+
+				var log= fileLogStorage.GetLogElement(objectId);
+				return log?.Elements.Cast<object>().AsQueryable();
+			}
+
+			int? id = null;
             if (!string.IsNullOrEmpty(objectId) && objectId != "null")
             {
                 id = int.Parse(objectId);
-            }
+            }					
 
-            switch (typeFullname)
+			switch (typeFullname)
             {
                 case "Cvl.DynamicForms.Test.Logger":
                     return loggers.Where(x => x.ParentId == id).Cast<object>().AsQueryable();
@@ -499,7 +524,10 @@ namespace Cvl.DynamicForms.Test
                     return addresses.Cast<object>().AsQueryable();
                 case "Cvl.DynamicForms.Test.Invoice":
                     return invoices.Cast<object>().AsQueryable();
-                case "Cvl.DynamicForms.Test.Logger":
+				case "Cvl.ApplicationServer.Logs.Model.LogElement":
+					return LogElements.Cast<object>().AsQueryable();
+
+				case "Cvl.DynamicForms.Test.Logger":
                     if (id == null)
                     {
                         return loggers.Cast<object>().AsQueryable();
@@ -519,6 +547,12 @@ namespace Cvl.DynamicForms.Test
         /// <returns></returns>
         public override string GetIdPropertyName(Type valueType)
         {
+			if(valueType == typeof(Cvl.ApplicationServer.Logs.Model.LogElement))
+            {
+				return "UniqueId";
+
+			}
+
             return "Id";
         }
     }

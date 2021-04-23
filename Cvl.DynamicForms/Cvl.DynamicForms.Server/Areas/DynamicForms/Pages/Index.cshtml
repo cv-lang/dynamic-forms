@@ -7,6 +7,6 @@
 @foreach (var item in Model.Types)
 {
     <div>
-        <a href="@item.Url">@item.Type</a>
+        <a href="@item.ListUrl">List: @item.Type</a> <a href="@item.TreeListUrl">TreeList</a>
     </div>
 }
