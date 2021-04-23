@@ -70,9 +70,11 @@ namespace Cvl.DynamicForms.Services
         {
             var gridBuilder = new ColumnBuilder();
             gridBuilder.ForType<ApplicationServer.Logs.Model.LogElement>()
-                    .AddColumn(x => x.Message)
                     .AddColumn(x => x.MemberName)
+                    .AddColumn(x => x.Message)
                     .AddColumn(x => x.ExternalId1)
+                    .AddColumn(x => x.ExternalId2)
+                    .AddColumn(x => x.ExternalId3)
                     .AddColumn(x => x.CreatedDate);
             gridBuilder.ForType<Logger>()
                 .AddColumn(x => x.Date)

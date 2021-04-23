@@ -47,7 +47,7 @@ namespace Cvl.DynamicForms.Services
 
         public enum EnumPreviewType
         {
-            PropertyGrid = 1200,
+            PropertyGrid = 200,
             Grid = 100
         }
 
