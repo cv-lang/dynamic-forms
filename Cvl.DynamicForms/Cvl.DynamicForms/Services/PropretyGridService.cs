@@ -11,14 +11,14 @@ using System.Xml.Linq;
 
 namespace Cvl.DynamicForms.Services
 {
-    public class PropretyGridService
+    public class PropertyGridService
     {
         private BaseService helper = new BaseService();
         private GridService gridService;
         private readonly DataServiceBase dataService;
         private readonly ViewConfigurationService viewConfigurationService;
 
-        public PropretyGridService(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, GridService gridService)
+        public PropertyGridService(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, GridService gridService)
         {
             this.dataService = dataService;
             this.viewConfigurationService = viewConfigurationService;

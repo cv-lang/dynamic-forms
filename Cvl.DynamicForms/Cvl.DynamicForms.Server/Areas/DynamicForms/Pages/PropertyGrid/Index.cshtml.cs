@@ -9,7 +9,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
     public class IndexModel : PageModelBase
     {
         private readonly DataServiceBase dataService;
-        private readonly PropretyGridService viewService;
+        private readonly PropertyGridService viewService;
         
         public string RefreshUrl { get; set; }
         public string AutoRefreshUrl { get; set; }
@@ -17,7 +17,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
 
         public Model.PropertyGridVM PropertyGrid { get; set; }
 
-        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, PropretyGridService propretyGridService, ApplicationConfigurtion applicationUrlConfigurtion) : base(applicationUrlConfigurtion)
+        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, PropertyGridService propretyGridService, ApplicationConfigurtion applicationUrlConfigurtion) : base(applicationUrlConfigurtion)
         {
             this.dataService = dataService;
             this.viewService = propretyGridService;

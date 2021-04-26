@@ -17,7 +17,7 @@ namespace Cvl.DynamicForms.Setup
             where TViewConfiguration : ViewConfigurationService
         {
             services.AddScoped<GridService, GridService>();
-            services.AddScoped<PropretyGridService, PropretyGridService>();
+            services.AddScoped<PropertyGridService, PropertyGridService>();
             services.AddScoped<TreeListService, TreeListService>();
             services.AddScoped<ViewService, ViewService>();
             services.AddScoped<DataServiceBase, TDataService>();

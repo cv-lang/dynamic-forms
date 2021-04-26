@@ -12,6 +12,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
     {
         private readonly DataServiceBase dataService;
         private readonly TreeListService viewService;
+        public string id;
 
         public TreeListViewModel TreeList { get; set; }
 
@@ -27,9 +28,9 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             var query = Request.Query;
             var objectIdStr = query["id"].ToString();
             var type = query["type"];
-
+            id = objectIdStr;
             var p = new CollectionViewModelParameters();
-            TreeList = viewService.GetTreeList(objectIdStr, type, p);
+            TreeList = (TreeListViewModel)viewService.GetTreeList(objectIdStr, type, p);
         }
     }
 }
