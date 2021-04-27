@@ -15,7 +15,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
         private readonly TreeListService viewService;
         public string id;
 
-        public RegionVM TreeList { get; set; }
+        public RegionVM Region { get; set; }
 
         public NodeModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion, TreeListService treeListService) : base(applicationConfigurtion)
         {
@@ -31,7 +31,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             var type = query["type"];
             id = objectIdStr;
             var p = new CollectionViewModelParameters();
-            TreeList = viewService.GetTreeList(objectIdStr, type, p);
+            Region = viewService.GetTreeList(objectIdStr, type, p);
         }
     }
 }

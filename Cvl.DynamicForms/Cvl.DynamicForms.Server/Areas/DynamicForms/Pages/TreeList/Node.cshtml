@@ -1,11 +1,11 @@
 ﻿@page
 @model Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList.NodeModel
 @* Strona odpowiedzialna za doczytywanie dynamiczne dzieci *@
-@if (Model.TreeList is Cvl.DynamicForms.Model.ViewModel.TreeListViewModel)
+@if (Model.Region is Cvl.DynamicForms.Model.ViewModel.TreeListViewModel)
 {
-    @await Component.InvokeAsync("TreeNodeView", Model.TreeList)
+    @await Component.InvokeAsync("TreeNodeView", Model.Region)
 }
-else if (Model.TreeList is Cvl.DynamicForms.Model.PropertyGridVM)
+else if (Model.Region is Cvl.DynamicForms.Model.PropertyGridVM)
 {
-    @await Component.InvokeAsync("PropertyView", Model.TreeList)
+    @await Component.InvokeAsync("PropertyView", Model.Region)
 }
