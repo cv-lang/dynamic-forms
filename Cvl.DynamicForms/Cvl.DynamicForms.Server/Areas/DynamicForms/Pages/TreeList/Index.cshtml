@@ -5,6 +5,8 @@
 }
 <div class="container-fluid">
     <form method="get">
+        <input type="hidden" name="id" value="@(Model.TreeList.MainObjectId)" />
+        <input type="hidden" name="type" value="@(Model.TreeList.MainObjectTypeFullname)" />
         <input name="mainfilter" id="mainfilter" type="text" placeholder="Enter filter value..." />
         <input name="submit" type="submit" id="submitButton" value="true" />
     </form>

@@ -25,17 +25,22 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             this.dataService = dataService;
             this.viewService = treeListService;
         }
-        public void OnGet(string submit = "false", string mainfilter = "")
+        public void OnGet()
         {
-            string filter = mainfilter;
-            bool wasButtonPressed = Boolean.Parse(submit);
             SetBasePage();
+            bool wasButtonPressed;
             var query = Request.Query;
+            string filter = query["mainfilter"];
+            try
+            {
+                wasButtonPressed = Boolean.Parse(query["submit"]);
+            } catch
+            {
+                wasButtonPressed = false;
+            }
             var objectIdStr = query["id"].ToString();
             var type = query["type"];
             var autorefresh = query["autorefresh"];
-            //if(!submitButton)
-            //    filter = Request.Form["mainfilter"].ToString();
 
             if (string.IsNullOrEmpty(autorefresh) == false)
             {
@@ -46,7 +51,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             AutoRefreshUrl = RefreshUrl + "&autorefresh=3";
 
             var p = new CollectionViewModelParameters();
-            TreeList = (TreeListViewModel)viewService.GetTreeList(objectIdStr, type, p);
+            TreeList = (TreeListViewModel)viewService.GetTreeList(objectIdStr, type, p, filter);
         }
     }
 }
