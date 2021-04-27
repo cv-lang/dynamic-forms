@@ -10,10 +10,10 @@ namespace Cvl.DynamicForms.Services
     public class ViewService
     {
         private readonly DataServiceBase dataService;
-        private readonly PropretyGridService propretyGridService;
+        private readonly PropertyGridService propretyGridService;
         private readonly GridService gridService;
 
-        public ViewService(DataServiceBase dataService, PropretyGridService propretyGridService, GridService gridService)
+        public ViewService(DataServiceBase dataService, PropertyGridService propretyGridService, GridService gridService)
         {
             this.dataService = dataService;
             this.propretyGridService = propretyGridService;

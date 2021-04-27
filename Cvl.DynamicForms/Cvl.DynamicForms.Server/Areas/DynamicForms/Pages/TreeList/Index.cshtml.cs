@@ -41,7 +41,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             AutoRefreshUrl = RefreshUrl + "&autorefresh=3";
 
             var p = new CollectionViewModelParameters();
-            TreeList = viewService.GetTreeList(objectIdStr, type, p);
+            TreeList = (TreeListViewModel)viewService.GetTreeList(objectIdStr, type, p);
         }
     }
 }
