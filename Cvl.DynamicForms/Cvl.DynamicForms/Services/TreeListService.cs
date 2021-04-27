@@ -25,8 +25,9 @@ namespace Cvl.DynamicForms.Services
         {
 
             var collection = dataService.GetChildrenCollection(objectId, typeFullname,  parameters);
-            if (collection.Any())
-                return GetTreeListViewModel(collection, parameters);
+            if(collection != null)
+                if (collection.Any())
+                    return GetTreeListViewModel(collection, parameters);
             return propertyGridService.GetPropertyGrid(objectId, typeFullname, "");
         }
 

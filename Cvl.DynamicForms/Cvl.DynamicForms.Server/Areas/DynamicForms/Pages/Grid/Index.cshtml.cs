@@ -24,8 +24,10 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.Grid
         {
             this.viewService = new GridService(dataService, viewConfigurationService);
         }
-        public void OnGet()
+        public void OnGet(string submit = "false", string mainfilter = "")
         {
+            string filterText = mainfilter;
+            bool wasButtonPressed = Boolean.Parse(submit);
             SetBasePage();
             var query = Request.Query;
             var type = query["type"];
