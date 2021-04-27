@@ -1,5 +1,6 @@
 using System.Linq;
 using Cvl.DynamicForms.Base;
+using Cvl.DynamicForms.Model;
 using Cvl.DynamicForms.Model.ViewModel;
 using Cvl.DynamicForms.Services;
 using Cvl.DynamicForms.Services.Base;
@@ -14,12 +15,12 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
         private readonly TreeListService viewService;
         public string id;
 
-        public TreeListViewModel TreeList { get; set; }
+        public RegionVM TreeList { get; set; }
 
-        public NodeModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion) : base(applicationConfigurtion)
+        public NodeModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion, TreeListService treeListService) : base(applicationConfigurtion)
         {
             this.dataService = dataService;
-            this.viewService = new TreeListService(dataService, viewConfigurationService);
+            this.viewService = treeListService;
         }
 
         public void OnGet()
@@ -30,7 +31,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             var type = query["type"];
             id = objectIdStr;
             var p = new CollectionViewModelParameters();
-            TreeList = (TreeListViewModel)viewService.GetTreeList(objectIdStr, type, p);
+            TreeList = viewService.GetTreeList(objectIdStr, type, p);
         }
     }
 }

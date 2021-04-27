@@ -12,12 +12,13 @@ namespace Cvl.DynamicForms.Services
         private BaseService helper = new BaseService();        
         private readonly DataServiceBase dataService;
         private readonly ViewConfigurationService viewConfigurationService;
-        private GridService gridService;
+        private PropertyGridService propertyGridService;
 
-        public TreeListService(DataServiceBase dataService, ViewConfigurationService viewConfigurationService)
+        public TreeListService(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, PropertyGridService propertyGridService)
         {
             this.dataService = dataService;
-            this.viewConfigurationService = viewConfigurationService;            
+            this.viewConfigurationService = viewConfigurationService;
+            this.propertyGridService = propertyGridService;
         }
 
         public RegionVM GetTreeList(string objectId, string typeFullname, CollectionViewModelParameters parameters)
@@ -26,8 +27,7 @@ namespace Cvl.DynamicForms.Services
             var collection = dataService.GetChildrenCollection(objectId, typeFullname,  parameters);
             if (collection.Any())
                 return GetTreeListViewModel(collection, parameters);
-            PropertyGridService service = new PropertyGridService(dataService, viewConfigurationService, gridService);
-            return service.GetPropertyGrid(objectId, typeFullname, "");
+            return propertyGridService.GetPropertyGrid(objectId, typeFullname, "");
         }
 
         public TreeListViewModel GetTreeListViewModel(IQueryable<object> collection, CollectionViewModelParameters parameters)

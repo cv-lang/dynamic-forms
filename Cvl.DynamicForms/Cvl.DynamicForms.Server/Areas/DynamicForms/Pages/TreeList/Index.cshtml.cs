@@ -18,10 +18,10 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
 
         public TreeListViewModel TreeList { get; set; }
 
-        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion) : base(applicationConfigurtion)
+        public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, ApplicationConfigurtion applicationConfigurtion, TreeListService treeListService) : base(applicationConfigurtion)
         {
             this.dataService = dataService;
-            this.viewService = new TreeListService(dataService, viewConfigurationService);
+            this.viewService = treeListService;
         }
 
         public void OnGet()

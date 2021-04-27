@@ -40,3 +40,23 @@
         })
     }
 </script>
+
+<script type="text/javascript">
+    function getPropertyGridNode(id, type, targetdiv, bindingPath, isStatic) {
+        if (isStatic) { return; } //jeśli z statycznego expandera to nic nie robię
+
+        $.ajax({
+            type: "get",
+            url: "@ViewData["ApplicationUrl"]/DynamicForms/PropertyGrid/PropertyGridNode?id=" + id + "&type=" + type + "&bindingPath=" + bindingPath,
+            dataType: "html",
+            contentType: "text/html",
+            success: function (data) {
+                $('#' + targetdiv).html(data);
+            },
+            failure: function (response) {
+                throw new Error('Error in ajax PropertyGridNode loading');
+            }
+        });
+    }
+
+</script>
