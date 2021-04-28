@@ -3,8 +3,14 @@
 @{
     Layout = "_Layout";
 }
-
 <div class="container-fluid">
+    <form method="get">
+        <input type="hidden" name="id" value="@(Model.TreeList.MainObjectId)" />
+        <input type="hidden" name="type" value="@(Model.TreeList.MainObjectTypeFullname)" />
+        <input name="mainfilter" id="mainfilter" type="text" placeholder="Enter filter value..." />
+        <input name="submit" type="submit" id="submitButton" value="true" />
+    </form>
+    
     <div class="row">
         <span>
             <a href="@Model.RefreshUrl"><i class="bi bi-arrow-clockwise"></i></a>
@@ -47,9 +53,7 @@
             }
         })
     }
-</script>
 
-<script type="text/javascript">
     function getPropertyGridNode(id, type, targetdiv, bindingPath, isStatic) {
         if (isStatic) { return; } //jeśli z statycznego expandera to nic nie robię
 
@@ -65,6 +69,21 @@
                 throw new Error('Error in ajax PropertyGridNode loading');
             }
         });
+    }
+    function getFilter(id, type) {
+        filter = $("#mainfilter").val();
+        $.ajax({
+            type: "get",
+            url: "@ViewData["ApplicationUrl"]/DynamicForms/TreeList?id=" + id + "&type=" + type + "&filter=" + filter,
+            dataType: "html",
+            contentMainObjectIdyTreeListpBindingPathe: "text/html",
+            success: function (data) {
+                $('#mainfilter').html("<h1>success</h1>");
+            },
+            failure: function (response) {
+                throw new Error('Error in ajax PropertyGridNode loading');
+            }
+       });
     }
 
 </script>

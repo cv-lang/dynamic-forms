@@ -466,7 +466,7 @@ namespace Cvl.DynamicForms.Test
         /// <param name="type"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public override IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters)
+        public override IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters, string mainFilter)
         {
 			if (typeFullname == "Cvl.ApplicationServer.Logs.Model.LogElement")
 			{

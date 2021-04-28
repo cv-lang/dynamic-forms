@@ -21,12 +21,13 @@ namespace Cvl.DynamicForms.Services
             this.propertyGridService = propertyGridService;
         }
 
-        public RegionVM GetTreeList(string objectId, string typeFullname, CollectionViewModelParameters parameters)
+        public RegionVM GetTreeList(string objectId, string typeFullname, CollectionViewModelParameters parameters, string mainFilter = "")
         {
 
-            var collection = dataService.GetChildrenCollection(objectId, typeFullname,  parameters);
-            if (collection.Any())
-                return GetTreeListViewModel(collection, parameters);
+            var collection = dataService.GetChildrenCollection(objectId, typeFullname,  parameters, mainFilter);
+            if(collection != null)
+                if (collection.Any())
+                    return GetTreeListViewModel(collection, parameters);
             return propertyGridService.GetPropertyGrid(objectId, typeFullname, "");
         }
 

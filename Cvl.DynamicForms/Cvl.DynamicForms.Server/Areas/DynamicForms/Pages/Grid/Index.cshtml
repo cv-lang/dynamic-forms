@@ -5,6 +5,10 @@
 }
 
 <div class="container-fluid">
+    <form method="get">
+        <input name="mainfilter" id="mainfilter" type="text" placeholder="Enter filter value..." />
+        <input name="submit" type="submit" id="submitButton" value="true" />
+    </form>
     <div class="row">
         <span>
             <a href="@Model.RefreshUrl"><i class="bi bi-arrow-clockwise"></i></a>

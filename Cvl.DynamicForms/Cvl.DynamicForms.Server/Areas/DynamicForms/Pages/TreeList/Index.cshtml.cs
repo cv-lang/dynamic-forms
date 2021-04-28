@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Cvl.DynamicForms.Base;
 using Cvl.DynamicForms.Model.ViewModel;
@@ -11,7 +12,8 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
     {
         private readonly DataServiceBase dataService;
         private readonly TreeListService viewService;
-
+        public string Filter { get; set; }
+        public bool WasButtonPressed { get; set; }
         public string RefreshUrl { get; set; }
         public string AutoRefreshUrl { get; set; }
         public bool IsAutoRefresh { get; set; }
@@ -23,11 +25,19 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             this.dataService = dataService;
             this.viewService = treeListService;
         }
-
         public void OnGet()
         {
             SetBasePage();
+            bool wasButtonPressed;
             var query = Request.Query;
+            string filter = query["mainfilter"];
+            try
+            {
+                wasButtonPressed = Boolean.Parse(query["submit"]);
+            } catch
+            {
+                wasButtonPressed = false;
+            }
             var objectIdStr = query["id"].ToString();
             var type = query["type"];
             var autorefresh = query["autorefresh"];
@@ -41,7 +51,7 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.TreeList
             AutoRefreshUrl = RefreshUrl + "&autorefresh=3";
 
             var p = new CollectionViewModelParameters();
-            TreeList = (TreeListViewModel)viewService.GetTreeList(objectIdStr, type, p);
+            TreeList = (TreeListViewModel)viewService.GetTreeList(objectIdStr, type, p, filter);
         }
     }
 }

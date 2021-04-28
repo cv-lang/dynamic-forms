@@ -93,7 +93,7 @@ namespace Cvl.DynamicForms.Services
         /// <param name="type"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        public virtual IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters)
+        public virtual IQueryable<object> GetChildrenCollection(string objectId, string typeFullname, CollectionViewModelParameters parameters, string mainFilter)
         {
             
 
