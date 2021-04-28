@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cvl.ApplicationServer" Version="0.11.0" />
+    <PackageReference Include="Cvl.ApplicationServer" Version="0.11.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Pather.CSharp" Version="2.1.0" />
     <PackageReference Include="SharpSerializer" Version="3.0.1" />
