@@ -54,6 +54,7 @@ namespace Cvl.DynamicForms.Services
                 pg.PropertyValue = obj?.ToString();                
                 pg.MainObjectId = objectId;
                 pg.MainObjectTypeFullname = typeFullname;
+                pg.BindingPath = bindingPath;
                 pg.IsStatic = false;
                 //mamy zwykły obiekt - przechodzimy refleksjami
                 createPropertyGridFromObject_internal(obj, pg, 1, bindingPath);

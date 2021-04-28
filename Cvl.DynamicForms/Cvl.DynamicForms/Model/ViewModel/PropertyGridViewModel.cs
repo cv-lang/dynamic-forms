@@ -21,7 +21,7 @@ namespace Cvl.DynamicForms.Model
         /// </summary>
         public string BindingPath { get; set; }
 
-        public string PropertyUniqueName => BindingPath?.Replace(".", "_") ?? PropertyName;
+        public virtual string PropertyUniqueName => $"{BindingPath?.Replace(".", "_") ?? PropertyName}";
         public string PropertyValue { get; set; }        
 
         public PropertyTypes Type { get; set; }       
@@ -62,6 +62,12 @@ namespace Cvl.DynamicForms.Model
 
         public string MainObjectId { get; set; }
         public string MainObjectTypeFullname { get; set; }
+
+        /// <summary>
+        /// Unikalne id propercji z id obiektu -
+        /// używane treelist przy wyświetlaniu propercji wielu obiektów na tej samej stronie
+        /// </summary>
+        public override string PropertyUniqueName => $"{MainObjectId}{BindingPath?.Replace(".", "_") ?? PropertyName}";
     }
 
     /// <summary>

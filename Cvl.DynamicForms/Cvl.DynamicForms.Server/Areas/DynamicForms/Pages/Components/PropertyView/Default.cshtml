@@ -5,13 +5,13 @@
 {
     @await Component.InvokeAsync("SimplePropertyView", Model)
 }
-else @if (Model is Cvl.DynamicForms.Model.ViewModel.GridVM)
+else if (Model is Cvl.DynamicForms.Model.ViewModel.GridVM)
 {
-@await Component.InvokeAsync("GridView", Model)
+    @await Component.InvokeAsync("GridView", Model)
 }
-else @if (Model is Cvl.DynamicForms.Model.GroupVM)
+else if (Model is Cvl.DynamicForms.Model.GroupVM)
 {
-@await Component.InvokeAsync("GroupView", Model)
+    @await Component.InvokeAsync("GroupView", Model)
 }
 
 

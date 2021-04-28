@@ -46,13 +46,13 @@
             url: "@ViewData["ApplicationUrl"]/DynamicForms/TreeList/Node?Id=" + id + "&type=" + type,
             dataType: "html",
             contentType: "text/html",
-            success: function (data) {
+            success: function(data) {
                 $('#' + targetdiv).html(data);
             },
-            failure: function (response) {
+            failure: function(response) {
                 throw new Error('Error in ajax TreeListNode loading');
             }
-        })
+        });
     }
 
     function getPropertyGridNode(id, type, targetdiv, bindingPath, isStatic) {
@@ -71,6 +71,7 @@
             }
         });
     }
+
     function getFilter(id, type) {
         filter = $("#mainfilter").val();
         $.ajax({
