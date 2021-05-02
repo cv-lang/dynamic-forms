@@ -423,7 +423,7 @@ namespace Cvl.DynamicForms.Test
         public TestDataService()
         {
             generate();
-			fileLogStorage = new FileLogStorage();
+			fileLogStorage = new FileLogStorage("c:\\logs\\");
 			LogElements= fileLogStorage.GetHeaders();
         }
 
@@ -472,7 +472,19 @@ namespace Cvl.DynamicForms.Test
 			{
 				if(string.IsNullOrEmpty(objectId))
                 {
-					return fileLogStorage.GetHeaders().Cast<object>().AsQueryable();
+                    if (string.IsNullOrEmpty(mainFilter))
+                    {
+                        return fileLogStorage.GetHeaders().Cast<object>().AsQueryable();
+                    }
+                    else
+                    {
+						return fileLogStorage.GetHeaders()
+                            .Where(x=> (x.ExternalId1 != null && x.ExternalId1.Contains(mainFilter)) || 
+                                       (x.ExternalId2 != null && x.ExternalId2.Contains(mainFilter)) || 
+                                       (x.ExternalId3 != null && x.ExternalId3.Contains(mainFilter)) || 
+                               (x.ExternalId4 != null && x.ExternalId4.Contains(mainFilter)))
+                            .Cast<object>().AsQueryable();
+					}
                 }
 
 				var log= fileLogStorage.GetLogElement(objectId);

@@ -18,7 +18,7 @@ namespace Cvl.DynamicForms.WebHost
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
 
-            services.UseDynamicForms< TestDataService, TestViewConfigurationService>("https://localhost:44314");
+            services.UseDynamicForms<TestDataService, TestViewConfigurationService>("https://localhost:44314");
 
 
         }

@@ -7,5 +7,6 @@ namespace Cvl.DynamicForms.Services.Base
     public class ApplicationConfigurtion
     {
         public string ApplicationUrl { get; set; }
+        public string LogFolder { get; set; }
     }
 }
