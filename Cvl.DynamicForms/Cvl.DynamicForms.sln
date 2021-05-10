@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cvl.DynamicForms.Server", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cvl.DynamicForms", "Cvl.DynamicForms\Cvl.DynamicForms.csproj", "{299C94AA-5452-4C35-9419-B96C06BCECB8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cvl.DynamicForms.Tests", "Tests\Cvl.DynamicForms.Tests.csproj", "{DD529884-C518-4E6E-933B-0DC9E7363A2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cvl.ApplicationServer", "Cvl.ApplicationServer\Cvl.ApplicationServer.csproj", "{01D788C5-9274-4349-B4CA-F172919EF1E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{299C94AA-5452-4C35-9419-B96C06BCECB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{299C94AA-5452-4C35-9419-B96C06BCECB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{299C94AA-5452-4C35-9419-B96C06BCECB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD529884-C518-4E6E-933B-0DC9E7363A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD529884-C518-4E6E-933B-0DC9E7363A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD529884-C518-4E6E-933B-0DC9E7363A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD529884-C518-4E6E-933B-0DC9E7363A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01D788C5-9274-4349-B4CA-F172919EF1E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01D788C5-9274-4349-B4CA-F172919EF1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01D788C5-9274-4349-B4CA-F172919EF1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01D788C5-9274-4349-B4CA-F172919EF1E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
