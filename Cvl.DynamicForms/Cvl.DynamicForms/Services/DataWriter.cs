@@ -11,7 +11,6 @@ namespace Cvl.DynamicForms.Services
         {
 
         }
-
         public void SetCustomValue(object target, string property, object setTo)
         {
             bool isCollection = false;

@@ -18,15 +18,19 @@
             }
             Id: @Model.PropertyGrid.MainObjectId <a href="@Model.PropertyGrid.ListUrl">@Model.PropertyGrid.MainObjectTypeFullname</a>
             <a href="@Model.AllTypesUrl">all types</a>
+            <input id="submit" type="submit" value="submit" onclick="postData()" /> 
         </span>
     </div>
     @await Component.InvokeAsync("GroupView", Model.PropertyGrid)
 </div>
 
 <script type="text/javascript">
+    var jsonPostObj = {
+    };
+    var objectId;
+    var fullTypeName = "@Model.PropertyGrid.MainObjectTypeFullname";
     function getPropertyGridNode(id, type, targetdiv, bindingPath, isStatic) {
         if (isStatic) { return; } //jeśli z statycznego expandera to nic nie robię
-
         $.ajax({
             type: "get",
             url: "@ViewData["ApplicationUrl"]/DynamicForms/PropertyGrid/PropertyGridNode?id=" + id + "&type=" + type + "&bindingPath=" + bindingPath,
@@ -40,5 +44,45 @@
             }
         });
     }
+
+    function postData() {
+        console.log(jsonPostObj);
+        $.ajax({
+            type: "POST",
+            url: "@ViewData["ApplicationUrl"]/DynamicForms/PropertyGrid/Index",
+            data: JSON.stringify(jsonPostObj),
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                jsonPostObj = {};
+            }
+        })
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        inputs = document.getElementsByTagName('input');
+        $(inputs).each(function () {
+            var elem = $(this);
+            if (elem.attr('id') === "Id") {
+                objectId = elem.val();
+                console.log(objectId);
+            }
+                
+            elem.data('oldVal', elem.val());
+            elem.bind("propertychange change click keyup input paste", function (event) {
+                if (elem.data('oldVal') != elem.val()) {
+                    elem.data('oldVal', elem.val());
+                    arr = Object.entries(jsonPostObj);
+                    jsonPostObj[elem.attr('id')] = {
+                        'id': objectId,
+                        'typeFullName': fullTypeName,
+                        'binding': elem.attr('id'),
+                        'value': elem.val(),
+                    };
+
+                }
+            });
+        });
+    });
 
 </script>
