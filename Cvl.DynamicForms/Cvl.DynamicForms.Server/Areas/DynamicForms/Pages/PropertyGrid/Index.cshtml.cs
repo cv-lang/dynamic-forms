@@ -3,6 +3,10 @@ using Cvl.DynamicForms.Base;
 using Cvl.DynamicForms.Services;
 using Cvl.DynamicForms.Services.Base;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Web;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
 {
@@ -14,7 +18,6 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
         public string RefreshUrl { get; set; }
         public string AutoRefreshUrl { get; set; }
         public bool IsAutoRefresh { get; set; }
-
         public Model.PropertyGridVM PropertyGrid { get; set; }
 
         public IndexModel(DataServiceBase dataService, ViewConfigurationService viewConfigurationService, PropertyGridService propretyGridService, ApplicationConfigurtion applicationUrlConfigurtion) : base(applicationUrlConfigurtion)
@@ -40,6 +43,14 @@ namespace Cvl.DynamicForms.Areas.DynamicForms.Pages.PropertyGrid
             AutoRefreshUrl = RefreshUrl + "&autorefresh=3";
 
             PropertyGrid = viewService.GetPropertyGrid(objectIdStr, type,  "");     
+        }
+        [HttpPost]
+        public void OnPost(string data)
+        {
+            if(data != null)
+            {
+                var received = data;
+            }
         }
     }
 }
