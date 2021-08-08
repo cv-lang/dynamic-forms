@@ -19,6 +19,7 @@ namespace Cvl.DynamicForms.WebHost
                 .AddRazorRuntimeCompilation();
 
             services.UseDynamicForms<TestDataService, TestViewConfigurationService>("https://localhost:44314");
+            //services.UseDynamicForms<TestDataService, TestViewConfigurationService>("http://172.29.0.9/SmeoLogs");
 
 
         }
