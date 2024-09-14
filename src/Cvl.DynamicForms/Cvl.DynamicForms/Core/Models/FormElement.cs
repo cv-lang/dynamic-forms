@@ -23,6 +23,11 @@ namespace Cvl.DynamicForms.Core.Models
         public bool? IsRequired { get; set; }
         public string? Action { get; set; }
         public string? Notes { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name} - {Type}";
+        }
     }
 
     public enum FormElementType
