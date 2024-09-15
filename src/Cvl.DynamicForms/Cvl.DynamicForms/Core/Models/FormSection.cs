@@ -22,6 +22,6 @@ namespace Cvl.DynamicForms.Core.Models
 
     public enum FormSectionType
     {
-        Section, Row, Collumn, Tabs, Tab, Legend, Table
+        Section, Row, Column, Tabs, Tab, Legend, Table
     }
 }

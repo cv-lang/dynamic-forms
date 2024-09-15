@@ -35,7 +35,7 @@ namespace Cvl.DynamicForms.Importers.Excel
                     return FormSectionType.Row;
                 case "kolumna":
                 case "column":
-                    return FormSectionType.Collumn;
+                    return FormSectionType.Column;
                 case "tabs":
                     return FormSectionType.Tabs;
                 case "tab":

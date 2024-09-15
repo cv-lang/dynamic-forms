@@ -1,0 +1,66 @@
+﻿@page "/df"
+
+@using Cvl.DynamicForms.Core.Importer
+@using Cvl.DynamicForms.Core.Models
+@using Cvl.DynamicForms.WebApp.Components.FormSections
+@inject IFormDefinitionImporter formImporter
+
+
+<h3>@Name</h3>
+<small>@DecodedPath</small>
+<hr />
+@foreach (var control in Children)
+{
+    <SectionCollectionView Model=@control></SectionCollectionView>
+}
+
+@if (ErrorTitle != null)
+{
+    <h3>@ErrorTitle</h3>
+    <p>
+        @ViewDescription
+    </p>
+    <p>
+        @ErrorDescription
+    </p>
+}
+@code {
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int Index { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Path { get; set; } = string.Empty;
+
+    public List<FormSection> Children { get; set; } = new List<FormSection>();
+
+    public string Name { get; set; } = string.Empty;
+    public string DecodedPath { get; set; } = string.Empty;
+
+    public string? ErrorTitle { get; set; }
+    public string? ErrorDescription { get; set; }
+    public string ViewDescription = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+
+
+        try
+        {
+            Path = @"C:\nbac\projects\proceses\online-form-test\szablon.xlsx";
+            DecodedPath = Path;
+            var form = formImporter.LoadFromFile(Path, 0);
+
+            Children = form.RootSection.Children;
+        }
+        catch (Exception ex)
+        {
+            ErrorTitle = "Błąd - " + ex.Message;
+            ErrorDescription = "\n " + ex.ToString();
+        }
+    }    
+
+}

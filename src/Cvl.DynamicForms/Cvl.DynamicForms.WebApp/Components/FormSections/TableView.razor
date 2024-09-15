@@ -1,0 +1,29 @@
+﻿@using Cvl.DynamicForms.Core.Models
+<table class="table" style="width:auto">
+    <thead>
+        <tr class="rz-data-row">
+            @foreach (var item in Model.Elements)
+            {
+                <th>@item.Name</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < 4; i++)
+        {
+            <tr class="rz-data-row">
+                @foreach (var cell in Model.Elements)
+                {
+                    <td>..@i..</td>
+                }
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter]
+    public FormSection Model { get; set; }
+}

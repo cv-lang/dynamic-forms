@@ -1,0 +1,32 @@
+﻿@using Cvl.DynamicForms.Core.Models
+@if (Model.SectionType == FormSectionType.Section)
+{
+    <SectionCollectionView Model=@Model></SectionCollectionView>
+} 
+else if (Model.SectionType == FormSectionType.Column)
+{
+    <ColumnView Model=@Model></ColumnView>
+} 
+else if (Model.SectionType == FormSectionType.Row)
+{
+    <RowView Model=@Model></RowView>
+}
+else if (Model.SectionType == FormSectionType.Table)
+{
+    <TableView Model=@Model></TableView>
+}
+else if (Model.SectionType == FormSectionType.Tabs)
+{
+    <TabsView Model=@Model></TabsView>
+}
+else if (Model.SectionType == FormSectionType.Tab)
+{
+    @foreach (var control in Model.Children)
+    {
+        <ControlView Model=@control></ControlView>
+    }
+}
+@code {
+    [Parameter]
+    public FormSection? Model { get; set; }
+}

@@ -1,0 +1,56 @@
+﻿@using Cvl.DynamicForms.Core.Models
+@using Cvl.DynamicForms.WebApp.Components.FormElements
+
+<ul class="nav nav-tabs" id="nav-tab" role="tablist">
+    @foreach (var element in Model.Children)
+    {
+        if (element.SectionType == FormSectionType.Tab)
+        {            
+            <li class="nav-item" role="presentation">
+                @if (Model.Children.First() == element)
+                {
+                    <button class="nav-link active" id="t-@element.Id-tab" data-bs-toggle="tab"
+                            data-bs-target="#t-@element.Id" type="button" role="tab" aria-controls="t-@element.Id"
+                        aria-selected="true">
+                        @element.Name
+                </button>
+                } else
+                {
+                    <button class="nav-link" id="t-@element.Id-tab" data-bs-toggle="tab"
+                            data-bs-target="#t-@element.Id" type="button" role="tab" aria-controls="t-@element.Id"
+                        aria-selected="false">
+                        @element.Name
+                </button>
+                }
+            </li>
+        }
+    }
+</ul>
+
+
+<div class="tab-content" id="myTabContent">
+    @foreach (var element in Model.Children)
+    {
+        if (element.SectionType == FormSectionType.Tab)
+        {
+            if (Model.Children.First() == element)
+            {
+                <div class="tab-pane fade show active" id="t-@element.Id" role="tabpanel" aria-labelledby="t-@element.Id-tab">
+                    <ControlView Model=@element></ControlView>
+                </div>
+            }
+            else
+            {
+                <div class="tab-pane fade" id="t-@element.Id" role="tabpanel" aria-labelledby="t-@element.Id-tab">
+                    <ControlView Model=@element></ControlView>
+                </div>
+            }
+
+
+        }
+    }
+</div>
+@code {
+    [Parameter]
+    public FormSection Model { get; set; }
+}
