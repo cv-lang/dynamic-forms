@@ -6,11 +6,23 @@
 {
     @switch (Model.Type)
     {
+        case ControlType.Container:
+            <ContainerView Model="Model"></ContainerView>
+            break;
         case ControlType.Grid:
             <GridView Model="Model"></GridView>
             break;
-        case ControlType.Container:
-            <ContainerView Model="Model"></ContainerView>
+        case ControlType.Section:
+            <SectionView Model="Model"></SectionView>
+            break;
+        case ControlType.Table:
+            <TableView Model="Model"></TableView>
+            break;
+        case ControlType.Tabs:
+            <TabsView Model="Model"></TabsView>
+            break;
+        case ControlType.Tab:
+            <TabView Model="Model"></TabView>
             break;
         default:
             <div>Nieznany typ sekcji: @Model.Type</div>

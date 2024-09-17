@@ -3,20 +3,13 @@
 
 @if (Model != null)
 {
-    <MudContainer MaxWidth="MaxWidth.Small">
+    <MudContainer>
         @foreach (var element in Model.Children)
         {
             <MudItem>
                 <ControlView Model=@element></ControlView>
             </MudItem>
         }
-
-        @* @foreach (var element in Model.Elements)
-        {
-            <div class="col">
-                <FormElementView Model=@element></FormElementView>
-            </div>
-        } *@
     </MudContainer>
 }
 

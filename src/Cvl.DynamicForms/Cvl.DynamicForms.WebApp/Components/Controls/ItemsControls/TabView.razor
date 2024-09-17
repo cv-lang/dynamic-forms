@@ -3,14 +3,12 @@
 
 @if (Model != null)
 {
-    <MudGrid >
+    <MudTabPanel Text="@Model.Name">
         @foreach (var element in Model.Children)
         {
-            <MudItem>
-                <ControlView Model=@element></ControlView>
-            </MudItem>
-        }       
-    </MudGrid>
+            <ControlView Model=@element></ControlView>            
+        }
+    </MudTabPanel>
 }
 
 @code {

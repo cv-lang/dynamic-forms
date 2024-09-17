@@ -3,14 +3,17 @@
 
 @if (Model != null)
 {
-    <MudGrid >
+    <MudPaper Elevation="1">
+        <MudText Typo="Typo.h5" GutterBottom="true">Cart</MudText>
+        <MudGrid>
         @foreach (var element in Model.Children)
         {
             <MudItem>
                 <ControlView Model=@element></ControlView>
             </MudItem>
-        }       
-    </MudGrid>
+        }
+        </MudGrid>
+    </MudPaper>
 }
 
 @code {
