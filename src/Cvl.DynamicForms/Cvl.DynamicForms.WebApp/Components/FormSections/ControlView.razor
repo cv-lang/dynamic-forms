@@ -1,25 +1,25 @@
 ﻿@using Cvl.DynamicForms.Core.Models
-@if (Model.SectionType == FormSectionType.Section)
+@if (Model.Type == ItemsControlType.Section)
 {
     <SectionCollectionView Model=@Model></SectionCollectionView>
 } 
-else if (Model.SectionType == FormSectionType.Column)
+else if (Model.Type == ItemsControlType.Column)
 {
     <ColumnView Model=@Model></ColumnView>
 } 
-else if (Model.SectionType == FormSectionType.Row)
+else if (Model.Type == ItemsControlType.Row)
 {
     <RowView Model=@Model></RowView>
 }
-else if (Model.SectionType == FormSectionType.Table)
+else if (Model.Type == ItemsControlType.Table)
 {
     <TableView Model=@Model></TableView>
 }
-else if (Model.SectionType == FormSectionType.Tabs)
+else if (Model.Type == ItemsControlType.Tabs)
 {
     <TabsView Model=@Model></TabsView>
 }
-else if (Model.SectionType == FormSectionType.Tab)
+else if (Model.Type == ItemsControlType.Tab)
 {
     @foreach (var control in Model.Children)
     {
@@ -28,5 +28,5 @@ else if (Model.SectionType == FormSectionType.Tab)
 }
 @code {
     [Parameter]
-    public FormSection? Model { get; set; }
+    public ItemsControl? Model { get; set; }
 }

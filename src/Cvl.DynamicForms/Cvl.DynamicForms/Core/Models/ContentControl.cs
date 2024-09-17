@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Core.Models
 {
-    public class FormElement
+    public class ContentControl : Control
     {
-        public required string Id { get; set; }
-        public required string Name { get; set; }
-        public FormElementType Type { get; set; }
+        public ContentControlType Type { get; set; }
         public string? Label { get; set; }
         public string? Description { get; set; }
         public string? DataSource { get; set; }
@@ -24,20 +22,27 @@ namespace Cvl.DynamicForms.Core.Models
         public string? Action { get; set; }
         public string? Notes { get; set; }
 
+        public ControlValues ControlValues { get; set; } = new();
+
         public override string ToString()
         {
             return $"{Name} - {Type}";
         }
     }
 
-    public enum FormElementType
+    public class ControlValues
+    {
+        public bool? BoolValue { get; set; }
+        public string? StringValue { get; set; }
+    }
+
+    public enum ContentControlType
     {
         Auto,
         Legend,
-
         Text,
         Date,
-        Bool,
+        Checkbox,
         Button,
         Combo,
         Icon,

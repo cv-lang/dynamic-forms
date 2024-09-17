@@ -9,14 +9,14 @@ namespace Cvl.DynamicForms.Importers.Excel
 {
     public interface IFormSectionTypeParser
     {
-        FormSectionType Parse(string elementType, int row);
+        ItemsControlType Parse(string elementType, int row);
     }
 
     public class FormSectionTypeParser : IFormSectionTypeParser
     {
-        public FormSectionType Parse(string elementType, int row)
+        public ItemsControlType Parse(string elementType, int row)
         {
-            var validTypeName = new string[] { "sekcja","wiersz", "row","kolumna","column", "tabs", "tab", "tabela"};
+            var validTypeName = new string[] { "sekcja","wiersz", "row","kolumna","column", "tabs", "tab", "tabela", "grid", "container", "kontener", "grid", "legend", "legenda"};
 
             if (validTypeName.Any(x => elementType == x) == false)
             {
@@ -26,22 +26,28 @@ namespace Cvl.DynamicForms.Importers.Excel
 
             switch (elementType)
             {
-                case "sekcja":
-                    return FormSectionType.Section;
                 case "legend":
-                    return FormSectionType.Legend;
+                case "legenda":
+                    return ItemsControlType.Legend;
+                case "grid":
+                    return ItemsControlType.Grid;
+                case "container":
+                case "kontener":
+                    return ItemsControlType.Container;
+                case "sekcja":
+                    return ItemsControlType.Section;
                 case "row":
                 case "wiersz":
-                    return FormSectionType.Row;
+                    return ItemsControlType.Row;
                 case "kolumna":
                 case "column":
-                    return FormSectionType.Column;
+                    return ItemsControlType.Column;
                 case "tabs":
-                    return FormSectionType.Tabs;
+                    return ItemsControlType.Tabs;
                 case "tab":
-                    return FormSectionType.Tab;
+                    return ItemsControlType.Tab;
                 case "tabela":
-                    return FormSectionType.Table;
+                    return ItemsControlType.Table;
             }
 
             throw new Exception("Brak takiego typu");

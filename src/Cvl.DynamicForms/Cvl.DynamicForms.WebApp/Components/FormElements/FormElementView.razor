@@ -1,26 +1,26 @@
 ﻿@using Cvl.DynamicForms.Core.Models
 
-@if (Model.Type == FormElementType.Text)
+@if (Model.Type == ContentControlType.Text)
 {
     <span data-bs-toggle="tooltip" data-bs-title=@Model.Description data-bs-placement="bottom">@Model.Name</span>
     <input id="e-@Model.Id" placeholder=@Model.Placeholder value="@Model.Value" />
 }
-else if (Model.Type == FormElementType.Date)
+else if (Model.Type == ContentControlType.Date)
 {
     <span data-bs-toggle="tooltip" data-bs-title=@Model.Description data-bs-placement="bottom">@Model.Name</span>
     <InputDate @bind-Value="Date"></InputDate>
 }
-else if (Model.Type == FormElementType.Bool)
+else if (Model.Type == ContentControlType.Checkbox)
 {
     <span data-bs-toggle="tooltip" data-bs-title=@Model.Description data-bs-placement="bottom">@Model.Name</span>
     <input id="e-@Model.Id" placeholder=@Model.Placeholder type="checkbox" />
 
 }
-else if (Model.Type == FormElementType.Info)
+else if (Model.Type == ContentControlType.Info)
 {
     <p>@Model.Name</p>
 }
-else if (Model.Type == FormElementType.Combo)
+else if (Model.Type == ContentControlType.Combo)
 {
     <span data-bs-toggle="tooltip" data-bs-title=@Model.Description data-bs-placement="bottom">@Model.Name</span>
     <select class="w-25" style="height:32px">
@@ -30,7 +30,7 @@ else if (Model.Type == FormElementType.Combo)
         }
     </select>
 }
-else if (Model.Type == FormElementType.Button)
+else if (Model.Type == ContentControlType.Button)
 {
     <button type="button" class="btn btn-light" style="background-color:#777" @onclick="ButtonClicked">@Model.Name</button>
 }
@@ -43,7 +43,7 @@ else if (Model.Type == FormElementType.Button)
 
 @code {
     [Parameter]
-    public FormElement Model { get; set; }
+    public ContentControl Model { get; set; }
 
     public DateTime? Date { get; set; }
 

@@ -1,0 +1,24 @@
+﻿@using Cvl.DynamicForms.Core.Models
+@using Cvl.DynamicForms.WebApp.Components.FormElements
+
+@if (Model != null)
+{
+    @switch (Model.Type)
+    {
+        case ContentControlType.Auto:
+            <MudTextField @bind-Value="Model.ControlValues.StringValue"></MudTextField>
+            break;
+        case ContentControlType.Checkbox:
+            <MudCheckBox @bind-Value="Model.ControlValues.BoolValue"></MudCheckBox>
+            break;
+        default:
+            <div>Nieznany typ sekcji: @Model.Type</div>
+            break;
+    }
+}
+
+
+@code {
+    [Parameter]
+    public ContentControl? Model { get; set; }
+}

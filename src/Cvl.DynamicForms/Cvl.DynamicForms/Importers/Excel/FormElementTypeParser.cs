@@ -10,11 +10,11 @@ namespace Cvl.DynamicForms.Importers.Excel
 {
     public interface IFormElementTypeParser
     {
-        FormElementType Parse(string elementType, int row);
+        ContentControlType Parse(string elementType, int row);
     }
     internal class FormElementTypeParser : IFormElementTypeParser
     {
-        public FormElementType Parse(string elementType, int row)
+        public ContentControlType Parse(string elementType, int row)
         {
             var validTypeName = new string[] { "", "legend",
                 "checkbox","cb", "tekst", "data", "combo", "przycisk", "img", "info", "waluta" };
@@ -28,28 +28,28 @@ namespace Cvl.DynamicForms.Importers.Excel
             switch (elementType)
             {
                 case "legend":
-                    return FormElementType.Legend;
+                    return ContentControlType.Legend;
                 case "cb":
                 case "checkbox":
-                    return FormElementType.Bool;
+                    return ContentControlType.Checkbox;
                 case "tekst":
-                    return FormElementType.Text;
+                    return ContentControlType.Text;
                 case "data":
-                    return FormElementType.Date;
+                    return ContentControlType.Date;
                 case "combo":
-                    return FormElementType.Combo;
+                    return ContentControlType.Combo;
                 case "przycisk":
-                    return FormElementType.Button;
+                    return ContentControlType.Button;
                 case "img":
-                    return FormElementType.Icon;
+                    return ContentControlType.Icon;
                 case "info":
-                    return FormElementType.Info;
+                    return ContentControlType.Info;
                 case "waluta":
-                    return FormElementType.Currency;
+                    return ContentControlType.Currency;
 
             }
 
-            return FormElementType.Auto;
+            return ContentControlType.Auto;
         }
     }
 }

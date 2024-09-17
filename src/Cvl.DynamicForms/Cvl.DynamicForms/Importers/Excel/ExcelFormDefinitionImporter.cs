@@ -42,12 +42,12 @@ namespace Cvl.DynamicForms.Importers.Excel
         }
 
 
-        private FormSection ParseExcelView(IWorksheet ws)
+        private ItemsControl ParseExcelView(IWorksheet ws)
         {
             var elementTypeParser = new FormElementTypeParser();
             int level = 1;
-            var root = new FormSection() { Name = "root", Id = "1" };
-            Stack<FormSection> controlStack = new();
+            var root = new ItemsControl() { Name = "root", Id = "1" };
+            Stack<ItemsControl> controlStack = new();
             controlStack.Push(root);
             for (int row = 4; row < 2000; row++)
             {
@@ -72,7 +72,7 @@ namespace Cvl.DynamicForms.Importers.Excel
                 if (czyWszystkiePuste && string.IsNullOrEmpty(elementName) == false)
                 {
                     //mamy element
-                    var element = new FormElement()
+                    var element = new ContentControl()
                     {
                         Id = row.ToString(),
                         Name = elementName,
@@ -96,13 +96,16 @@ namespace Cvl.DynamicForms.Importers.Excel
                 
                 if (controlName == "sekcja" || controlName == "kolumna" 
                     || controlName == "wiersz" || controlName == "tabs"
-                    || controlName == "tab" || controlName == "tabela")
+                    || controlName == "tab" || controlName == "tabela"
+                    || controlName == "legenda" || controlName == "legend"
+                    || controlName == "container" || controlName == "kontener"
+                    || controlName == "grid")
                 {
-                    var ctrl = new FormSection()
+                    var ctrl = new ItemsControl()
                     {
                         Id = row.ToString(),
                         Name = elementName ?? "",
-                        SectionType = formSectionTypeParser.Parse(controlName, row)
+                        Type = formSectionTypeParser.Parse(controlName, row)
                     };
                     currentControl.Children.Add(ctrl);
                     controlStack.Push(ctrl);

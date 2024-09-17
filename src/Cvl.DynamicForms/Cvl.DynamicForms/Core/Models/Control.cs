@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Core.Models
 {
-    public class FormDefinition
+    public abstract class Control
     {
+        public required string Id { get; set; }
         public required string Name { get; set; }
-        public required ItemsControl RootSection { get; set; }
+
+
     }
 }

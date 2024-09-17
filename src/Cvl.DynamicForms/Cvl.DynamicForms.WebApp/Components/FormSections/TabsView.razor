@@ -4,7 +4,7 @@
 <ul class="nav nav-tabs" id="nav-tab" role="tablist">
     @foreach (var element in Model.Children)
     {
-        if (element.SectionType == FormSectionType.Tab)
+        if (element.Type == ItemsControlType.Tab)
         {            
             <li class="nav-item" role="presentation">
                 @if (Model.Children.First() == element)
@@ -31,7 +31,7 @@
 <div class="tab-content" id="myTabContent">
     @foreach (var element in Model.Children)
     {
-        if (element.SectionType == FormSectionType.Tab)
+        if (element.Type == ItemsControlType.Tab)
         {
             if (Model.Children.First() == element)
             {
@@ -52,5 +52,5 @@
 </div>
 @code {
     [Parameter]
-    public FormSection Model { get; set; }
+    public ItemsControl Model { get; set; }
 }
