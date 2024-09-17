@@ -85,7 +85,7 @@ namespace Cvl.DynamicForms.Importers.Excel
                         Action = action
                     };
 
-                    currentControl.Elements.Add(element);
+                    currentControl.Children.Add(element);
                     continue;
                 }
 

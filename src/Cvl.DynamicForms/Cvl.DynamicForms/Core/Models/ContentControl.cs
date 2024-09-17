@@ -8,7 +8,6 @@ namespace Cvl.DynamicForms.Core.Models
 {
     public class ContentControl : Control
     {
-        public ContentControlType Type { get; set; }
         public string? Label { get; set; }
         public string? Description { get; set; }
         public string? DataSource { get; set; }
@@ -36,17 +35,4 @@ namespace Cvl.DynamicForms.Core.Models
         public string? StringValue { get; set; }
     }
 
-    public enum ContentControlType
-    {
-        Auto,
-        Legend,
-        Text,
-        Date,
-        Checkbox,
-        Button,
-        Combo,
-        Icon,
-        Info,
-        Currency
-    }
 }

@@ -2,7 +2,6 @@
 
 @using Cvl.DynamicForms.Core.Importer
 @using Cvl.DynamicForms.Core.Models
-@using Cvl.DynamicForms.WebApp.Components.FormSections
 @inject IFormDefinitionImporter formImporter
 
 
@@ -11,7 +10,7 @@
 <hr />
 @foreach (var control in Children)
 {
-    <SectionCollectionView Model=@control></SectionCollectionView>
+    <ControlView Model=@control></ControlView>
 }
 
 @if (ErrorTitle != null)
@@ -34,7 +33,7 @@
     [SupplyParameterFromQuery]
     public string Path { get; set; } = string.Empty;
 
-    public List<ItemsControl> Children { get; set; } = new List<ItemsControl>();
+    public List<Control> Children { get; set; } = new List<Control>();
 
     public string Name { get; set; } = string.Empty;
     public string DecodedPath { get; set; } = string.Empty;

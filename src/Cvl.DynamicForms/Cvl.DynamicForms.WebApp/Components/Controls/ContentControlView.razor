@@ -5,10 +5,10 @@
 {
     @switch (Model.Type)
     {
-        case ContentControlType.Auto:
+        case ControlType.Auto:
             <MudTextField @bind-Value="Model.ControlValues.StringValue"></MudTextField>
             break;
-        case ContentControlType.Checkbox:
+        case ControlType.Checkbox:
             <MudCheckBox @bind-Value="Model.ControlValues.BoolValue"></MudCheckBox>
             break;
         default:

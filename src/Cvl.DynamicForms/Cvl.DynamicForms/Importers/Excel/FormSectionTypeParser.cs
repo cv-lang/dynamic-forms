@@ -9,12 +9,12 @@ namespace Cvl.DynamicForms.Importers.Excel
 {
     public interface IFormSectionTypeParser
     {
-        ItemsControlType Parse(string elementType, int row);
+        ControlType Parse(string elementType, int row);
     }
 
     public class FormSectionTypeParser : IFormSectionTypeParser
     {
-        public ItemsControlType Parse(string elementType, int row)
+        public ControlType Parse(string elementType, int row)
         {
             var validTypeName = new string[] { "sekcja","wiersz", "row","kolumna","column", "tabs", "tab", "tabela", "grid", "container", "kontener", "grid", "legend", "legenda"};
 
@@ -28,26 +28,26 @@ namespace Cvl.DynamicForms.Importers.Excel
             {
                 case "legend":
                 case "legenda":
-                    return ItemsControlType.Legend;
+                    return ControlType.Legend;
                 case "grid":
-                    return ItemsControlType.Grid;
+                    return ControlType.Grid;
                 case "container":
                 case "kontener":
-                    return ItemsControlType.Container;
+                    return ControlType.Container;
                 case "sekcja":
-                    return ItemsControlType.Section;
+                    return ControlType.Section;
                 case "row":
                 case "wiersz":
-                    return ItemsControlType.Row;
+                    return ControlType.Row;
                 case "kolumna":
                 case "column":
-                    return ItemsControlType.Column;
+                    return ControlType.Column;
                 case "tabs":
-                    return ItemsControlType.Tabs;
+                    return ControlType.Tabs;
                 case "tab":
-                    return ItemsControlType.Tab;
+                    return ControlType.Tab;
                 case "tabela":
-                    return ItemsControlType.Table;
+                    return ControlType.Table;
             }
 
             throw new Exception("Brak takiego typu");

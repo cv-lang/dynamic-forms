@@ -10,11 +10,11 @@ namespace Cvl.DynamicForms.Importers.Excel
 {
     public interface IFormElementTypeParser
     {
-        ContentControlType Parse(string elementType, int row);
+        ControlType Parse(string elementType, int row);
     }
     internal class FormElementTypeParser : IFormElementTypeParser
     {
-        public ContentControlType Parse(string elementType, int row)
+        public ControlType Parse(string elementType, int row)
         {
             var validTypeName = new string[] { "", "legend",
                 "checkbox","cb", "tekst", "data", "combo", "przycisk", "img", "info", "waluta" };
@@ -28,28 +28,28 @@ namespace Cvl.DynamicForms.Importers.Excel
             switch (elementType)
             {
                 case "legend":
-                    return ContentControlType.Legend;
+                    return ControlType.Legend;
                 case "cb":
                 case "checkbox":
-                    return ContentControlType.Checkbox;
+                    return ControlType.Checkbox;
                 case "tekst":
-                    return ContentControlType.Text;
+                    return ControlType.Text;
                 case "data":
-                    return ContentControlType.Date;
+                    return ControlType.Date;
                 case "combo":
-                    return ContentControlType.Combo;
+                    return ControlType.Combo;
                 case "przycisk":
-                    return ContentControlType.Button;
+                    return ControlType.Button;
                 case "img":
-                    return ContentControlType.Icon;
+                    return ControlType.Icon;
                 case "info":
-                    return ContentControlType.Info;
+                    return ControlType.Info;
                 case "waluta":
-                    return ContentControlType.Currency;
+                    return ControlType.Currency;
 
             }
 
-            return ContentControlType.Auto;
+            return ControlType.Auto;
         }
     }
 }

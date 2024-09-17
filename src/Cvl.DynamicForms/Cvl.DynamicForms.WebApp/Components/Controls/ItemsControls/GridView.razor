@@ -13,9 +13,9 @@
 
         @foreach (var element in Model.Elements)
         {
-            <div class="col">
+            <MudItem>
                 <FormElementView Model=@element></FormElementView>
-            </div>
+            </MudItem>
         }
     </MudGrid>
 }
