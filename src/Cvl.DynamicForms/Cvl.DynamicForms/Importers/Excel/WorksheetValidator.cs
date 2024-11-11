@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cvl.DynamicForms.Importers.Excel.Tools;
 
 namespace Cvl.DynamicForms.Importers.Excel
 {
@@ -21,8 +22,8 @@ namespace Cvl.DynamicForms.Importers.Excel
             if (ws.GetCellText(1, 2) != "ver")
                 throw new Exception("Poprawny szablon musi mieć w komórce B1 tekst: ver");
 
-            var columns = new string[] {"1","2","3","4","5","Nazwa","Typ", "*", "Opis",
-                "Źródło danych", "Znak wodny",  "Walid","Walid. Wiadomość","Tooltip",
+            var columns = new string[] {"1","2","3","4","5","6","Nazwa","Typ", "*","RO", "Opis",
+                "Źródło danych","Ikona", "Znak wodny", "Wyrównanie",  "Walid","Walid. Wiadomość","Tooltip",
                 "Wartość","Binding","Zaznaczony element","Akcja","Uwagi" };
 
             for (int i = 0; i < columns.Length; i++)

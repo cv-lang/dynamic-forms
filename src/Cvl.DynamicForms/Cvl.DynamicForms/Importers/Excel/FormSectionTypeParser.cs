@@ -1,4 +1,4 @@
-﻿using Cvl.DynamicForms.Core.Models;
+﻿using Cvl.DynamicForms.Core.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;

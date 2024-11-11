@@ -9,6 +9,9 @@ using static System.Collections.Specialized.BitVector32;
 using System.Xml.Linq;
 using Cvl.DynamicForms.Core.Models;
 using Cvl.DynamicForms.Core.Importer;
+using Cvl.DynamicForms.Core.Models.ItemsControls;
+using Cvl.DynamicForms.Importers.Excel.Tools;
+using Cvl.DynamicForms.Importers.Excel.Helpers;
 
 namespace Cvl.DynamicForms.Importers.Excel
 {
@@ -44,6 +47,7 @@ namespace Cvl.DynamicForms.Importers.Excel
 
         private ItemsControl ParseExcelView(IWorksheet ws)
         {
+            var excelRowReader = new ExcelRowReader();
             var elementTypeParser = new FormElementTypeParser();
             int level = 1;
             var root = new ItemsControl() { Name = "root", Id = "1" };
@@ -51,6 +55,8 @@ namespace Cvl.DynamicForms.Importers.Excel
             controlStack.Push(root);
             for (int row = 4; row < 2000; row++)
             {
+                var excelRow = excelRowReader.ReadRow(ws, row, level);
+
                 var controlName = ws.GetCellText(row, level);
                 var elementName = ws.GetCellText(row, ExcelColumnIndex.Name) ?? "";
                 var elementValue = ws.GetCellText(row, ExcelColumnIndex.Value);
@@ -131,17 +137,5 @@ namespace Cvl.DynamicForms.Importers.Excel
 
     }
 
-    public class ExcelColumnIndex
-    {
-        public const int Name = 6;
-        public const int Type = 7;
-        public const int Value = 8;
-        public const int Binding = 9;
-        public const int Placeholder = 10;
-        public const int IsRequired = 11;
-        public const int Description = 13;
-        public const int Datasource = 16;
-        public const int Action = 17;
-        public const int IsReadOnly = 19;
-    }
+    
 }

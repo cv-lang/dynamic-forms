@@ -14,7 +14,7 @@ var app = builder.Build();
 
 var parser = app.Services.GetRequiredService<IFormDefinitionImporter>();
 
-var form = parser.LoadFromFile(@"C:\nbac\projects\proceses\online-form-test\szablon.xlsx", 0);
+var form = parser.LoadFromFile(@"C:\nbac\projects\dynamic-forms\dynamic-form-szablon.xlsx", 0);
 
 Console.WriteLine(form.ToString());
 

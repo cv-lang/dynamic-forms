@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cvl.DynamicForms.Core.Models
+namespace Cvl.DynamicForms.Core.Models.Base
 {
     public class ContentControl : Control
     {
-        public string? Label { get; set; }
-        public string? Description { get; set; }
-        public string? DataSource { get; set; }
+
         public string? Placeholder { get; set; }
         public string? Validation { get; set; }
         public string? ValidationMessage { get; set; }
