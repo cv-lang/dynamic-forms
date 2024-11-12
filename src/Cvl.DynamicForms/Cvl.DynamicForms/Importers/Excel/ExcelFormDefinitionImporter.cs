@@ -9,10 +9,11 @@ using static System.Collections.Specialized.BitVector32;
 using System.Xml.Linq;
 using Cvl.DynamicForms.Core.Models;
 using Cvl.DynamicForms.Core.Importer;
-using Cvl.DynamicForms.Core.Models.ItemsControls;
 using Cvl.DynamicForms.Importers.Excel.Tools;
 using Cvl.DynamicForms.Importers.Excel.Helpers;
 using Cvl.DynamicForms.Core.Models.Base;
+using Cvl.DynamicForms.Core.Parsers;
+using Cvl.DynamicForms.Core.Models.Layouts;
 
 namespace Cvl.DynamicForms.Importers.Excel
 {
@@ -46,81 +47,55 @@ namespace Cvl.DynamicForms.Importers.Excel
         }
 
 
-        private ItemsControl ParseExcelView(IWorksheet ws)
+        private HierarchicalControl ParseExcelView(IWorksheet ws)
         {
             var excelRowReader = new ExcelRowReader();
             var elementTypeParser = new FormElementTypeParser();
             int level = 1;
-            var root = new ItemsControl() { Name = "root", Id = "1" };
-            Stack<ItemsControl> controlStack = new();
+            var root = new Stack() { Name = "root", Id = "1" };
+            Stack<HierarchicalControl> controlStack = new();
             controlStack.Push(root);
             for (int row = 4; row < 2000; row++)
             {
-                var excelRow = excelRowReader.ReadRow(ws, row, level);
-
-                var controlName = ws.GetCellText(row, level);
-                var elementName = ws.GetCellText(row, ExcelColumnIndex.Name) ?? "";
-                var elementValue = ws.GetCellText(row, ExcelColumnIndex.Value);
-                var placeholder = ws.GetCellText(row, ExcelColumnIndex.Placeholder) ?? "";
-                var isRequiredString = ws.GetCellText(row, ExcelColumnIndex.IsRequired);
-                var isRequired = isRequiredString == "1";
-                var description = ws.GetCellText(row, ExcelColumnIndex.Description) ?? "";
-                var datasource = ws.GetCellText(row, ExcelColumnIndex.Datasource) ?? "";
-                var binding = ws.GetCellText(row, ExcelColumnIndex.Binding) ?? elementName.Replace(" ", "_");
-                var stringType = ws.GetCellText(row, ExcelColumnIndex.Type)?.Trim() ?? "tekst";
-                var type = formElementTypeParser.Parse(stringType, row);
-
-                var action = ws.GetCellText(row, ExcelColumnIndex.Action)?.Trim()?.ToLower();
-
                 var currentControl = controlStack.Peek();
 
-                var czyWszystkiePuste = new int[] { 1, 2, 3, 4, 5 }.All(x => string.IsNullOrEmpty(ws.GetCellText(row, x)));
+                //sprawdzam rodzaj kontrolki
+                var czyWszystkiePuste = new int[] { 1, 2, 3, 4, 5, 6 }.All(x => string.IsNullOrEmpty(ws.GetCellText(row, x)));
 
-                if (czyWszystkiePuste && string.IsNullOrEmpty(elementName) == false)
+                if (czyWszystkiePuste && string.IsNullOrEmpty(ws.GetCellText(row, ExcelColumnIndex.Name)) == false)
                 {
                     //mamy element
-                    var element = new ContentControl()
-                    {
-                        Id = row.ToString(),
-                        Name = elementName,
-                        Type = type,
-                        Value = elementValue,
-                        Placeholder = placeholder,
-                        IsRequired = isRequired,
-                        Description = $"{description} - path:{binding}",
-                        DataSource = datasource,
-                        Action = action
-                    };
+                    var controlDescription = excelRowReader.ReadControlRow(ws, row, level);
+                    var controlsParser = new ContentControlsParser();
 
-                    currentControl.Children.Add(element);
+                    if (!controlsParser.IsContentControl(controlDescription))
+                    {
+                        throw new Exception("Element nie jest poprawną kontrolką");
+                    }
+                    
+                    var ctrl = controlsParser.Create(controlDescription);
+                    currentControl.Children.Add(ctrl);
                     continue;
                 }
 
                 if (czyWszystkiePuste)
                 {
+                    //mamy puste wiersze
                     continue;
                 }
-                
-                if (controlName == "sekcja" || controlName == "kolumna" 
-                    || controlName == "wiersz" || controlName == "tabs"
-                    || controlName == "tab" || controlName == "tabela"
-                    || controlName == "legenda" || controlName == "legend"
-                    || controlName == "container" || controlName == "kontener"
-                    || controlName == "grid")
+
+                var hierarchicalControlDescription = excelRowReader.ReadHierarchicalControlRow(ws, row, level);
+                var hierarchicalParser = new HierarchicalControlsParser();
+
+                if(hierarchicalParser.IsHierarhicalControl(hierarchicalControlDescription))
                 {
-                    var ctrl = new ItemsControl()
-                    {
-                        Id = row.ToString(),
-                        Name = elementName ?? "",
-                        Type = formSectionTypeParser.Parse(controlName, row)
-                    };
+                    var ctrl = hierarchicalParser.Create(hierarchicalControlDescription);
+
                     currentControl.Children.Add(ctrl);
                     controlStack.Push(ctrl);
                     level++;
                     continue;
-                } 
-
-
+                }                
 
                 //możemy mieć zmniejszenie poziomu
                 var nowyPoziom = new int[] { 1, 2, 3, 4, 5 }.First(x => string.IsNullOrEmpty(ws.GetCellText(row, x)) == false);
@@ -135,8 +110,5 @@ namespace Cvl.DynamicForms.Importers.Excel
 
             return root;
         }
-
-    }
-
-    
+    }    
 }

@@ -1,4 +1,5 @@
-﻿using Cvl.DynamicForms.Importers.Excel;
+﻿using Cvl.DynamicForms.Core.ControlDescriptions;
+using Cvl.DynamicForms.Importers.Excel;
 using Cvl.DynamicForms.Importers.Excel.Tools;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using System;
@@ -9,39 +10,51 @@ using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Importers.Excel.Helpers
 {
-    public class ExcelRow
-    {
-        public required string ControlName { get; set; }
-        public required string ElementName { get; set; }
-        public required string Placeholder { get; set; }
-        public required string ElementValue { get; set; }
-        public required bool IsRequired { get; set; }
-        public required string Description { get; set; }
-        public required string Datasource { get; set; }
-        public required string Binding { get; set; }
-        public required string StringType { get; set; }
-    }
+    
 
 
     public class ExcelRowReader
     {
-        public ExcelRow ReadRow(IWorksheet ws, int row, int level)
+        public HierarchicalControlDescription ReadHierarchicalControlRow(IWorksheet ws, int row, int level)
         {
-            var isRequiredString = ws.GetCellText(row, ExcelColumnIndex.IsRequired);
             var elementName = ws.GetCellText(row, ExcelColumnIndex.Name) ?? "";
 
-            var excelRow = new ExcelRow()
+            var excelRow = new HierarchicalControlDescription()
             {
-                ControlName = ws.GetCellText(row, level),
+                Name = ws.GetCellText(row, level),
                 ElementName = elementName,
-                ElementValue = ws.GetCellText(row, ExcelColumnIndex.Value),
-                Placeholder = ws.GetCellText(row, ExcelColumnIndex.Placeholder) ?? "",
+                TypeName = ws.GetCellText(row, ExcelColumnIndex.Type)?.Trim() ?? "",
+                Level = level,
+                Row = row,
+            };
+            return excelRow;
+        }
+
+        public ControlDescription ReadControlRow(IWorksheet ws, int row, int level)
+        {          
+            var isRequiredString = ws.GetCellText(row, ExcelColumnIndex.IsRequired);
+            var isReadOnlyString = ws.GetCellText(row, ExcelColumnIndex.IsReadOnly);
+
+            var excelRow = new ControlDescription()
+            {
+                Row = row,
+                ElementName = ws.GetCellText(row, ExcelColumnIndex.Name) ?? "",
+                TypeName = ws.GetCellText(row, ExcelColumnIndex.Type)?.Trim() ?? "",
                 IsRequired = isRequiredString == "1",
+                IsReadOnly = isReadOnlyString == "1",
                 Description = ws.GetCellText(row, ExcelColumnIndex.Description) ?? "",
                 Datasource = ws.GetCellText(row, ExcelColumnIndex.Datasource) ?? "",
-                Binding = ws.GetCellText(row, ExcelColumnIndex.Binding) ??
-                    elementName.Replace(" ", "_"),
-                StringType = ws.GetCellText(row, ExcelColumnIndex.Type)?.Trim() ?? "tekst"
+                Icon = ws.GetCellText(row, ExcelColumnIndex.Icon) ?? "",
+                Placeholder = ws.GetCellText(row, ExcelColumnIndex.Placeholder) ?? "",
+                Aligment = ws.GetCellText(row, ExcelColumnIndex.Aligment) ?? "",
+                Validation = ws.GetCellText(row, ExcelColumnIndex.Validation) ?? "",
+                ValidationMessage = ws.GetCellText(row, ExcelColumnIndex.ValidationMessage) ?? "",
+                Tooltip = ws.GetCellText(row, ExcelColumnIndex.Tooltip) ?? "",
+                Value = ws.GetCellText(row, ExcelColumnIndex.Value) ?? "",
+                Binding = ws.GetCellText(row, ExcelColumnIndex.Binding) ?? "",
+                SelectedElementBinding = ws.GetCellText(row, ExcelColumnIndex.SelectedElementBinding) ?? "",
+                Action = ws.GetCellText(row, ExcelColumnIndex.Action) ?? "",
+                Comments = ws.GetCellText(row, ExcelColumnIndex.Comments) ?? "",
             };
             return excelRow;
         }
@@ -56,10 +69,14 @@ namespace Cvl.DynamicForms.Importers.Excel.Helpers
         public const int Datasource = 12;
         public const int Icon = 13;
         public const int Placeholder = 14;
+        public const int Aligment = 15;
+        public const int Validation = 16;
+        public const int ValidationMessage = 17;
         public const int Tooltip = 18;
         public const int Value = 19;
         public const int Binding = 20;
-        
+        public const int SelectedElementBinding = 21;
         public const int Action = 22;
+        public const int Comments = 23;
     }
 }

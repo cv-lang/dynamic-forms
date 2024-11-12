@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cvl.DynamicForms.Core.ControlDescriptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Core.Models.Base
 {
-    public class ContentControl : Control
-    {
+    /// <summary>
+    /// Kontrolka prosta typu - textbox, checkbox, autocomplet itp
+    /// </summary>
+    public abstract class ContentControl : HierarchicalControl
+    {        
+        public ContentControl(ControlDescription controlDescription) 
+        {
+            Id = controlDescription.Row.ToString();
+            Name = controlDescription.ElementName;
+        }
 
         public string? Placeholder { get; set; }
         public string? Validation { get; set; }
