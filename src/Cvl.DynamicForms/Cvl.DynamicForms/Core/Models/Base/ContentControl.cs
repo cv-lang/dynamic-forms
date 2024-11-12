@@ -10,7 +10,7 @@ namespace Cvl.DynamicForms.Core.Models.Base
     /// <summary>
     /// Kontrolka prosta typu - textbox, checkbox, autocomplet itp
     /// </summary>
-    public abstract class ContentControl : HierarchicalControl
+    public abstract class ContentControl : Control
     {        
         public ContentControl(ControlDescription controlDescription) 
         {

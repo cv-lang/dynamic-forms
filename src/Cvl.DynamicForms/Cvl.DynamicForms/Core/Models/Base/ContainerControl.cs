@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cvl.DynamicForms.Core.ControlDescriptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,11 @@ namespace Cvl.DynamicForms.Core.Models.Base
     /// </summary>
     public class ContainerControl : HierarchicalControl
     {
+        public ContainerControl()
+        {
+        }
+        public ContainerControl(HierarchicalControlDescription controlDescription)
+        {
+        }
     }
 }

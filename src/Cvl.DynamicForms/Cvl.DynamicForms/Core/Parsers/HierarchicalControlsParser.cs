@@ -17,7 +17,8 @@ namespace Cvl.DynamicForms.Core.Parsers
 
     public class HierarchicalControlsParser
     {
-        private static IHierarchicalControlParser[] parsers = { new LayoutParser() };
+        private static IHierarchicalControlParser[] parsers = { new LayoutParser(), new HeaderParser(), new FooterParser(),
+            new StackParser(), new RowParser(), new ColumnParser(), new SidebarParser() };
 
         internal bool IsHierarhicalControl(HierarchicalControlDescription hierarchicalControlDescription)
         {
