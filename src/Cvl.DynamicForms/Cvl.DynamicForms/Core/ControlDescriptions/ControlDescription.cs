@@ -9,7 +9,7 @@ namespace Cvl.DynamicForms.Core.ControlDescriptions
     public class ControlDescription
     {
         public required string ElementName { get; set; }
-        public required string TypeName { get; set; }
+        public required string ElementType { get; set; }
         public required string Placeholder { get; set; }
         public required bool IsRequired { get; set; }
         public required string Description { get; set; }

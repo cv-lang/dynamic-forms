@@ -19,16 +19,17 @@ namespace Cvl.DynamicForms.Core.Parsers
     internal class ContentControlsParser
     {
         private static IContentControlParser[] parsers = { new ImageParser(), new LinkParser(), new BodyParser(),
-        new DatePickerParser(), new TextBoxParser(), new AutoCompleteParser()};
+        new DatePickerParser(), new TextBoxParser(), new AutoCompleteParser(), new ButtonParser(), new ComboBoxParser(),
+        new CurrencyParser(), new InfoParser()};
 
         internal bool IsContentControl(ControlDescription controlDescription)
         {
-            return parsers.Any(x => x.IsContentControl(controlDescription.TypeName));
+            return parsers.Any(x => x.IsContentControl(controlDescription.ElementType));
         }
 
         internal ContentControl Create(ControlDescription controlDescription)
         {
-            return parsers.First(x => x.IsContentControl(controlDescription.TypeName))
+            return parsers.First(x => x.IsContentControl(controlDescription.ElementType))
                 .Create(controlDescription);
         }
     }

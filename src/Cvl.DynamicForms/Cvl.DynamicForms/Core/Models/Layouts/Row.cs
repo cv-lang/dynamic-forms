@@ -25,7 +25,7 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
 
         public bool IsHierarhicalControl(string name)
         {
-            return name.ToLower() == "row";
+            return new string[] { "row", "wiersz"}.Contains(name.ToLower());
         }
     }
 }

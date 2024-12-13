@@ -25,7 +25,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
 
         public bool IsContentControl(string name)
         {
-            return  new string[]{ "textbox", "tekst"}.Contains(name.ToLower());
+            return  new string[]{ "textbox", "tekst", ""}.Contains(name.ToLower());
         }
     }
 }

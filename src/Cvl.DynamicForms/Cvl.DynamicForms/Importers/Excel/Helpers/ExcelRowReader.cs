@@ -17,13 +17,13 @@ namespace Cvl.DynamicForms.Importers.Excel.Helpers
     {
         public HierarchicalControlDescription ReadHierarchicalControlRow(IWorksheet ws, int row, int level)
         {
-            var elementName = ws.GetCellText(row, ExcelColumnIndex.Name) ?? "";
+            var elementName = ws.GetCellText(row, ExcelColumnIndex.ElementName) ?? "";
 
             var excelRow = new HierarchicalControlDescription()
             {
-                Name = ws.GetCellText(row, level),
+                HierarchicalControlType = ws.GetCellText(row, level),
                 ElementName = elementName,
-                TypeName = ws.GetCellText(row, ExcelColumnIndex.Type)?.Trim() ?? "",
+                TypeName = ws.GetCellText(row, ExcelColumnIndex.ElementType)?.Trim() ?? "",
                 Level = level,
                 Row = row,
             };
@@ -38,8 +38,8 @@ namespace Cvl.DynamicForms.Importers.Excel.Helpers
             var excelRow = new ControlDescription()
             {
                 Row = row,
-                ElementName = ws.GetCellText(row, ExcelColumnIndex.Name) ?? "",
-                TypeName = ws.GetCellText(row, ExcelColumnIndex.Type)?.Trim() ?? "",
+                ElementName = ws.GetCellText(row, ExcelColumnIndex.ElementName) ?? "",
+                ElementType = ws.GetCellText(row, ExcelColumnIndex.ElementType)?.Trim() ?? "",
                 IsRequired = isRequiredString == "1",
                 IsReadOnly = isReadOnlyString == "1",
                 Description = ws.GetCellText(row, ExcelColumnIndex.Description) ?? "",
@@ -61,8 +61,8 @@ namespace Cvl.DynamicForms.Importers.Excel.Helpers
     }
     public class ExcelColumnIndex
     {
-        public const int Name = 7;
-        public const int Type = 8;
+        public const int ElementName = 7;
+        public const int ElementType = 8;
         public const int IsRequired = 9;
         public const int IsReadOnly = 10;
         public const int Description = 11;

@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Core.Models.ContentControls
 {
-    public class DatePicker : ContentControl
+    public class Currency : ContentControl
     {
-        public DatePicker(ControlDescription controlDescription) : base(controlDescription)
+        public Currency(ControlDescription controlDescription) : base(controlDescription)
         {
         }
     }
 
-    public class DatePickerParser : IContentControlParser
+    public class CurrencyParser : IContentControlParser
     {
         public ContentControl Create(ControlDescription controlDescription)
         {
-            return new DatePicker(controlDescription);
+            return new Currency(controlDescription);
         }
 
         public bool IsContentControl(string name)
         {
-            return name.ToLower() == "data";
+            return new string[] { "currency", "waluta"}.Contains(name.ToLower());
         }
     }
 }

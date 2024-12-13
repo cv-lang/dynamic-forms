@@ -18,16 +18,18 @@ namespace Cvl.DynamicForms.Core.Parsers
     public class HierarchicalControlsParser
     {
         private static IHierarchicalControlParser[] parsers = { new LayoutParser(), new HeaderParser(), new FooterParser(),
-            new StackParser(), new RowParser(), new ColumnParser(), new SidebarParser() };
+            new StackParser(), new RowParser(), new ColumnParser(), new SidebarParser(),
+        new TabsParser(), new TabParser(), new GridParser(), new SectionParser(),
+        new LegendParser(), new TableParser()};
 
         internal bool IsHierarhicalControl(HierarchicalControlDescription hierarchicalControlDescription)
         {
-            return parsers.Any(x => x.IsHierarhicalControl(hierarchicalControlDescription.Name));
+            return parsers.Any(x => x.IsHierarhicalControl(hierarchicalControlDescription.HierarchicalControlType));
         }
 
         internal HierarchicalControl Create(HierarchicalControlDescription hierarchicalControlDescription)
         {
-            return parsers.First(x => x.IsHierarhicalControl(hierarchicalControlDescription.Name))
+            return parsers.First(x => x.IsHierarhicalControl(hierarchicalControlDescription.HierarchicalControlType))
                 .Create(hierarchicalControlDescription);
         }
     }

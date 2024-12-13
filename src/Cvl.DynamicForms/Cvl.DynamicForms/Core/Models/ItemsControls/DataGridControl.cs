@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Core.Models.ItemsControls
 {
-    internal class GridControl
+    internal class DataGridControl
     {
     }
 }

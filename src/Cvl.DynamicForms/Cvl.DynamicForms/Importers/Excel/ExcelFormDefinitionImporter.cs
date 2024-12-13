@@ -57,12 +57,16 @@ namespace Cvl.DynamicForms.Importers.Excel
             controlStack.Push(root);
             for (int row = 4; row < 2000; row++)
             {
-                var currentControl = controlStack.Peek();
+                if(row == 9)
+                {
+                    
+                }
+                
 
                 //sprawdzam rodzaj kontrolki
                 var czyWszystkiePuste = new int[] { 1, 2, 3, 4, 5, 6 }.All(x => string.IsNullOrEmpty(ws.GetCellText(row, x)));
 
-                if (czyWszystkiePuste && string.IsNullOrEmpty(ws.GetCellText(row, ExcelColumnIndex.Name)) == false)
+                if (czyWszystkiePuste && string.IsNullOrEmpty(ws.GetCellText(row, ExcelColumnIndex.ElementName)) == false)
                 {
                     //mamy element
                     var controlDescription = excelRowReader.ReadControlRow(ws, row, level);
@@ -74,6 +78,7 @@ namespace Cvl.DynamicForms.Importers.Excel
                     }
                     
                     var ctrl = controlsParser.Create(controlDescription);
+                    var currentControl = controlStack.Peek();
                     currentControl.Children.Add(ctrl);
                     continue;
                 }
@@ -102,10 +107,14 @@ namespace Cvl.DynamicForms.Importers.Excel
                 {
                     var ctrl = hierarchicalParser.Create(hierarchicalControlDescription);
 
+                    var currentControl = controlStack.Peek();
                     currentControl.Children.Add(ctrl);
                     controlStack.Push(ctrl);
                     level++;
                     continue;
+                } else
+                {
+                    throw new Exception("Brak kontrholki hierarchicznej");
                 }
             }
 
