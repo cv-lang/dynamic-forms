@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cvl.DynamicForms.Importers.Excel
+namespace Cvl.DynamicForms.Infrastructure.Importers.Excel
 {
     public interface IFormSectionTypeParser
     {
@@ -16,7 +16,7 @@ namespace Cvl.DynamicForms.Importers.Excel
     {
         public ControlType Parse(string elementType, int row)
         {
-            var validTypeName = new string[] { "sekcja","wiersz", "row","kolumna","column", "tabs", "tab", "tabela", "grid", "container", "kontener", "grid", "legend", "legenda"};
+            var validTypeName = new string[] { "sekcja", "wiersz", "row", "kolumna", "column", "tabs", "tab", "tabela", "grid", "container", "kontener", "grid", "legend", "legenda" };
 
             if (validTypeName.Any(x => elementType == x) == false)
             {

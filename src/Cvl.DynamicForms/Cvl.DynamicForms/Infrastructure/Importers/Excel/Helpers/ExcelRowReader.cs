@@ -1,6 +1,5 @@
 ﻿using Cvl.DynamicForms.Core.ControlDescriptions;
-using Cvl.DynamicForms.Importers.Excel;
-using Cvl.DynamicForms.Importers.Excel.Tools;
+using Cvl.DynamicForms.Infrastructure.Importers.Excel.Tools;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using System;
 using System.Collections.Generic;
@@ -8,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cvl.DynamicForms.Importers.Excel.Helpers
+namespace Cvl.DynamicForms.Infrastructure.Importers.Excel.Helpers
 {
-    
+
 
 
     public class ExcelRowReader
@@ -31,7 +30,7 @@ namespace Cvl.DynamicForms.Importers.Excel.Helpers
         }
 
         public ControlDescription ReadControlRow(IWorksheet ws, int row, int level)
-        {          
+        {
             var isRequiredString = ws.GetCellText(row, ExcelColumnIndex.IsRequired);
             var isReadOnlyString = ws.GetCellText(row, ExcelColumnIndex.IsReadOnly);
 

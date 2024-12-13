@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cvl.DynamicForms.Importers.Excel.Tools;
+using Cvl.DynamicForms.Infrastructure.Importers.Excel.Tools;
 
-namespace Cvl.DynamicForms.Importers.Excel
+namespace Cvl.DynamicForms.Infrastructure.Importers.Excel
 {
     public interface IWorksheetValidator
     {

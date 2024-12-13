@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cvl.DynamicForms.Importers.Excel.Tools
+namespace Cvl.DynamicForms.Infrastructure.Importers.Excel.Tools
 {
     public interface IExcelReader
     {

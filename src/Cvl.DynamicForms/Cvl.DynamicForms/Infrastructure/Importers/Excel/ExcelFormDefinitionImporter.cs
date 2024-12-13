@@ -9,13 +9,13 @@ using static System.Collections.Specialized.BitVector32;
 using System.Xml.Linq;
 using Cvl.DynamicForms.Core.Models;
 using Cvl.DynamicForms.Core.Importer;
-using Cvl.DynamicForms.Importers.Excel.Tools;
-using Cvl.DynamicForms.Importers.Excel.Helpers;
 using Cvl.DynamicForms.Core.Models.Base;
 using Cvl.DynamicForms.Core.Parsers;
 using Cvl.DynamicForms.Core.Models.Layouts;
+using Cvl.DynamicForms.Infrastructure.Importers.Excel.Helpers;
+using Cvl.DynamicForms.Infrastructure.Importers.Excel.Tools;
 
-namespace Cvl.DynamicForms.Importers.Excel
+namespace Cvl.DynamicForms.Infrastructure.Importers.Excel
 {
     internal class ExcelFormDefinitionImporter(
         IFormElementTypeParser formElementTypeParser,
@@ -57,11 +57,11 @@ namespace Cvl.DynamicForms.Importers.Excel
             controlStack.Push(root);
             for (int row = 4; row < 2000; row++)
             {
-                if(row == 9)
+                if (row == 9)
                 {
-                    
+
                 }
-                
+
 
                 //sprawdzam rodzaj kontrolki
                 var czyWszystkiePuste = new int[] { 1, 2, 3, 4, 5, 6 }.All(x => string.IsNullOrEmpty(ws.GetCellText(row, x)));
@@ -76,7 +76,7 @@ namespace Cvl.DynamicForms.Importers.Excel
                     {
                         throw new Exception("Element nie jest poprawną kontrolką");
                     }
-                    
+
                     var ctrl = controlsParser.Create(controlDescription);
                     var currentControl = controlStack.Peek();
                     currentControl.Children.Add(ctrl);
@@ -88,7 +88,7 @@ namespace Cvl.DynamicForms.Importers.Excel
                     //mamy puste wiersze
                     continue;
                 }
-                
+
 
                 //możemy mieć zmniejszenie poziomu
                 var nowyPoziom = new int[] { 1, 2, 3, 4, 5, 6 }.First(x => string.IsNullOrEmpty(ws.GetCellText(row, x)) == false);
@@ -112,7 +112,8 @@ namespace Cvl.DynamicForms.Importers.Excel
                     controlStack.Push(ctrl);
                     level++;
                     continue;
-                } else
+                }
+                else
                 {
                     throw new Exception("Brak kontrholki hierarchicznej");
                 }
@@ -120,5 +121,5 @@ namespace Cvl.DynamicForms.Importers.Excel
 
             return root;
         }
-    }    
+    }
 }
