@@ -83,11 +83,22 @@ namespace Cvl.DynamicForms.Importers.Excel
                     //mamy puste wiersze
                     continue;
                 }
+                
+
+                //możemy mieć zmniejszenie poziomu
+                var nowyPoziom = new int[] { 1, 2, 3, 4, 5, 6 }.First(x => string.IsNullOrEmpty(ws.GetCellText(row, x)) == false);
+                var dl = level - nowyPoziom;
+                for (int i = 0; i < dl; i++)
+                {
+                    controlStack.Pop();
+                }
+                level = nowyPoziom;
+
 
                 var hierarchicalControlDescription = excelRowReader.ReadHierarchicalControlRow(ws, row, level);
                 var hierarchicalParser = new HierarchicalControlsParser();
 
-                if(hierarchicalParser.IsHierarhicalControl(hierarchicalControlDescription))
+                if (hierarchicalParser.IsHierarhicalControl(hierarchicalControlDescription))
                 {
                     var ctrl = hierarchicalParser.Create(hierarchicalControlDescription);
 
@@ -95,17 +106,7 @@ namespace Cvl.DynamicForms.Importers.Excel
                     controlStack.Push(ctrl);
                     level++;
                     continue;
-                }                
-
-                //możemy mieć zmniejszenie poziomu
-                var nowyPoziom = new int[] { 1, 2, 3, 4, 5 }.First(x => string.IsNullOrEmpty(ws.GetCellText(row, x)) == false);
-                var dl = level - nowyPoziom;
-                for (int i = 0; i < dl; i++)
-                {
-                    controlStack.Pop();
                 }
-                row--;
-                level = nowyPoziom;
             }
 
             return root;

@@ -18,7 +18,8 @@ namespace Cvl.DynamicForms.Core.Parsers
 
     internal class ContentControlsParser
     {
-        private static IContentControlParser[] parsers = { new ImageParser() };
+        private static IContentControlParser[] parsers = { new ImageParser(), new LinkParser(), new BodyParser(),
+        new DatePickerParser(), new TextBoxParser(), new AutoCompleteParser()};
 
         internal bool IsContentControl(ControlDescription controlDescription)
         {
