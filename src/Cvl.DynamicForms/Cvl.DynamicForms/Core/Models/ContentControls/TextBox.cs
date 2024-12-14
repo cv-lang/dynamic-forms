@@ -13,6 +13,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public TextBox(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.TextBox;
         }
     }
 

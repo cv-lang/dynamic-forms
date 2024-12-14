@@ -14,6 +14,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public ComboBox(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.ComboBox;
         }
     }
 

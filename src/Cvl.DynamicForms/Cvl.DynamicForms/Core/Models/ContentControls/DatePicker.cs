@@ -13,6 +13,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public DatePicker(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.DatePicker;
         }
     }
 

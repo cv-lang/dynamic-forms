@@ -1,0 +1,6 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+<RadzenImage Path="@Element.DataSource" AlternateText="@Element.Name" />
+
+@code {
+    [Parameter] public Image Element { get; set; }
+}

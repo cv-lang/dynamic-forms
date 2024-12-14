@@ -13,6 +13,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public Currency(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Currency;
         }
     }
 

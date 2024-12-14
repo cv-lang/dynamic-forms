@@ -12,7 +12,6 @@ namespace Cvl.DynamicForms
             services.AddTransient<IWorksheetValidator, WorksheetValidator>();
             services.AddTransient<IExcelReader, ExcelReader>();
             services.AddTransient<IFormDefinitionImporter, ExcelFormDefinitionImporter>();
-            services.AddTransient<IFormElementTypeParser, FormElementTypeParser>();
             services.AddTransient<IFormSectionTypeParser, FormSectionTypeParser>();
 
             return services;

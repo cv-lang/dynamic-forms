@@ -1,0 +1,84 @@
+﻿@using Cvl.DynamicForms.Core.Models.Base
+@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+@if (Element.Type == ControlType.Image)
+{
+    <DynamicImage Element="(Image)Element" />
+}
+else if (Element.Type == ControlType.Link)
+{
+    <DynamicLink Element="(Link)Element" />
+}
+else if (Element.Type == ControlType.Layout)
+{
+    <DynamicLayout Element="(Layout)Element" />
+}
+else if (Element.Type == ControlType.TextBox)
+{
+    <DynamicTextBox Element="(TextBox)Element" />
+}
+else if (Element.Type == ControlType.Button)
+{
+    <DynamicButton Element="(Button)Element" />
+}
+else if (Element.Type == ControlType.ComboBox)
+{
+    <DynamicComboBox Element="(ComboBox)Element" />
+}
+else if (Element.Type == ControlType.Currency)
+{
+    <DynamicCurrency Element="(Currency)Element" />
+}
+else if (Element.Type == ControlType.DatePicker)
+{
+    <DynamicDatePicker Element="(DatePicker)Element" />
+}
+else if (Element.Type == ControlType.Info)
+{
+    <DynamicInfo Element="(Info)Element" />
+}
+else if (Element.Type == ControlType.Grid)
+{
+    <DynamicGrid Element="(Grid)Element" />
+}
+else if (Element.Type == ControlType.Row)
+{
+    <DynamicRow Element="(Row)Element" />
+}
+else if (Element.Type == ControlType.Column)
+{
+    <DynamicColumn Element="(Column)Element" />
+}
+else if (Element.Type == ControlType.Section)
+{
+    <DynamicSection Element="(Section)Element" />
+}
+else if (Element.Type == ControlType.Tabs)
+{
+    <DynamicTabs Element="(Tabs)Element" />
+}
+else if (Element.Type == ControlType.Sidebar)
+{
+    <DynamicSidebar Element="(Sidebar)Element" />
+}
+else if (Element.Type == ControlType.Header)
+{
+    <DynamicHeader Element="(Header)Element" />
+}
+else if (Element.Type == ControlType.Footer)
+{
+    <DynamicFooter Element="(Footer)Element" />
+}
+else if (Element.Type == ControlType.Stack)
+{
+    <DynamicStack Element="(Stack)Element" />
+}
+else
+{
+    <p>Unsupported control type: @Element.Type</p>
+}
+
+@code {
+    [Parameter] public Control Element { get; set; }
+}

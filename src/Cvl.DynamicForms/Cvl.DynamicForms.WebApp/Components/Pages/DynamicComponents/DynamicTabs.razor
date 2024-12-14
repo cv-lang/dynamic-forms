@@ -1,0 +1,17 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+@using Radzen
+
+<RadzenTabs>
+    @foreach (var tab in Element.Children)
+    {
+        <RadzenTabsItem Text="@tab.Name">
+            <DynamicRenderer Element="@tab" />
+        </RadzenTabsItem>
+    }
+</RadzenTabs>
+
+@code {
+    [Parameter] public Tabs Element { get; set; }
+    public string Content { get; set; }
+}

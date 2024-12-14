@@ -1,0 +1,18 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+<RadzenAutoComplete TValue="string"
+                    @bind-Value="@Element.Value"
+                    Data="@Element.DataSource"
+                    Placeholder="@Element.Placeholder"
+                    Style="width: 100%;"
+                    Change="OnChange"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" />
+
+@code {
+    [Parameter] public AutoComplete Element { get; set; }
+
+    // Handle the change event if needed
+    private void OnChange(object value)
+    {
+        Element.Value = value?.ToString();
+    }
+}

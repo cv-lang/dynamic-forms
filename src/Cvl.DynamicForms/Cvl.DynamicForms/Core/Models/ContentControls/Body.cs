@@ -13,6 +13,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public Body(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Body;
         }
     }
 

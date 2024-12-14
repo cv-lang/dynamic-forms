@@ -8,6 +8,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public Link(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Link;
         }
     }
 

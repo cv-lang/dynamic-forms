@@ -13,6 +13,7 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
     {
         public Column(HierarchicalControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Column;
         }
     }
 

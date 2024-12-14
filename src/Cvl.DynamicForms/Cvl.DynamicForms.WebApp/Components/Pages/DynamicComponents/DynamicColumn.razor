@@ -1,0 +1,21 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<div style="flex: @(Width ?? "1 1 auto"); padding: 10px;">
+    @if (Element.Children != null && Element.Children.Any())
+    {
+        @foreach (var child in Element.Children)
+        {
+            <DynamicRenderer Element="child" />
+        }
+    }
+    else
+    {
+        @* <span>@Element.Content</span> *@
+    }
+</div>
+
+@code {
+    [Parameter] public Column Element { get; set; }
+    public string Width { get; set; }
+}

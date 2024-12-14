@@ -1,0 +1,32 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+
+<RadzenTextBox @bind-Value="@Element.Value"
+               Placeholder="@Element.Placeholder"
+               Disabled="@Element.IsReadOnly"
+               Style="width: 100%;"
+               Change="OnChange"
+               @onkeypress="OnKeyPress" />
+
+
+@code {
+    [Parameter] public TextBox Element { get; set; }
+
+    private void OnChange(string value)
+    {
+        Element.Value = value;
+
+        // // Optional: Custom validation logic
+        // if (Element.OnChange != null)
+        // {
+        //     Element.OnChange.Invoke(value);
+        // }
+    }
+
+    private void OnKeyPress(KeyboardEventArgs e)
+    {
+        // if (Element.MaxLength > 0 && Element.Value?.Length >= Element.MaxLength)
+        // {
+        //     e.PreventDefault(); // Prevent exceeding MaxLength
+        // }
+    }
+}

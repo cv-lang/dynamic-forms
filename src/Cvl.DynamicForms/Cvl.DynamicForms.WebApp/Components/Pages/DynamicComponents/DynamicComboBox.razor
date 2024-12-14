@@ -1,0 +1,24 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+
+<RadzenDropDown @bind-Value="@Element.Value"
+                Data="@Element.DataSource"
+                TextProperty="Text"
+                ValueProperty="Value"
+                Placeholder="@Element.Placeholder"
+                Disabled="@Element.IsReadOnly"
+                Change="OnChange"
+                Style="width: 100%;" />
+
+@code {
+    [Parameter] public ComboBox Element { get; set; }
+
+    private void OnChange(object value)
+    {
+        Element.Value = value?.ToString();
+
+        // if (Element.OnChange != null)
+        // {
+        //     Element.OnChange.Invoke(value);
+        // }
+    }
+}

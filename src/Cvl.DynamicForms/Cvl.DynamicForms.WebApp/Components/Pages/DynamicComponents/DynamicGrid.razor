@@ -1,0 +1,19 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<div style="display: grid; grid-template-columns: repeat(@Element.Children, 1fr); gap: @(Gap ?? "10px");
+            width: 100%; padding: 10px;">
+
+    @foreach (var child in Element.Children)
+    {
+        <div style="grid-column: span @(Span ?? 1);">
+            <DynamicRenderer Element="child" />
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Grid Element { get; set; }
+    public string Gap { get; set; }
+    public int? Span { get; set; }
+}

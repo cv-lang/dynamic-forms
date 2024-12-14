@@ -1,0 +1,11 @@
+﻿@using Cvl.DynamicForms.Core.Models.Layouts
+<div class="layout">
+    @foreach (var child in Element.Children)
+    {
+        <DynamicRenderer Element="child" />
+    }
+</div>
+
+@code {
+    [Parameter] public Layout Element { get; set; }
+}

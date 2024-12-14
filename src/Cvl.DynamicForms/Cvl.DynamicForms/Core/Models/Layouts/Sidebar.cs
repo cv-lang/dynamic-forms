@@ -13,6 +13,7 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
     {
         public Sidebar(HierarchicalControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Sidebar;
         }
     }
 

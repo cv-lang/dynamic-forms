@@ -1,0 +1,26 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+
+<RadzenNumeric TValue="decimal"
+               @bind-Value="@Element.ControlValues.DecimalValue"
+               Placeholder="@Element.Placeholder"
+               @* Min="@Element.MinValue"
+               Max="@Element.MaxValue"
+               Format="@Element.Format" *@
+               Step="0.01"
+               Disabled="@Element.IsReadOnly"               
+               Style="width: 100%;"
+               Change="OnChange" />
+
+@code {
+    [Parameter] public Currency Element { get; set; }
+
+    private void OnChange(decimal value)
+    {
+        // Element.Value = value ?? 0;
+
+        // if (Element.OnChange != null)
+        // {
+        //     Element.OnChange.Invoke(value);
+        // }
+    }
+}

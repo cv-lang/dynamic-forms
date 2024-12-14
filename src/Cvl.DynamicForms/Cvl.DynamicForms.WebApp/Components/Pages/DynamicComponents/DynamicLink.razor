@@ -1,0 +1,20 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+
+<RadzenLink Href="@Element.DataSource"
+            @* Target="@Element.Target" *@
+            Style="color: #007bff; text-decoration: none; margin: 5px; font-size: 16px;"
+            @onclick="OnClick">
+    @Element.Name
+</RadzenLink>
+
+@code {
+    [Parameter] public Link Element { get; set; }
+
+    private async Task OnClick(MouseEventArgs e)
+    {
+        // if (Element.OnClick != null)
+        // {
+        //     await Element.OnClick.InvokeAsync(Element.Url);
+        // }
+    }
+}

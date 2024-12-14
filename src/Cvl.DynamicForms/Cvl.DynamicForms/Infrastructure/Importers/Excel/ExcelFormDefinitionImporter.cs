@@ -17,8 +17,7 @@ using Cvl.DynamicForms.Infrastructure.Importers.Excel.Tools;
 
 namespace Cvl.DynamicForms.Infrastructure.Importers.Excel
 {
-    internal class ExcelFormDefinitionImporter(
-        IFormElementTypeParser formElementTypeParser,
+    internal class ExcelFormDefinitionImporter(       
         IFormSectionTypeParser formSectionTypeParser,
         IExcelReader excelReader
         ) : IFormDefinitionImporter
@@ -50,7 +49,6 @@ namespace Cvl.DynamicForms.Infrastructure.Importers.Excel
         private HierarchicalControl ParseExcelView(IWorksheet ws)
         {
             var excelRowReader = new ExcelRowReader();
-            var elementTypeParser = new FormElementTypeParser();
             int level = 1;
             var root = new Stack() { Name = "root", Id = "1" };
             Stack<HierarchicalControl> controlStack = new();

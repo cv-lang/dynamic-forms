@@ -12,10 +12,11 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
     public class Stack : ContainerControl
     {
         public Stack()
-        { }
+        { Type = ControlType.Stack; }
 
         public Stack(HierarchicalControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Stack;
         }
     }
 

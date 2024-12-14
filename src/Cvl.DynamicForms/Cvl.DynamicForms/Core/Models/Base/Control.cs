@@ -53,17 +53,19 @@ namespace Cvl.DynamicForms.Core.Models.Base
     public enum ControlType
     {
         //kontenery
-        Section, Row, Column, Tabs, Tab, Legend, Table, Grid, Container,
+        Column, Footer, Grid, Header, Layout, Legend, Row, Section, Sidebar, Stack, Tab, Tabs, Table,
 
         //proste kontrolki
         Auto,
-        Text,
-        Date,
-        Checkbox,
+        AutoComplete,
+        Body,
         Button,
-        Combo,
-        Icon,
+        ComboBox,
+        Currency,
+        DatePicker,
+        Image,
         Info,
-        Currency
+        Link,
+        TextBox,
     }
 }

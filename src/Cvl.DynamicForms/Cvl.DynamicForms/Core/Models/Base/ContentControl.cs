@@ -29,6 +29,7 @@ namespace Cvl.DynamicForms.Core.Models.Base
         public string? Value { get; set; }
         public string? Binding { get; set; }
         public bool? IsRequired { get; set; }
+        public bool IsReadOnly { get; set; } = false;
         public string? Action { get; set; }
         public string? Notes { get; set; }
 
@@ -44,6 +45,7 @@ namespace Cvl.DynamicForms.Core.Models.Base
     {
         public bool? BoolValue { get; set; }
         public string? StringValue { get; set; }
+        public decimal DecimalValue { get; set; }
     }
 
 }

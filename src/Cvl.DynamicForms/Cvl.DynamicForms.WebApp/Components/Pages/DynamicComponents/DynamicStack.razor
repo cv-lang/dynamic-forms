@@ -1,0 +1,22 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<div style="display: flex; flex-direction: @(Orientation == "Horizontal" ? "row" : "column");
+            gap: @(Spacing + "px");
+            align-items: @(Alignment ?? "stretch");
+            justify-content: @(Justification ?? "flex-start");
+            width: 100%;">
+    @foreach (var child in Element.Children)
+    {
+        <DynamicRenderer Element="child" />
+    }
+</div>
+
+@code {
+    [Parameter] public Stack Element { get; set; }
+
+    public string Orientation { get; set; }
+    public string Alignment { get; set; }
+    public string Spacing { get; set; }
+    public string Justification { get; set; }
+}

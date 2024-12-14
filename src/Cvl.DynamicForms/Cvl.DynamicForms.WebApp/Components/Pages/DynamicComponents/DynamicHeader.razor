@@ -1,0 +1,37 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<header style="width: 100%; padding: 10px; background-color: @(BackgroundColor ?? "#007bff");
+               color: @(FontColor ?? "#ffffff"); text-align: @(Alignment ?? "center");
+               border-bottom: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <h1 style="margin: 0; font-size: @(FontSize ?? "24px");">@Element.Name</h1>
+
+    @if (!string.IsNullOrWhiteSpace(Subtitle))
+    {
+        <p style="margin: 5px 0 0; font-size: @(SubtitleFontSize ?? "16px"); color: @(SubtitleColor ?? "#f8f9fa");">
+            @Subtitle
+        </p>
+    }
+
+    @if (Element.Children != null && Element.Children.Any())
+    {
+        <nav style="margin-top: 10px;">
+            @foreach (var child in Element.Children)
+            {
+                <DynamicRenderer Element="child" />
+            }
+        </nav>
+    }
+</header>
+
+@code {
+    [Parameter] public Header Element { get; set; }
+
+    public string BackgroundColor { get; set; }
+    public string FontColor { get; set; }
+    public string Alignment { get; set; }
+    public string FontSize { get; set; }
+    public string SubtitleFontSize { get; set; }
+    public string SubtitleColor { get; set; }
+    public string Subtitle { get; set; }
+}

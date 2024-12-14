@@ -8,6 +8,7 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
     {
         public Legend(HierarchicalControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Legend;
         }
     }
 

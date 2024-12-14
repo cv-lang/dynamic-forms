@@ -1,0 +1,29 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<RadzenGrid Data="@Element.DataSource"
+            TItem="object"
+            ShowPagingSummary="true"
+            PageSize="10"
+            AllowPaging="true"
+            AllowSorting="true"
+            Style="width: 100%; border: 1px solid #ddd;">
+
+    <Columns>
+        @foreach (var column in Element.Children)
+        {
+            <RadzenGridColumn TItem="object" Property="@column.Name" Title="@column.Name">
+               @*  @if (!string.IsNullOrEmpty(column.Template))
+                {
+                    <Template Context="data">
+                        @((MarkupString)column.Template)
+                    </Template>
+                } *@
+            </RadzenGridColumn>
+        }
+    </Columns>
+</RadzenGrid>
+
+@code {
+    [Parameter] public Table Element { get; set; }
+}

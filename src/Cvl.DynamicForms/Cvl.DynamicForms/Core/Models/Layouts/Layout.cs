@@ -8,6 +8,7 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
     {
         public Layout(HierarchicalControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Layout;
         }
     }
 

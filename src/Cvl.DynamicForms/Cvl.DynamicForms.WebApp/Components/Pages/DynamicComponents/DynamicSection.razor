@@ -1,0 +1,39 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<section style="padding: @(Padding ?? "20px"); margin: @(Margin ?? "10px 0");
+                 border: @(HasBorder ? "1px solid #ddd" : "none");
+                 background-color: @(BackgroundColor ?? "transparent");
+                 border-radius: 5px; box-shadow: @(HasShadow ? "0 2px 4px rgba(0, 0, 0, 0.1)" : "none");">
+    @if (!string.IsNullOrWhiteSpace(Element.Name))
+    {
+        <h2 style="font-size: @(TitleFontSize ?? "18px");
+                    color: @(TitleColor ?? "#333"); margin-bottom: 10px;">
+            @Element.Name
+        </h2>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Element.Description))
+    {
+        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+            @Element.Description
+        </p>
+    }
+
+    @foreach (var child in Element.Children)
+    {
+        <DynamicRenderer Element="child" />
+    }
+</section>
+
+@code {
+    [Parameter] public Section Element { get; set; }
+    public string Padding { get; set; }
+    public string Margin { get; set; }
+    public bool HasBorder { get; set; }
+    public string BackgroundColor { get; set; }
+    public bool HasShadow { get; set; }
+    public string TitleFontSize { get; set; }
+    public string TitleColor { get; set; }
+    public string Pole { get; set; }
+}

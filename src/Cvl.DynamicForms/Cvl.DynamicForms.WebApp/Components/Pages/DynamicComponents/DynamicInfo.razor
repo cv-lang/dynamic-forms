@@ -1,0 +1,15 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+
+<RadzenPanel Style="margin: 10px; padding: 10px; width: 100%; background-color: #f9f9f9; border: 1px solid #ddd;">
+    <RadzenLabel Text="@Element.Name" Style="font-size: 16px; color: #333;" />
+    @if (!string.IsNullOrWhiteSpace(Element.Description))
+    {
+        <div style="margin-top: 5px; font-size: 14px; color: #666;">
+            @Element.Description
+        </div>
+    }
+</RadzenPanel>
+
+@code {
+    [Parameter] public Info Element { get; set; }
+}

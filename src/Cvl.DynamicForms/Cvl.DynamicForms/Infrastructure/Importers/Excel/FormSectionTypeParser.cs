@@ -16,7 +16,7 @@ namespace Cvl.DynamicForms.Infrastructure.Importers.Excel
     {
         public ControlType Parse(string elementType, int row)
         {
-            var validTypeName = new string[] { "sekcja", "wiersz", "row", "kolumna", "column", "tabs", "tab", "tabela", "grid", "container", "kontener", "grid", "legend", "legenda" };
+            var validTypeName = new string[] { "sekcja", "wiersz", "row", "kolumna", "column", "tabs", "tab", "tabela", "grid", "grid", "legend", "legenda" };
 
             if (validTypeName.Any(x => elementType == x) == false)
             {
@@ -30,10 +30,7 @@ namespace Cvl.DynamicForms.Infrastructure.Importers.Excel
                 case "legenda":
                     return ControlType.Legend;
                 case "grid":
-                    return ControlType.Grid;
-                case "container":
-                case "kontener":
-                    return ControlType.Container;
+                    return ControlType.Grid;                
                 case "sekcja":
                     return ControlType.Section;
                 case "row":

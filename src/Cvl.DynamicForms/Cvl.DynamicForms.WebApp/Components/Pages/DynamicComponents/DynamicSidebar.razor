@@ -1,0 +1,33 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<aside style="width: @(Width ?? "250px"); height: 100%; position: fixed;
+              top: 0; left: 0; background-color: @(BackgroundColor ?? "#343a40");
+              color: @(FontColor ?? "#ffffff"); padding: 10px; box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+              display: @(IsVisible ? "block" : "none"); z-index: 1000;">
+    @if (!string.IsNullOrWhiteSpace(Element.Name))
+    {
+        <h2 style="margin-top: 0; font-size: @(TitleFontSize ?? "20px"); color: @(TitleColor ?? "#ffffff");">
+            @Element.Name
+        </h2>
+    }
+
+    <ul style="list-style-type: none; padding: 0; margin: 0;">
+        @foreach (var child in Element.Children)
+        {
+            <li style="margin-bottom: 10px;">
+                <DynamicRenderer Element="child" />
+            </li>
+        }
+    </ul>
+</aside>
+
+@code {
+    [Parameter] public Sidebar Element { get; set; }
+    public string? Width { get; set; }
+    public string? BackgroundColor { get; set; }
+    public string? FontColor { get; set; }
+    public bool IsVisible { get; set; } = true;
+    public string? TitleFontSize { get; set; }
+    public string? TitleColor { get; set; }
+}

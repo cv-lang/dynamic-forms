@@ -13,6 +13,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public AutoComplete(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.AutoComplete;
         }
     }
 

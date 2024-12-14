@@ -14,8 +14,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Cvl.DynamicForms\Cvl.DynamicForms.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Components\Pages\DynamicComponents\" />
-  </ItemGroup>
 </Project>

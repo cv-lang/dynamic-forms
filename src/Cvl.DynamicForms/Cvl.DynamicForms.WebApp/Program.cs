@@ -1,7 +1,10 @@
 using Radzen;
 using Cvl.DynamicForms.WebApp.Components;
+using Cvl.DynamicForms;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDyncmicFormsCore();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

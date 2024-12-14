@@ -1,0 +1,25 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+
+<RadzenDatePicker @bind-Value="@Element.Value"
+                  Placeholder="@Element.Placeholder"
+                  @* MinDate="@Element.MinDate"
+                  MaxDate="@Element.MaxDate"
+                  DateFormat="@Element.DateFormat" *@
+                  Disabled="@Element.IsReadOnly"
+                  Style="width: 100%;"
+                  Change="OnChange"
+                   />
+
+@code {
+    [Parameter] public DatePicker Element { get; set; }
+
+    private void OnChange(DateTime? value)
+    {
+        // Element.Value = value;
+
+        // if (Element.OnChange != null)
+        // {
+        //     Element.OnChange.Invoke(value);
+        // }
+    }
+}

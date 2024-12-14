@@ -1,0 +1,23 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<div style="display: flex; flex-wrap: wrap; gap: @(Spacing ?? "10px"); align-items: @(Alignment ?? "stretch");
+            justify-content: @(Justification ?? "flex-start"); padding: 10px; width: 100%;">
+
+    @foreach (var child in Element.Children)
+    {
+        <div style="flex: @(Flex ?? "1 1 auto"); max-width: @(MaxWidth ?? "100%");">
+            <DynamicRenderer Element="child" />
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Row Element { get; set; }
+    public string Spacing { get; set; }
+    public string Alignment { get; set; }
+    public string Justification { get; set; }
+    public string MaxWidth { get; set; }
+    public string Flex { get; set; }
+
+}

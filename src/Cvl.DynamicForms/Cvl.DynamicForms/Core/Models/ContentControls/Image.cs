@@ -8,6 +8,7 @@ namespace Cvl.DynamicForms.Core.Models.ContentControls
     {
         public Image(ControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Image;
         }
     }
 

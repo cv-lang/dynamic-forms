@@ -1,0 +1,30 @@
+﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+@using Cvl.DynamicForms.Core.Models.Layouts
+
+<footer style="width: 100%; padding: 10px; background-color: @(BackgroundColor ?? "#f8f9fa");
+               text-align: @(Alignment ?? "center"); border-top: 1px solid #ddd;">
+    @if (!string.IsNullOrWhiteSpace(Content))
+    {
+        <div style="font-size: 14px; color: @(FontColor ?? "#333");">
+            @Content
+        </div>
+    }
+
+    @if (Element.Children != null && Element.Children.Any())
+    {
+        <div style="margin-top: 10px;">
+            @foreach (var child in Element.Children)
+            {
+                <DynamicRenderer Element="child" />
+            }
+        </div>
+    }
+</footer>
+
+@code {
+    [Parameter] public Footer Element { get; set; }
+    public string BackgroundColor { get; set; }
+    public string Alignment { get; set; }
+    public string Content { get; set; }
+    public string FontColor { get; set; }
+}

@@ -8,6 +8,7 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
     {
         public Tabs(HierarchicalControlDescription controlDescription) : base(controlDescription)
         {
+            Type = ControlType.Tabs;
         }
     }
 

@@ -1,6 +1,17 @@
 ﻿@page "/df"
-<h3>DynamicForm</h3>
+@using Cvl.DynamicForms.Core.Importer
+@using Cvl.DynamicForms.Core.Models.Base
+@using Cvl.DynamicForms.WebApp.Components.Pages.DynamicComponents
+@inject IFormDefinitionImporter parser
+
+<DynamicRenderer Element="FormRoot" />
 
 @code {
+    private Control FormRoot;
 
+    protected override async Task OnInitializedAsync()
+    {
+        var form = parser.LoadFromFile(@"C:\nbac\projects\dynamic-forms\dynamic-form-szablon.xlsx", 0);
+        FormRoot = form.RootSection;
+    }
 }
