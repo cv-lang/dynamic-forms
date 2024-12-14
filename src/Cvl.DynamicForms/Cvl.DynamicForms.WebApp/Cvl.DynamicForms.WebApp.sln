@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.0.0
+MinimumVisualStudioVersion = 17.0.0.0
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cvl.DynamicForms.WebApp", "Cvl.DynamicForms.WebApp.csproj", "{43758182-892D-4B89-A415-1DECB26F3701}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43758182-892D-4B89-A415-1DECB26F3701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43758182-892D-4B89-A415-1DECB26F3701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43758182-892D-4B89-A415-1DECB26F3701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43758182-892D-4B89-A415-1DECB26F3701}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC346300-C8A7-40AB-898E-18F68C3959BF}
+	EndGlobalSection
+EndGlobal

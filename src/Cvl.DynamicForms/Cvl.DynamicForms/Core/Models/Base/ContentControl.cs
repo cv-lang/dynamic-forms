@@ -1,8 +1,11 @@
 ﻿using Cvl.DynamicForms.Core.ControlDescriptions;
+using Cvl.DynamicForms.Core.Models.ContentControls;
+using Cvl.DynamicForms.Core.Models.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Cvl.DynamicForms.Core.Models.Base
@@ -10,12 +13,13 @@ namespace Cvl.DynamicForms.Core.Models.Base
     /// <summary>
     /// Kontrolka prosta typu - textbox, checkbox, autocomplet itp
     /// </summary>
+    
     public abstract class ContentControl : Control
     {        
         public ContentControl(ControlDescription controlDescription) 
         {
             Id = controlDescription.Row.ToString();
-            Name = controlDescription.ElementName;
+            Name = controlDescription.ElementName == "" ? this.GetType().Name : controlDescription.ElementName;
         }
 
         public string? Placeholder { get; set; }

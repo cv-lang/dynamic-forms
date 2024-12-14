@@ -22,7 +22,7 @@ namespace Cvl.DynamicForms.Infrastructure.Importers.Excel.Helpers
             {
                 HierarchicalControlType = ws.GetCellText(row, level),
                 ElementName = elementName,
-                TypeName = ws.GetCellText(row, ExcelColumnIndex.ElementType)?.Trim() ?? "",
+                TypeName = ws.GetCellText(row, ExcelColumnIndex.ElementType)?.Trim() ?? ws.GetCellText(row, level) ?? "",
                 Level = level,
                 Row = row,
             };
