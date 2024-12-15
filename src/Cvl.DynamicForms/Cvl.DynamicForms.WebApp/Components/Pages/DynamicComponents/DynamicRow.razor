@@ -1,16 +1,15 @@
 ﻿@using Cvl.DynamicForms.Core.Models.ContentControls
 @using Cvl.DynamicForms.Core.Models.Layouts
 
-<div style="display: flex; flex-wrap: wrap; gap: @(Spacing ?? "10px"); align-items: @(Alignment ?? "stretch");
-            justify-content: @(Justification ?? "flex-start"); padding: 10px; width: 100%;">
+<RadzenRow Gap="2rem" RowGap="2rem" class="rz-m-0 rz-m-md-12">
 
     @foreach (var child in Element.Children)
     {
-        <div style="flex: @(Flex ?? "1 1 auto"); max-width: @(MaxWidth ?? "100%");">
+        <RadzenColumn Size="null" >
             <DynamicRenderer Element="child" />
-        </div>
+        </RadzenColumn>
     }
-</div>
+</RadzenRow>
 
 @code {
     [Parameter] public Row Element { get; set; }

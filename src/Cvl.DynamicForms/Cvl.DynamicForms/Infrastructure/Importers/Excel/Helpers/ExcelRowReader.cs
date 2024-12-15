@@ -54,6 +54,19 @@ namespace Cvl.DynamicForms.Infrastructure.Importers.Excel.Helpers
                 SelectedElementBinding = ws.GetCellText(row, ExcelColumnIndex.SelectedElementBinding) ?? "",
                 Action = ws.GetCellText(row, ExcelColumnIndex.Action) ?? "",
                 Comments = ws.GetCellText(row, ExcelColumnIndex.Comments) ?? "",
+                Column = ws.GetCellText(row, ExcelColumnIndex.Column) ,
+                Style = ws.GetCellText(row, ExcelColumnIndex.Style),
+                ElementStyle = ws.GetCellText(row, ExcelColumnIndex.ElementStyle),
+                Min = ws.GetCellText(row, ExcelColumnIndex.Min),
+                Max = ws.GetCellText(row, ExcelColumnIndex.Max),
+                Format = ws.GetCellText(row, ExcelColumnIndex.Format),
+                Width = ws.GetCellText(row, ExcelColumnIndex.Width),
+                Height = ws.GetCellText(row, ExcelColumnIndex.Height),
+                TestDataRow1 = ws.GetCellText(row, ExcelColumnIndex.TestDataRow1),
+                TestDataRow2 = ws.GetCellText(row, ExcelColumnIndex.TestDataRow2),
+                TestDataRow3 = ws.GetCellText(row, ExcelColumnIndex.TestDataRow3),
+                TestDataRow4 = ws.GetCellText(row, ExcelColumnIndex.TestDataRow4),
+                TestDataRow5 = ws.GetCellText(row, ExcelColumnIndex.TestDataRow5),
             };
             return excelRow;
         }
@@ -77,5 +90,19 @@ namespace Cvl.DynamicForms.Infrastructure.Importers.Excel.Helpers
         public const int SelectedElementBinding = 21;
         public const int Action = 22;
         public const int Comments = 23;
+        public const int Min = 24;
+        public const int Max = 25;
+        public const int Format = 26;
+        public const int Width = 27;
+        public const int Height = 28;
+        public const int Column = 29;
+        public const int Style = 30;
+        public const int ElementStyle = 31;
+        public const int TestDataRow1 = 32;
+        public const int TestDataRow2 = 33;
+        public const int TestDataRow3 = 34;
+        public const int TestDataRow4 = 35;
+        public const int TestDataRow5 = 36;
+
     }
 }

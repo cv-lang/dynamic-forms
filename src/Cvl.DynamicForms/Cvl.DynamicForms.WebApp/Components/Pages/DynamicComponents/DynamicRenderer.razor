@@ -74,6 +74,15 @@ else if (Element.Type == ControlType.Stack)
 {
     <DynamicStack Element="(Stack)Element" />
 }
+else if (Element.Type == ControlType.Legend)
+{
+    <DynamicLegend Element="(Legend)Element" />
+}
+else if (Element.Type == ControlType.Table)
+
+{
+    <DynamicTable Element="(Table)Element" />
+}
 else
 {
     <p>Unsupported control type: @Element.Type</p>

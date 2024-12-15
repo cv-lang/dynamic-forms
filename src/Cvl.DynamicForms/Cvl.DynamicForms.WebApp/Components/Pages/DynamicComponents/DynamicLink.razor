@@ -1,7 +1,7 @@
 ﻿@using Cvl.DynamicForms.Core.Models.ContentControls
 
 <RadzenLink Href="@Element.DataSource"
-            @* Target="@Element.Target" *@
+            Target="@Target"
             Style="color: #007bff; text-decoration: none; margin: 5px; font-size: 16px;"
             @onclick="OnClick">
     @Element.Name
@@ -9,6 +9,7 @@
 
 @code {
     [Parameter] public Link Element { get; set; }
+    public string Target => Element.Format ?? "_blank";
 
     private async Task OnClick(MouseEventArgs e)
     {

@@ -1,13 +1,12 @@
 ﻿@using Cvl.DynamicForms.Core.Models.ContentControls
 
 <RadzenButton Text="@Element.Name"
-              Click="OnClick"
-              @* Icon="@Element.Icon" ButtonStyle="@Element.Style" *@
-              Disabled="@Element.IsReadOnly"
-              Style="width: 100%;" />
+Click="OnClick" Icon="@Element.Icon" Disabled="@Element.IsReadOnly"
+Style="width: 100%;" />
 
 @code {
     [Parameter] public Button Element { get; set; }
+    public string Style { get; set; }
 
     private void OnClick(MouseEventArgs args)
     {

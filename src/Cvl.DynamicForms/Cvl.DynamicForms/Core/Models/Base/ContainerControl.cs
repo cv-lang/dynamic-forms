@@ -21,6 +21,7 @@ namespace Cvl.DynamicForms.Core.Models.Base
         }
         public ContainerControl(HierarchicalControlDescription controlDescription)
         {
+            Name = controlDescription.ElementName == "" ? this.GetType().Name : controlDescription.ElementName;
         }
     }
 }

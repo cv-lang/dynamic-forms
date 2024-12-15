@@ -2,16 +2,25 @@
 @using Cvl.DynamicForms.Core.Models.Layouts
 @using Radzen
 
-<RadzenTabs>
-    @foreach (var tab in Element.Children)
-    {
-        <RadzenTabsItem Text="@tab.Name">
-            <DynamicRenderer Element="@tab" />
-        </RadzenTabsItem>
-    }
+<RadzenTabs TabPosition="@tabPosition" RenderMode="TabRenderMode.Client">
+    <Tabs>
+        @foreach (Tab tab in Element.Children)
+        {
+            <RadzenTabsItem Text="@tab.Name">
+                @if (tab.Children != null && tab.Children.Any())
+                {
+                    @foreach (var child in tab.Children)
+                    {
+                        <DynamicRenderer Element="child" />
+                    }
+                }
+            </RadzenTabsItem>
+        }
+    </Tabs>
 </RadzenTabs>
 
 @code {
     [Parameter] public Tabs Element { get; set; }
+    TabPosition tabPosition = TabPosition.Top;
     public string Content { get; set; }
 }

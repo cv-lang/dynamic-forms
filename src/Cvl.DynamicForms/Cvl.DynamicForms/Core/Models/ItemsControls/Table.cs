@@ -9,7 +9,7 @@ namespace Cvl.DynamicForms.Core.Models.Layouts
         public Table(HierarchicalControlDescription controlDescription) : base(controlDescription)
         {
             Type = ControlType.Table;
-        }
+        }        
     }
 
     public class TableParser : IHierarchicalControlParser

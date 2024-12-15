@@ -1,29 +1,62 @@
-﻿@using Cvl.DynamicForms.Core.Models.ContentControls
+﻿@using Cvl.DynamicForms.Core.Models.Base
+@using Cvl.DynamicForms.Core.Models.ContentControls
 @using Cvl.DynamicForms.Core.Models.Layouts
 
-<RadzenGrid Data="@Element.DataSource"
-            TItem="object"
-            ShowPagingSummary="true"
-            PageSize="10"
-            AllowPaging="true"
-            AllowSorting="true"
-            Style="width: 100%; border: 1px solid #ddd;">
+<RadzenDataGrid TItem="Dictionary<string, object>"
+ColumnWidth="200px"
+ShowPagingSummary="true"
+PageSize="5"
+AllowPaging="true"
+AllowSorting="true"
+Style="width: 100%; border: 1px solid #ddd;"
+Data="@TestData">
 
     <Columns>
         @foreach (var column in Element.Children)
         {
-            <RadzenGridColumn TItem="object" Property="@column.Name" Title="@column.Name">
-               @*  @if (!string.IsNullOrEmpty(column.Template))
-                {
-                    <Template Context="data">
-                        @((MarkupString)column.Template)
-                    </Template>
-                } *@
-            </RadzenGridColumn>
+            <RadzenDataGridColumn Title="@column.Name">
+                <Template>
+                    @context[@column.Name]
+                </Template>
+            </RadzenDataGridColumn>
         }
     </Columns>
-</RadzenGrid>
+</RadzenDataGrid>
 
 @code {
-    [Parameter] public Table Element { get; set; }
+    [Parameter] public Table Element { get; set; }    
+
+
+    public List<Dictionary<string, object>> TestData
+    {
+        get
+        {
+            var list = new List<Dictionary<string, object>>();
+            var row1 = new Dictionary<string, object>();
+            var row2 = new Dictionary<string, object>();
+            var row3 = new Dictionary<string, object>();
+            var row4 = new Dictionary<string, object>();
+            var row5 = new Dictionary<string, object>();
+            foreach (ContentControl col in Element.Children)
+            {
+                row1[col.Name] = col.TestDataRow1 ?? $"...1...";
+                row2[col.Name] = col.TestDataRow2 ?? $"...2...";
+                row3[col.Name] = col.TestDataRow3 ?? $"...3...";
+                row4[col.Name] = col.TestDataRow4 ?? $"...4...";
+                row5[col.Name] = col.TestDataRow5 ?? $"...5...";
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                list.Add(row1);
+                list.Add(row2);
+                list.Add(row3);
+                list.Add(row4);
+                list.Add(row5);
+            }
+
+            return list;
+        }
+
+    }
 }
