@@ -23,7 +23,7 @@ namespace Cvl.DynamicForms.Core.Parsers
         new LegendParser(), new TableParser()};
 
         internal bool IsHierarhicalControl(HierarchicalControlDescription hierarchicalControlDescription)
-        {
+        {            
             return parsers.Any(x => x.IsHierarhicalControl(hierarchicalControlDescription.HierarchicalControlType));
         }
 

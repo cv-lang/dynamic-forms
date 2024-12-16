@@ -32,7 +32,7 @@ var options = new JsonSerializerOptions
         {
             typeInfo =>
             {
-                if (typeInfo.Type == typeof(Control))
+                if (typeInfo.Type == typeof(Control) && typeInfo.PolymorphismOptions != null)
                 {
                     typeInfo.PolymorphismOptions.UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FallBackToNearestAncestor;
                 }
